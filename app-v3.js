@@ -34,6 +34,18 @@ state.profile.proteinPriority=state.profile.proteinPriority||'normal';
 state.profile.sugar=state.profile.sugar||'normal';
 state.profile.notes=state.profile.notes||'';
 
+const v3BaseRenderAppliances=renderAppliances;
+renderAppliances=function(filter){
+  if(state.profile.applianceId) appliances.forEach(a=>a.favorite=a.id===state.profile.applianceId);
+  return v3BaseRenderAppliances(filter);
+};
+const v3BasePopulateApplianceSelect=populateApplianceSelect;
+populateApplianceSelect=function(){
+  v3BasePopulateApplianceSelect();
+  const sel=$('#detailApplianceSelect');
+  if(sel&&state.profile.applianceId&&appliances.some(a=>a.id===state.profile.applianceId)) sel.value=state.profile.applianceId;
+};
+
 function savePlan(){localStorage.setItem('misePlan',JSON.stringify(state.plan))}
 function saveProfileV3(){localStorage.setItem('miseProfile',JSON.stringify(state.profile))}
 function favoriteRecipe(id){state.favorites.has(id)?state.favorites.delete(id):state.favorites.add(id);localStorage.setItem('miseFavorites',JSON.stringify([...state.favorites]));renderRecipes(window.__recipeFilter||'all');renderAccount();if(currentRecipe?.id===id)syncDetailActions()}
