@@ -655,3 +655,72 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
   // Initial normalization: saved plan and shopping location are repaired once on load.
   state.plan=finalizeGeneratedPlan(state.plan,null);savePlan();persistCanonicalStore();renderWeek();
 })();
+
+
+// V7 — removable shopping items + durable store key
+(function(){
+  state.removedShopping=new Set(JSON.parse(localStorage.getItem('miseRemovedShopping')||'[]'));
+  const aggregateShoppingBeforeRemoval=aggregateShopping;
+  aggregateShopping=function(){
+    return aggregateShoppingBeforeRemoval().filter(x=>!state.removedShopping.has(x.name.toLowerCase().replace(/\s/g,'-')));
+  };
+  function saveChecked(){
+    const arr=[...state.checked];
+    localStorage.setItem('miseShoppingChecked',JSON.stringify(arr));
+    localStorage.setItem('miseShopChecked',JSON.stringify(arr));
+  }
+  function recipeUsesIngredient(name){
+    const key=name.toLowerCase();
+    const out=[];
+    state.plan.flat().forEach(id=>{
+      const r=recipeById(id);
+      if(!r)return;
+      if((r.ingredients||[]).some(([n])=>n.toLowerCase()===key)){
+        const title=recipeText(r).name;
+        if(!out.includes(title))out.push(title);
+      }
+    });
+    return out;
+  }
+  function shoppingRecipeLine(name){
+    const uses=recipeUsesIngredient(name);
+    if(!uses.length)return '';
+    const visible=uses.slice(0,3).join(' · ');
+    const extra=uses.length>3?` +${uses.length-3}`:'';
+    return `<small class="shop-recipes">${txt('Utilisé pour : ','Used for: ')}${visible}${extra}</small>`;
+  }
+  renderShopping=function(){
+    const items=aggregateShopping(),groups={};
+    items.forEach(it=>{const c=categorize(it.name);(groups[c]??=[]).push({...it,key:it.name.toLowerCase().replace(/\s/g,'-')})});
+    const restore=state.removedShopping.size?`<div class="removed-shopping-bar"><span>${state.removedShopping.size} ${txt('article(s) retiré(s)','removed item(s)')}</span><button id="restoreShoppingItems" type="button">${txt('Restaurer','Restore')}</button></div>`:'';
+    $('#shoppingList').innerHTML=restore+Object.entries(groups).map(([cat,arr])=>`<div class="shopping-category"><div class="shopping-category-title">${categoryLabel(cat)}</div>${arr.map(it=>`<div class="shop-row" data-shop-row="${it.key}"><input class="shop-check" type="checkbox" data-shop="${it.key}" ${state.checked.has(it.key)?'checked':''}><span class="shop-name"><strong>${ingredientName(it.name)}</strong>${shoppingRecipeLine(it.name)}<small class="shop-product">${productSuggestion()}</small></span><span class="shop-price">${money(estimateItemPrice(it.name))}</span><span class="shop-qty">${simplifyQty(it.name,it.qty)}</span><button class="shop-remove" type="button" data-remove-shop="${it.key}" aria-label="${txt('Retirer de la liste','Remove from list')}">×</button></div>`).join('')}</div>`).join('');
+    $$('.shop-check').forEach(c=>c.addEventListener('change',()=>{c.checked?state.checked.add(c.dataset.shop):state.checked.delete(c.dataset.shop);state.shopChecked=state.checked;saveChecked();updateShoppingMeta()}));
+    $$('[data-remove-shop]').forEach(b=>b.addEventListener('click',()=>{state.removedShopping.add(b.dataset.removeShop);localStorage.setItem('miseRemovedShopping',JSON.stringify([...state.removedShopping]));renderShopping();toast(txt('Article retiré de la liste.','Item removed from list.'))}));
+    $('#restoreShoppingItems')?.addEventListener('click',()=>{state.removedShopping.clear();localStorage.removeItem('miseRemovedShopping');renderShopping();toast(txt('Articles restaurés.','Items restored.'))});
+    $('#shoppingCount').textContent=items.length;$('#cartItems').textContent=items.length;$('#pantryCount').textContent=state.checked.size;updateShoppingMeta();
+  };
+
+  function persistStoreKeys(){
+    localStorage.setItem('miseStore',state.profile.store||'Whole Foods Market');
+    localStorage.setItem('miseLocation',state.profile.location||'');
+    localStorage.setItem('miseBudget',String(state.profile.budget||90));
+    saveProfileV3();
+  }
+  const savedStore=localStorage.getItem('miseStore');
+  const savedLocation=localStorage.getItem('miseLocation');
+  const savedBudget=Number(localStorage.getItem('miseBudget'));
+  if(savedStore)state.profile.store=savedStore;
+  if(savedLocation)state.profile.location=savedLocation;
+  if(Number.isFinite(savedBudget)&&savedBudget>0)state.profile.budget=savedBudget;
+  updateStoreUI();
+  if($('#profileStore'))$('#profileStore').value=state.profile.store;
+  if($('#profileLocation'))$('#profileLocation').value=state.profile.location;
+  const budgetInput=$('#profileForm [name="budget"]');if(budgetInput)budgetInput.value=state.profile.budget;
+
+  $('#profileStore')?.addEventListener('change',e=>{state.profile.store=e.target.value;persistStoreKeys();updateStoreUI();renderShopping()});
+  $('#profileLocation')?.addEventListener('change',e=>{state.profile.location=e.target.value;persistStoreKeys();updateStoreUI()});
+  budgetInput?.addEventListener('change',e=>{state.profile.budget=Number(e.target.value||90);persistStoreKeys();updateShoppingMeta()});
+  $('#saveProfile')?.addEventListener('click',()=>setTimeout(()=>{state.profile.store=$('#profileStore')?.value||state.profile.store;state.profile.location=$('#profileLocation')?.value||state.profile.location;state.profile.budget=Number(budgetInput?.value||state.profile.budget||90);persistStoreKeys();updateStoreUI();renderShopping()},20));
+
+  renderShopping();
+})();
