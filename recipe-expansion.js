@@ -62,9 +62,10 @@
     airfryer:{label:'Air Fryer',kind:'chicken',slot:'dinner',tags:['airfryer']},
     summer:{label:'Repas d’été',kind:'salad',slot:'lunch',tags:['summer']},
     winter:{label:'Repas d’hiver',kind:'soup',slot:'dinner',tags:['winter']},
-    'date-night':{label:'Dîner à deux',kind:'fish',slot:'dinner',tags:['date-night','occasion']},
+    'date-night':{label:'Dîner à deux',kind:'fish',slot:'dinner',tags:['date-night']},
     family:{label:'Repas famille',kind:'pasta',slot:'dinner',tags:['family']},
-    quick:{label:'Repas express',kind:'bowl',slot:'lunch',tags:['quick']}
+    quick:{label:'Repas express',kind:'bowl',slot:'lunch',tags:['quick']},
+    everyday:{label:'Everyday',kind:'bowl',slot:'lunch',tags:['everyday']}
   };
   function base(kind){
     switch(kind){
@@ -87,7 +88,7 @@
     }
   }
   function buildRecipe(category,i,cfg){
-    const b=base(cfg.kind),flavor=FLAVORS[i%FLAVORS.length];
+    const b=base(cfg.kind),flavor=category==='occasion'?['vanille & fruits rouges','chocolat fondant','citron meringué','caramel doux','framboise & vanille','pomme cannelle','chocolat noisette','fraise & crème'][i%8]:FLAVORS[i%FLAVORS.length];
     const isQuick=category==='quick';
     const tags=[...new Set([...(cfg.tags||[]),category])];
     if(isQuick)tags.push('quick');
@@ -101,6 +102,73 @@
       steps:[...b.steps],tip:`Variation ${i+1} pensée pour la catégorie “${cfg.label}”.`,methods:b.methods
     };
   }
+
+  const EVERYDAY_RECIPES = [
+    {id:'everyday-no-knead-bread',name:'Pain maison sans pétrissage',slot:'breakfast',time:10,kcal:180,protein:6,carbs:36,fat:1,tags:['everyday','bread','vegetarian'],isSide:true,ingredients:[['Farine','1 cup'],['Levure boulangère','½ tsp'],['Sel','½ tsp'],['Eau','¾ cup']],steps:['Mélangez farine, levure, sel et eau.','Laissez lever jusqu’à ce que la pâte soit gonflée.','Cuisez dans un petit moule ou une cocotte jusqu’à croûte dorée.'],tip:'Très peu de travail actif : parfait pour avoir du pain maison sous la main.',methods:{default:['Four','425°F · 25–30 min'],airfryer:['Bake','330°F · 18–22 min dans un moule compatible']}},
+    {id:'everyday-focaccia',name:'Mini focaccia huile d’olive & herbes',slot:'lunch',time:15,kcal:230,protein:6,carbs:34,fat:8,tags:['everyday','bread','italian','vegetarian'],isSide:true,ingredients:[['Farine','1 cup'],['Levure boulangère','½ tsp'],['Huile d’olive','1 tbsp'],['Herbes','1 tbsp']],steps:['Préparez une pâte souple.','Étalez-la dans un petit moule huilé.','Ajoutez huile et herbes puis cuisez jusqu’à doré.'],tip:'Idéale avec salade, soupe ou pâtes.',methods:{default:['Four','400°F · 18–22 min'],airfryer:['Bake','330°F · 12–16 min']}},
+    {id:'everyday-naan',name:'Naan express au yaourt',slot:'lunch',time:15,kcal:210,protein:8,carbs:36,fat:4,tags:['everyday','bread','indian','vegetarian','quick'],isSide:true,ingredients:[['Farine','¾ cup'],['Greek yogurt','½ cup'],['Sel','1 pinch']],steps:['Mélangez farine, yaourt et sel.','Formez deux petits pains plats.','Cuisez à la poêle très chaude des deux côtés.'],tip:'Trois ingrédients, parfait avec curry ou bowl.',methods:{default:['Poêle','8–10 min'],airfryer:['Air Fry','360°F · 6–8 min']}},
+    {id:'everyday-pita',name:'Pita maison rapide',slot:'lunch',time:18,kcal:190,protein:6,carbs:38,fat:1,tags:['everyday','bread','middle-eastern','vegan'],isSide:true,ingredients:[['Farine','1 cup'],['Levure boulangère','½ tsp'],['Eau','½ cup'],['Sel','½ tsp']],steps:['Préparez une pâte et laissez-la détendre.','Étalez en disques fins.','Cuisez très chaud jusqu’à gonflement.'],tip:'À remplir ou servir avec houmous.',methods:{default:['Poêle / four','10–12 min'],airfryer:['Bake','375°F · 5–7 min']}},
+    {id:'everyday-flatbread',name:'Flatbread 2 ingrédients',slot:'lunch',time:12,kcal:200,protein:9,carbs:34,fat:3,tags:['everyday','bread','vegetarian','quick'],isSide:true,ingredients:[['Farine','¾ cup'],['Greek yogurt','½ cup']],steps:['Mélangez farine et yaourt.','Divisez et étalez finement.','Cuisez quelques minutes de chaque côté.'],tip:'Utilisez-le comme pain, wrap ou accompagnement.',methods:{default:['Poêle','8–10 min'],airfryer:['Air Fry','360°F · 5–7 min']}},
+    {id:'everyday-garlic-bread',name:'Garlic bread express',slot:'lunch',time:8,kcal:220,protein:7,carbs:30,fat:9,tags:['everyday','bread','quick','vegetarian'],isSide:true,ingredients:[['Pain complet','2 tranches'],['Beurre','1 tbsp'],['Ail','1 clove'],['Persil','1 tbsp']],steps:['Mélangez beurre, ail et persil.','Tartinez le pain.','Faites dorer jusqu’à bords croustillants.'],tip:'Très simple avec pâtes, soupe ou salade.',methods:{default:['Four','400°F · 6–8 min'],airfryer:['Air Fry','350°F · 4–5 min']}},
+    {id:'everyday-breadsticks',name:'Breadsticks parmesan & herbes',slot:'lunch',time:20,kcal:210,protein:8,carbs:30,fat:7,tags:['everyday','bread','italian','vegetarian'],isSide:true,ingredients:[['Farine','¾ cup'],['Parmesan','1 oz'],['Herbes','1 tbsp'],['Huile d’olive','1 tsp']],steps:['Formez une pâte simple.','Roulez en bâtonnets.','Ajoutez parmesan et herbes puis cuisez.'],tip:'À servir avec soupe ou sauce tomate.',methods:{default:['Four','400°F · 12–15 min'],airfryer:['Bake','340°F · 8–10 min']}},
+    {id:'everyday-croutons',name:'Croûtons croustillants maison',slot:'lunch',time:8,kcal:140,protein:4,carbs:20,fat:5,tags:['everyday','bread','quick','airfryer'],isSide:true,ingredients:[['Pain complet','2 tranches'],['Huile d’olive','1 tsp'],['Herbes','1 tsp']],steps:['Coupez le pain en cubes.','Mélangez avec huile et herbes.','Cuisez jusqu’à croustillant en remuant une fois.'],tip:'Pour salades et soupes.',methods:{default:['Four','375°F · 8–10 min'],airfryer:['Air Fry','350°F · 5–7 min']}},
+    {id:'everyday-crackers',name:'Crackers graines & herbes',slot:'lunch',time:18,kcal:160,protein:5,carbs:22,fat:6,tags:['everyday','bread','vegetarian'],isSide:true,ingredients:[['Farine','½ cup'],['Graines','2 tbsp'],['Huile d’olive','1 tsp'],['Eau','¼ cup']],steps:['Mélangez en pâte ferme.','Étalez très finement.','Découpez puis cuisez jusqu’à sec et doré.'],tip:'Parfaits avec houmous ou fromage.',methods:{default:['Four','375°F · 12–15 min'],airfryer:['Bake','330°F · 8–10 min']}},
+    {id:'everyday-parmesan-crisps',name:'Tuiles de parmesan',slot:'lunch',time:7,kcal:110,protein:9,carbs:1,fat:8,tags:['everyday','quick','low-carb','gluten-free'],isSide:true,ingredients:[['Parmesan','2 oz']],steps:['Formez de petits tas de parmesan.','Aplatissez légèrement.','Cuisez jusqu’à doré puis laissez refroidir.'],tip:'Ajoute du croustillant aux salades et soupes.',methods:{default:['Four','400°F · 5–7 min'],airfryer:['Bake','350°F · 4–5 min']}},
+    {id:'everyday-roasted-chickpeas',name:'Pois chiches croustillants paprika',slot:'lunch',time:18,kcal:190,protein:9,carbs:28,fat:5,tags:['everyday','vegan','high-fiber','airfryer'],isSide:true,ingredients:[['Pois chiches','1 cup'],['Paprika','1 tsp'],['Huile d’olive','1 tsp']],steps:['Séchez très bien les pois chiches.','Ajoutez huile et paprika.','Cuisez en secouant plusieurs fois.'],tip:'À ajouter sur bowls et salades.',methods:{default:['Four','400°F · 22–25 min'],airfryer:['Air Fry','390°F · 12–15 min']}},
+    {id:'everyday-hummus',name:'Houmous minute',slot:'lunch',time:5,kcal:180,protein:7,carbs:22,fat:8,tags:['everyday','vegan','middle-eastern','quick','gluten-free'],isSide:true,ingredients:[['Pois chiches','1 cup'],['Citron','½'],['Tahini','1 tbsp'],['Ail','1 clove']],steps:['Mettez tout au blender.','Mixez en ajoutant un peu d’eau jusqu’à texture crémeuse.'],tip:'Sauce, dip ou base de sandwich.',methods:{default:['Blender','3–5 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-tzatziki',name:'Tzatziki express',slot:'lunch',time:7,kcal:90,protein:8,carbs:7,fat:3,tags:['everyday','vegetarian','greek','quick','gluten-free'],isSide:true,ingredients:[['Greek yogurt','½ cup'],['Concombre','½'],['Citron','½'],['Herbes','1 tbsp']],steps:['Râpez le concombre et essorez-le.','Mélangez avec yaourt, citron et herbes.'],tip:'Avec poulet, pita, pommes de terre ou crudités.',methods:{default:['Sans cuisson','7 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-yogurt-sauce',name:'Sauce yaourt citron & herbes',slot:'lunch',time:3,kcal:70,protein:7,carbs:5,fat:2,tags:['everyday','vegetarian','quick','gluten-free'],isSide:true,ingredients:[['Greek yogurt','½ cup'],['Citron','½'],['Herbes','1 tbsp']],steps:['Mélangez tous les ingrédients.','Salez et poivrez selon goût.'],tip:'Passe partout avec viande, légumes et bowls.',methods:{default:['Sans cuisson','3 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-pesto',name:'Pesto basilic express',slot:'lunch',time:5,kcal:150,protein:4,carbs:4,fat:14,tags:['everyday','italian','vegetarian','quick'],isSide:true,ingredients:[['Basilic','1 cup'],['Parmesan','1 oz'],['Huile d’olive','1 tbsp'],['Ail','1 clove']],steps:['Mixez basilic, parmesan et ail.','Ajoutez l’huile jusqu’à texture souhaitée.'],tip:'Pour pâtes, tartines, poulet ou légumes.',methods:{default:['Blender','5 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-garlic-butter',name:'Beurre à l’ail & persil',slot:'lunch',time:4,kcal:110,protein:0,carbs:1,fat:12,tags:['everyday','vegetarian','quick','gluten-free'],isSide:true,ingredients:[['Beurre','1 tbsp'],['Ail','1 clove'],['Persil','1 tbsp']],steps:['Ramollissez le beurre.','Mélangez avec ail et persil.'],tip:'Sur pain, légumes, pommes de terre ou viande.',methods:{default:['Sans cuisson','4 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-bruschetta',name:'Bruschetta tomate basilic',slot:'lunch',time:10,kcal:180,protein:5,carbs:28,fat:6,tags:['everyday','italian','vegetarian','quick'],isSide:true,ingredients:[['Pain complet','2 tranches'],['Tomates','1 cup'],['Basilic','1 tbsp'],['Huile d’olive','1 tsp']],steps:['Toastez le pain.','Coupez tomates et basilic.','Déposez la garniture juste avant de servir.'],tip:'Petit accompagnement frais et rapide.',methods:{default:['Toaster / four','8–10 min'],airfryer:['Air Fry','350°F · 4–5 min pour le pain']}},
+    {id:'everyday-guacamole',name:'Guacamole très simple',slot:'lunch',time:5,kcal:170,protein:2,carbs:9,fat:15,tags:['everyday','vegan','mexican','quick','gluten-free'],isSide:true,ingredients:[['Avocat','1'],['Citron vert','½'],['Tomates','¼ cup']],steps:['Écrasez l’avocat.','Ajoutez citron vert et tomate.','Salez selon goût.'],tip:'Avec tacos, bowls ou crudités.',methods:{default:['Sans cuisson','5 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-pickled-onions',name:'Oignons rouges pickles express',slot:'lunch',time:8,kcal:35,protein:1,carbs:8,fat:0,tags:['everyday','vegan','quick','gluten-free'],isSide:true,ingredients:[['Oignon rouge','1'],['Vinaigre','½ cup'],['Sucre','1 tsp'],['Sel','½ tsp']],steps:['Émincez finement l’oignon.','Versez vinaigre chaud, sucre et sel.','Laissez reposer avant de servir.'],tip:'Transforme instantanément tacos, burgers et bowls.',methods:{default:['Sans cuisson','8 min + repos'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-vinaigrette',name:'Vinaigrette moutarde maison',slot:'lunch',time:3,kcal:90,protein:0,carbs:2,fat:9,tags:['everyday','vegan','quick','gluten-free'],isSide:true,ingredients:[['Huile d’olive','1 tbsp'],['Moutarde','1 tsp'],['Vinaigre','1 tsp']],steps:['Mélangez moutarde et vinaigre.','Fouettez avec l’huile.'],tip:'Une base pour toutes les salades.',methods:{default:['Sans cuisson','3 min'],airfryer:['Sans cuisson','Aucune cuisson nécessaire']}},
+    {id:'everyday-roast-potatoes',name:'Pommes de terre rôties toutes simples',slot:'dinner',time:25,kcal:240,protein:5,carbs:42,fat:6,tags:['everyday','vegan','gluten-free','airfryer'],isSide:true,ingredients:[['Pommes de terre','7 oz'],['Huile d’olive','1 tsp'],['Paprika','1 tsp']],steps:['Coupez les pommes de terre en morceaux.','Mélangez avec huile et paprika.','Cuisez jusqu’à cœur et croustillantes.'],tip:'Accompagnement universel.',methods:{default:['Four','425°F · 25–30 min'],airfryer:['Air Fry','390°F · 16–20 min']}},
+    {id:'everyday-couscous',name:'Couscous aux herbes 5 minutes',slot:'lunch',time:7,kcal:210,protein:7,carbs:42,fat:2,tags:['everyday','vegan','quick'],isSide:true,ingredients:[['Couscous','½ cup'],['Eau','½ cup'],['Herbes','1 tbsp'],['Citron','½']],steps:['Versez l’eau chaude sur le couscous.','Couvrez 5 minutes.','Égrenez puis ajoutez herbes et citron.'],tip:'Accompagnement ultra rapide pour poulet, poisson ou légumes.',methods:{default:['Bouilloire / casserole','7 min'],airfryer:['Sans cuisson Air Fryer','Utilisez eau chaude']}},
+    {id:'everyday-rice',name:'Riz citron & persil',slot:'lunch',time:18,kcal:220,protein:4,carbs:46,fat:2,tags:['everyday','vegan','gluten-free'],isSide:true,ingredients:[['Riz cuit','1 cup'],['Citron','½'],['Persil','1 tbsp']],steps:['Cuisez ou réchauffez le riz.','Ajoutez citron, persil et poivre.'],tip:'Base neutre pour presque tous les bowls.',methods:{default:['Casserole / rice cooker','15–18 min'],airfryer:['Non recommandé','Préférez casserole ou rice cooker']}},
+    {id:'everyday-green-beans',name:'Haricots verts ail & citron',slot:'dinner',time:12,kcal:100,protein:4,carbs:13,fat:4,tags:['everyday','vegan','quick','gluten-free','airfryer'],isSide:true,ingredients:[['Haricots verts','1 cup'],['Ail','1 clove'],['Citron','½'],['Huile d’olive','1 tsp']],steps:['Mélangez les haricots avec huile et ail.','Cuisez jusqu’à tendres mais encore fermes.','Ajoutez citron à la fin.'],tip:'Accompagnement léger et très simple.',methods:{default:['Poêle','10–12 min'],airfryer:['Air Fry','375°F · 8–10 min']}},
+    {id:'everyday-roast-broccoli',name:'Brocoli rôti parmesan',slot:'dinner',time:15,kcal:150,protein:9,carbs:14,fat:7,tags:['everyday','vegetarian','quick','gluten-free','airfryer'],isSide:true,ingredients:[['Brocoli','2 cups'],['Parmesan','1 oz'],['Huile d’olive','1 tsp']],steps:['Mélangez brocoli et huile.','Cuisez jusqu’à bords grillés.','Ajoutez parmesan en fin de cuisson.'],tip:'Simple avec poulet, poisson ou pâtes.',methods:{default:['Four','425°F · 15–18 min'],airfryer:['Air Fry','380°F · 9–11 min']}}
+  ];
+
+  const SWEET_OCCASION_RECIPES = [
+    ['birthday-vanilla','Gâteau anniversaire vanille & fruits rouges','cake'],
+    ['chocolate-layer','Gâteau chocolat fondant de fête','cake'],
+    ['lemon-cake','Gâteau citron glaçage léger','cake'],
+    ['red-velvet','Red velvet cake','cake'],
+    ['carrot-cake','Carrot cake cannelle & noix','cake'],
+    ['strawberry-shortcake','Strawberry shortcake','cake'],
+    ['cheesecake-berry','Cheesecake fruits rouges','cake'],
+    ['apple-crumble','Crumble pommes cannelle','tart'],
+    ['pear-tart','Tarte poire & chocolat','tart'],
+    ['lemon-tart','Tarte citron meringuée','tart'],
+    ['chocolate-cookies','Cookies chocolat de fête','cookies'],
+    ['sugar-cookies','Sugar cookies décorés','cookies'],
+    ['gingerbread','Biscuits pain d’épices','cookies'],
+    ['brownies','Brownies chocolat fondants','brownie'],
+    ['blondies','Blondies vanille chocolat blanc','brownie'],
+    ['cupcakes-vanilla','Cupcakes vanille & fruits','cake'],
+    ['cupcakes-chocolate','Cupcakes chocolat','cake'],
+    ['cinnamon-rolls','Cinnamon rolls glaçage vanille','bread'],
+    ['chocolate-mousse','Mousse au chocolat','dessert'],
+    ['tiramisu','Tiramisu classique','dessert'],
+    ['panna-cotta','Panna cotta fruits rouges','dessert'],
+    ['macarons','Macarons vanille & framboise','cookies'],
+    ['madeleines','Madeleines citron','cookies'],
+    ['banana-bread-party','Banana bread chocolat & noix','bread']
+  ].map(([id,name,kind],i)=>({
+    id:'occasion-'+id,name,slot:'dinner',time:20+(i%5)*7,kcal:300+(i%6)*35,protein:5+(i%3),carbs:42+(i%5)*5,fat:12+(i%4)*3,
+    tags:['dessert','occasion','sweet','vegetarian'],
+    ingredients:kind==='cookies'?[['Farine','1 cup'],['Beurre','½ cup'],['Sucre','⅓ cup'],['Œufs','1']]:
+      kind==='dessert'?[['Lait','1 cup'],['Sucre','¼ cup'],['Fruits rouges','½ cup']]:
+      [['Farine','1 cup'],['Œufs','2'],['Sucre','½ cup'],['Beurre','¼ cup']],
+    steps:kind==='dessert'?['Préparez la base sucrée.','Laissez prendre ou refroidir selon la recette.','Décorez avant de servir.']:['Préparez la pâte.','Versez ou formez dans le moule adapté.','Cuisez jusqu’à cuisson juste puis laissez refroidir avant de décorer.'],
+    tip:'Une recette sucrée pensée pour fêtes, anniversaires ou occasions spéciales.',
+    methods:{default:['Four / préparation froide',kind==='dessert'?'Selon prise au froid':'350°F · 18–30 min'],airfryer:['Bake',kind==='dessert'?'Non recommandé':'320°F · 12–22 min selon format']}
+  }));
+  RECIPES.push(...EVERYDAY_RECIPES.filter(x=>!RECIPES.some(r=>r.id===x.id)));
+  RECIPES.push(...SWEET_OCCASION_RECIPES.filter(x=>!RECIPES.some(r=>r.id===x.id)));
+
   Object.entries(CONFIG).forEach(([category,cfg])=>{
     let count;
     if(category==='quick')count=RECIPES.filter(r=>r.time<=20).length;
