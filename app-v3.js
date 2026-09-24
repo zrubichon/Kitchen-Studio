@@ -730,3 +730,209 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
 
   renderShopping();
 })();
+
+
+// V8 — intelligent single-device search and AI cooking adaptation
+(function(){
+  let researchedDevice=null;
+
+  function normalizeDevice(raw){
+    if(!raw)return null;
+    const d={...raw};
+    d.id=d.id||('custom-'+String(d.brand||'device')+'-'+String(d.modelCode||d.model||'model')).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,80);
+    d.brand=d.brand||'Appareil';
+    d.model=d.model||d.modelCode||'Modèle identifié';
+    d.type=d.type||'Other';
+    d.favorite=true;
+    d.modes=Array.isArray(d.modes)?d.modes:[];
+    d.sourceUrls=Array.isArray(d.sourceUrls)?d.sourceUrls.filter(Boolean):[];
+    if(d.source&&!d.sourceUrls.includes(d.source))d.sourceUrls.unshift(d.source);
+    return d;
+  }
+  function savedDevice(){return normalizeDevice(JSON.parse(localStorage.getItem('miseCustomAppliance')||'null'))}
+  function injectSavedDevice(device){
+    if(!device)return;
+    const i=appliances.findIndex(a=>a.id===device.id);
+    if(i>=0)appliances[i]=device;else appliances.unshift(device);
+    appliances.forEach(a=>a.favorite=a.id===device.id);
+    state.profile.applianceId=device.id;
+  }
+  function imageUrlForDevice(d){
+    return '/api/appliance-image?brand='+encodeURIComponent(d.brand||'')+'&model='+encodeURIComponent(d.model||'')+'&code='+encodeURIComponent(d.modelCode||'')+'&source='+encodeURIComponent(d.source||'');
+  }
+  function renderSavedDevice(){
+    const d=savedDevice();
+    const empty=$('#savedDeviceEmpty'),content=$('#savedDeviceContent');
+    if(!d){
+      if(empty)empty.hidden=false;if(content)content.hidden=true;
+      const ps=$('#profileDeviceSummary');if(ps)ps.innerHTML='<strong>Aucun appareil enregistré</strong><small>Ajoutez votre modèle exact dans “Mes appareils”.</small>';
+      return;
+    }
+    injectSavedDevice(d);
+    if(empty)empty.hidden=true;if(content)content.hidden=false;
+    const img=$('#savedDeviceImage');if(img)img.src=imageUrlForDevice(d);
+    if($('#favoriteApplianceName'))$('#favoriteApplianceName').textContent=(d.brand+' '+d.model).trim();
+    if($('#favoriteApplianceMeta')){
+      const bits=[d.type,d.modelCode,d.tempRangeF?d.tempRangeF[0]+'–'+d.tempRangeF[1]+'°F':null].filter(Boolean);
+      $('#favoriteApplianceMeta').textContent=bits.join(' · ')||d.description||'Appareil enregistré';
+    }
+    if($('#favoriteModes'))$('#favoriteModes').innerHTML=(d.modes||[]).slice(0,8).map(m=>'<span>'+m.name+'</span>').join('');
+    const ps=$('#profileDeviceSummary');
+    if(ps)ps.innerHTML='<strong>'+d.brand+' '+d.model+'</strong><small>'+[d.type,d.modelCode].filter(Boolean).join(' · ')+'</small>';
+    const sourceBtn=$('#viewFavoriteManual');
+    if(sourceBtn)sourceBtn.onclick=()=>{if(d.source)window.open(d.source,'_blank','noopener');else toast(txt('Aucune source directe enregistrée.','No direct source saved.'))};
+  }
+
+  // The old visual catalog is intentionally disabled. Internal profiles remain only as a fast exact-match cache.
+  renderAppliances=function(){renderSavedDevice()};
+  populateApplianceSelect=function(){
+    const sel=$('#detailApplianceSelect');if(!sel)return;
+    const d=savedDevice();
+    sel.innerHTML='<option value="default">'+UI[state.profile.language].classic+'</option>'+(d?'<option value="'+d.id+'">'+d.brand+' '+d.model+'</option>':'');
+    if(d)sel.value=d.id;
+  };
+
+  function catalogMatch(query){
+    const q=query.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    if(!q)return null;
+    let best=null;
+    for(const a of appliances){
+      const code=String(a.modelCode||'').toLowerCase();
+      const brand=String(a.brand||'').toLowerCase();
+      const model=String(a.model||'').toLowerCase();
+      let score=0;
+      if(code&&q.includes(code.replace(/[^a-z0-9]+/g,' ')))score+=30;
+      if(brand&&q.includes(brand.replace(/[^a-z0-9]+/g,' ')))score+=7;
+      const tokens=model.replace(/[^a-z0-9]+/g,' ').split(' ').filter(x=>x.length>2);
+      score+=tokens.filter(t=>q.includes(t)).length*3;
+      if(!best||score>best.score)best={a,score};
+    }
+    if(!best||best.score<10)return null;
+    const d=normalizeDevice({...best.a,confidence:Math.min(.99,.72+best.score/100),verified:true,sourceUrls:best.a.source?[best.a.source]:[],evidenceSummary:'Modèle correspondant trouvé dans la base Kitchen Studio.'});
+    return d;
+  }
+
+  function resultHtml(d){
+    const confidence=Math.round(Number(d.confidence||0)*100);
+    const temp=d.tempRangeF?d.tempRangeF[0]+'–'+d.tempRangeF[1]+'°F':'Plage non confirmée';
+    const modes=(d.modes||[]).slice(0,8).map(m=>'<span>'+m.name+'</span>').join('');
+    const verify=d.verified?'Référence confirmée':'À confirmer';
+    return '<div class="device-result-grid">'+
+      '<div class="device-result-image"><img src="'+imageUrlForDevice(d)+'" alt="'+d.brand+' '+d.model+'"></div>'+
+      '<div class="device-result-info"><div class="device-result-top"><span class="confidence-pill '+(d.verified?'verified':'')+'">'+verify+' · '+confidence+'%</span></div>'+
+      '<h3>'+d.brand+' '+d.model+'</h3>'+
+      '<p>'+[d.type,d.modelCode,temp].filter(Boolean).join(' · ')+'</p>'+
+      (d.evidenceSummary?'<small class="device-evidence">'+d.evidenceSummary+'</small>':'')+
+      (modes?'<div class="mode-pills">'+modes+'</div>':'')+
+      '<div class="device-result-actions"><button class="btn btn-primary" id="saveResearchedDevice" type="button">Enregistrer cet appareil</button>'+
+      (d.source?'<a class="text-btn" href="'+d.source+'" target="_blank" rel="noopener">Voir la source ↗</a>':'')+'</div></div></div>';
+  }
+
+  async function researchDevice(query){
+    const local=catalogMatch(query);
+    if(local&&local.score!==0)return local;
+    const r=await fetch('/api/research-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query})});
+    const data=await r.json();
+    if(!r.ok)throw new Error(data.error||'Recherche impossible');
+    return normalizeDevice(data.device);
+  }
+
+  const form=$('#deviceResearchForm');
+  if(form)form.onsubmit=async e=>{
+    e.preventDefault();
+    const query=$('#deviceResearchInput').value.trim();
+    if(!query)return;
+    const status=$('#deviceResearchStatus'),box=$('#deviceResearchResult'),btn=$('#deviceResearchBtn');
+    status.hidden=false;box.hidden=true;
+    status.innerHTML='<strong>✦ Recherche du modèle exact…</strong><small>Kitchen Studio compare la référence, les modes et les caractéristiques disponibles.</small>';
+    btn.disabled=true;
+    try{
+      researchedDevice=await researchDevice(query);
+      status.hidden=true;box.hidden=false;box.innerHTML=resultHtml(researchedDevice);
+      $('#saveResearchedDevice').onclick=()=>{
+        const d=normalizeDevice(researchedDevice);
+        localStorage.setItem('miseCustomAppliance',JSON.stringify(d));
+        injectSavedDevice(d);saveProfileV3();renderSavedDevice();populateApplianceSelect();
+        box.hidden=true;$('#deviceResearchInput').value='';
+        toast(txt('Appareil enregistré. Les recettes vont maintenant s’adapter à ce modèle.','Device saved. Recipes will now adapt to this model.'));
+      };
+    }catch(err){
+      status.innerHTML='<strong>Recherche incomplète</strong><small>'+txt('Je n’ai pas pu confirmer ce modèle. Ajoutez la marque + la référence exacte inscrite sur l’appareil.','I could not confirm this model. Add the brand + exact model number printed on the device.')+'</small>';
+    }finally{btn.disabled=false}
+  };
+
+  $('#removeSavedDevice')?.addEventListener('click',()=>{
+    localStorage.removeItem('miseCustomAppliance');
+    delete state.profile.applianceId;saveProfileV3();
+    appliances.forEach(a=>a.favorite=false);
+    renderSavedDevice();populateApplianceSelect();
+    toast(txt('Appareil retiré.','Device removed.'));
+  });
+
+  // AI-first cooking guide for the saved researched appliance.
+  function renderAIGuide(g){
+    $('#cookGuidePanel').hidden=false;
+    $('#cookGuideDevice').textContent=g.device||'—';
+    $('#cookGuideMode').textContent=g.mode||txt('Non recommandé','Not recommended');
+    const temp=g.temperatureF!=null?(g.temperatureF+'°F / '+(g.temperatureC!=null?g.temperatureC:Math.round((g.temperatureF-32)*5/9))+'°C'):'—';
+    $('#cookGuideTemp').textContent=temp;
+    $('#cookGuideTime').textContent=g.timeMinutes?(g.timeMinutes.min===g.timeMinutes.max?g.timeMinutes.min+' min':g.timeMinutes.min+'–'+g.timeMinutes.max+' min'):'—';
+    $('#cookGuideContainer').textContent=g.container||'—';
+    $('#cookGuidePreheat').textContent=g.preheat||'—';
+    $('#cookCompatibility').textContent=g.compatible?txt('Compatible','Compatible'):txt('Non recommandé','Not recommended');
+    $('#cookCompatibility').classList.toggle('not-compatible',!g.compatible);
+    const prep=Array.isArray(g.preparation)&&g.preparation.length?g.preparation.map(x=>'• '+x).join(' '):'';
+    $('#cookGuideNote').textContent=[prep,g.notes,g.safety].filter(Boolean).join(' ');
+    $('#cookGuideSteps').innerHTML=(g.steps||[]).map(x=>'<li>'+x+'</li>').join('');
+    $('#cookGuidePanel').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  async function adaptCurrentRecipeWithSavedDevice(){
+    const d=savedDevice();
+    if(!d){
+      toast(txt('Ajoutez d’abord votre appareil dans “Mes appareils”.','Add your device first in “My appliance”.'));
+      return false;
+    }
+    $('#cookGuidePanel').hidden=false;
+    $('#cookGuideDevice').textContent=d.brand+' '+d.model;
+    $('#cookGuideMode').textContent='✦ '+txt('Adaptation IA…','AI adapting…');
+    $('#cookGuideTemp').textContent='—';$('#cookGuideTime').textContent='—';$('#cookGuideContainer').textContent='—';$('#cookGuidePreheat').textContent='—';
+    $('#cookGuideSteps').innerHTML='<li>'+txt('Analyse de la recette et des capacités exactes de votre appareil…','Analyzing the recipe and your device capabilities…')+'</li>';
+    try{
+      const rt=recipeText(currentRecipe);
+      const recipePayload={...currentRecipe,name:rt.name,steps:rt.steps};
+      const r=await fetch('/api/adapt-cooking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipe:recipePayload,device:d})});
+      const g=await r.json();
+      if(!r.ok)throw new Error(g.error||'Adaptation impossible');
+      renderAIGuide(g);return true;
+    }catch(err){
+      $('#cookGuideMode').textContent=txt('Adaptation IA indisponible','AI adaptation unavailable');
+      $('#cookGuideNote').textContent=txt('Kitchen Studio conserve la méthode classique ci-dessous. Vérifiez les réglages sur votre appareil.','Kitchen Studio keeps the classic method below. Verify settings on your appliance.');
+      return false;
+    }
+  }
+
+  const cookBtn=$('#startCookingBtn');
+  if(cookBtn)cookBtn.addEventListener('click',async e=>{
+    const d=savedDevice();if(!d)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    $$('.cook-method').forEach(b=>b.classList.toggle('active',b.dataset.cookMethod==='selected'));
+    await adaptCurrentRecipeWithSavedDevice();
+  },true);
+
+  $$('.cook-method').forEach(b=>b.addEventListener('click',async e=>{
+    if(b.dataset.cookMethod!=='selected'||!savedDevice())return;
+    e.preventDefault();e.stopImmediatePropagation();
+    $$('.cook-method').forEach(x=>x.classList.toggle('active',x===b));
+    await adaptCurrentRecipeWithSavedDevice();
+  },true));
+
+  function relabelApplianceNav(){
+    const b=$('.nav-item[data-page="appliances"]');if(b)b.innerHTML='<span>◫</span> '+txt('Mon appareil','My appliance');
+  }
+  $('#languageSelect')?.addEventListener('change',()=>setTimeout(relabelApplianceNav,0));
+  relabelApplianceNav();
+
+  const initial=savedDevice();if(initial)injectSavedDevice(initial);
+  renderSavedDevice();populateApplianceSelect();
+  setTimeout(()=>{const d=savedDevice();if(d)injectSavedDevice(d);renderSavedDevice();populateApplianceSelect()},350);
+})();
