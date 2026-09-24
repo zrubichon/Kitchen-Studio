@@ -446,3 +446,194 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
   // Re-render with full catalog after async appliance JSON load.
   setTimeout(()=>{renderAppliances(state.applianceFilter||'all');populateApplianceSelect();renderRecipes(window.__recipeFilter||'all')},250);
 })();
+
+
+// V6 — reliable recomposition, diversity and canonical store persistence
+(function(){
+  function samePlan(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+  function clonePlan(p){return p.map(day=>[...day])}
+  function keyForIngredient(name){return name.toLowerCase().replace(/\s/g,'-')}
+  function usedCost(used){
+    let total=0;
+    const names=new Map();
+    RECIPES.forEach(r=>r.ingredients.forEach(([name])=>names.set(keyForIngredient(name),name)));
+    used.forEach(k=>{if(!state.checked.has(k)&&names.has(k))total+=estimateItemPrice(names.get(k))});
+    return total;
+  }
+  function candidateMarginal(r,used){
+    let total=0;
+    for(const [name] of r.ingredients){
+      const k=keyForIngredient(name);
+      if(!state.checked.has(k)&&!used.has(k)) total+=estimateItemPrice(name);
+    }
+    return total;
+  }
+  function addIngredients(r,used){r.ingredients.forEach(([name])=>used.add(keyForIngredient(name)))}
+  function diverseCandidates(slot,dayIndex,slotIndex,planSoFar,counts,avoidPlan){
+    let pool=RECIPES.filter(r=>r.slot===slot&&eligibleByProfile(r));
+    if(!pool.length)pool=RECIPES.filter(r=>r.slot===slot);
+    const previous=dayIndex>0?planSoFar[dayIndex-1]?.[slotIndex]:null;
+    let preferred=pool.filter(r=>r.id!==previous&&(counts.get(r.id)||0)<2);
+    if(avoidPlan?.[dayIndex]?.[slotIndex]&&preferred.some(r=>r.id!==avoidPlan[dayIndex][slotIndex])){
+      preferred=preferred.filter(r=>r.id!==avoidPlan[dayIndex][slotIndex]);
+    }
+    if(!preferred.length) preferred=pool.filter(r=>r.id!==previous&&(counts.get(r.id)||0)<3);
+    if(!preferred.length) preferred=pool.filter(r=>r.id!==previous);
+    return preferred.length?preferred:pool;
+  }
+  function buildDiverseBudgetPlan(target,avoidPlan=null){
+    const used=new Set([...state.checked]),counts=new Map(),plan=[];
+    const maxBudget=Math.max(20,Number(target||state.profile.budget||90));
+    for(let d=0;d<7;d++){
+      const day=[];
+      plan.push(day);
+      for(let si=0;si<3;si++){
+        const slot=['breakfast','lunch','dinner'][si];
+        const pool=diverseCandidates(slot,d,si,plan,counts,avoidPlan);
+        const current=usedCost(used);
+        const ranked=pool.map(r=>{
+          const marginal=candidateMarginal(r,used),repeats=counts.get(r.id)||0;
+          const profileBonus=scoreRecipe(r);
+          const oldPenalty=avoidPlan?.[d]?.[si]===r.id?15:0;
+          const overPenalty=current+marginal>maxBudget?1000+(current+marginal-maxBudget)*30:0;
+          return {r,marginal,score:marginal*9+repeats*14+oldPenalty+overPenalty-profileBonus*2};
+        }).sort((a,b)=>a.score-b.score);
+        const pick=ranked[0]?.r||pool[0];
+        day.push(pick.id);counts.set(pick.id,(counts.get(pick.id)||0)+1);addIngredients(pick,used);
+      }
+    }
+    return plan;
+  }
+  function repairConsecutiveDuplicates(plan){
+    const out=clonePlan(plan);
+    for(let si=0;si<3;si++){
+      const counts=new Map();
+      for(let d=0;d<7;d++){
+        const id=out[d][si];
+        counts.set(id,(counts.get(id)||0)+1);
+        const prev=d>0?out[d-1][si]:null;
+        if(id===prev){
+          const slot=['breakfast','lunch','dinner'][si];
+          const pool=RECIPES.filter(r=>r.slot===slot&&eligibleByProfile(r)&&r.id!==prev&&(counts.get(r.id)||0)<3);
+          if(pool.length){
+            pool.sort((a,b)=>candidateMarginal(a,new Set([...state.checked]))-candidateMarginal(b,new Set([...state.checked])));
+            out[d][si]=pool[0].id;
+            counts.set(pool[0].id,(counts.get(pool[0].id)||0)+1);
+          }
+        }
+      }
+    }
+    return out;
+  }
+  function countChanged(before,after){
+    let n=0;for(let d=0;d<7;d++)for(let s=0;s<3;s++)if(before[d]?.[s]!==after[d]?.[s])n++;return n;
+  }
+  function finalizeGeneratedPlan(plan,previous=null){
+    const target=Number(state.profile.budget||90);
+    let candidate=repairConsecutiveDuplicates(plan);
+    if(estimatePlanGroceryCost(candidate)>target) candidate=buildDiverseBudgetPlan(target,previous||plan);
+    candidate=repairConsecutiveDuplicates(candidate);
+    if(previous&&samePlan(candidate,previous)) candidate=buildDiverseBudgetPlan(target,previous);
+    return candidate;
+  }
+
+  // Replace budget builder with diversity-aware version so budget repair never creates streaks.
+  buildBudgetPlan=function(target){return buildDiverseBudgetPlan(target,state.plan)};
+  enforceBudgetPlan=function(plan){
+    const target=Math.max(20,Number(state.profile.budget||90));
+    const clean=repairConsecutiveDuplicates(plan);
+    if(estimatePlanGroceryCost(clean)<=target)return clean;
+    const rebuilt=buildDiverseBudgetPlan(target,clean);
+    return estimatePlanGroceryCost(rebuilt)<=estimatePlanGroceryCost(clean)?rebuilt:clean;
+  };
+
+  // Final, authoritative Recomposer handler.
+  $('#regenerateSelected').onclick=()=>{
+    const before=clonePlan(state.plan);
+    const selected=[...state.selected];
+    if(!selected.length){
+      state.plan=buildDiverseBudgetPlan(Number(state.profile.budget||90),before);
+    }else{
+      const working=clonePlan(state.plan),counts=new Map();
+      working.flat().forEach(id=>counts.set(id,(counts.get(id)||0)+1));
+      for(const key of selected){
+        const [d,si]=key.split('-').map(Number),slot=['breakfast','lunch','dinner'][si];
+        const prev=d>0?working[d-1][si]:null,next=d<6?working[d+1][si]:null,current=working[d][si];
+        let pool=RECIPES.filter(r=>r.slot===slot&&eligibleByProfile(r)&&r.id!==current&&r.id!==prev&&r.id!==next&&(counts.get(r.id)||0)<3);
+        if(!pool.length)pool=RECIPES.filter(r=>r.slot===slot&&eligibleByProfile(r)&&r.id!==current&&r.id!==prev&&r.id!==next);
+        if(!pool.length)pool=RECIPES.filter(r=>r.slot===slot&&r.id!==current);
+        pool.sort((a,b)=>scoreRecipe(b)-scoreRecipe(a));
+        if(pool[0]){counts.set(current,Math.max(0,(counts.get(current)||1)-1));working[d][si]=pool[0].id;counts.set(pool[0].id,(counts.get(pool[0].id)||0)+1)}
+      }
+      state.plan=finalizeGeneratedPlan(working,before);
+    }
+    state.selected.clear();savePlan();renderWeek();
+    const changed=countChanged(before,state.plan);
+    toast(txt(`${changed} repas recomposé${changed>1?'s':''} · aucune répétition consécutive.`,`${changed} meal${changed===1?'':'s'} regenerated · no consecutive duplicates.`));
+  };
+
+  function persistCanonicalStore(){
+    const form=$('#profileForm');if(!form)return;
+    const fd=new FormData(form);
+    state.profile.store=String(fd.get('store')||state.profile.store||'Whole Foods Market');
+    state.profile.location=String(fd.get('location')||state.profile.location||'');
+    state.profile.budget=Number(fd.get('budget')||state.profile.budget||90);
+    state.profile.goal=String(fd.get('goal')||state.profile.goal||'balanced');
+    state.profile.diet=String(fd.get('diet')||state.profile.diet||'balanced');
+    state.profile.servings=Number(fd.get('servings')||state.profile.servings||1);
+    saveProfileV3();
+    updateStoreUI();
+    const wf=$('#wizardForm');
+    if(wf){
+      if(wf.elements.weekStore&&[...wf.elements.weekStore.options].some(o=>o.value===state.profile.store||o.text===state.profile.store))wf.elements.weekStore.value=state.profile.store;
+      if(wf.elements.weekLocation)wf.elements.weekLocation.value=state.profile.location;
+      if(wf.elements.weekBudget)wf.elements.weekBudget.value=state.profile.budget;
+    }
+    renderShopping();
+  }
+  $('#profileStore')?.addEventListener('change',()=>setTimeout(persistCanonicalStore,0));
+  $('#profileLocation')?.addEventListener('change',()=>setTimeout(persistCanonicalStore,0));
+  $('#profileForm [name="budget"]')?.addEventListener('change',()=>setTimeout(persistCanonicalStore,0));
+  $('#saveProfile')?.addEventListener('click',()=>setTimeout(()=>{persistCanonicalStore();enforceCurrentBudget(true);toast(txt(`Profil enregistré · courses chez ${state.profile.store}.`,`Profile saved · shopping at ${state.profile.store}.`))},10));
+
+  // Keep the weekly wizard synchronized with the saved shopping profile.
+  const wizardStore=$('#wizardForm [name="weekStore"]');
+  const wizardLocation=$('#wizardForm [name="weekLocation"]');
+  const wizardBudget=$('#wizardForm [name="weekBudget"]');
+  function syncWizardFromProfile(){
+    if(wizardStore){
+      const has=[...wizardStore.options].some(o=>o.value===state.profile.store||o.text===state.profile.store);
+      if(!has){const o=document.createElement('option');o.value=state.profile.store;o.textContent=state.profile.store;wizardStore.appendChild(o)}
+      wizardStore.value=state.profile.store;
+    }
+    if(wizardLocation)wizardLocation.value=state.profile.location||'';
+    if(wizardBudget)wizardBudget.value=state.profile.budget||90;
+  }
+  $('#weekSettings')?.addEventListener('click',syncWizardFromProfile);
+  $('#generateWeek')?.addEventListener('click',syncWizardFromProfile);
+
+  // Replace the final wizard action so its store/location/budget are actually saved.
+  $('#wizardNext').onclick=async()=>{
+    if(wizardStep<3){wizardStep++;syncWizard();return}
+    const fd=new FormData($('#wizardForm'));
+    state.profile.store=String(fd.get('weekStore')||state.profile.store||'Whole Foods Market');
+    state.profile.location=String(fd.get('weekLocation')||state.profile.location||'');
+    state.profile.budget=Number(fd.get('weekBudget')||state.profile.budget||90);
+    saveProfileV3();updateStoreUI();
+    const prompt=String(fd.get('prompt')||''),goal=String(fd.get('weekGoal')||'high-protein');
+    closeModal($('#wizardModal'));toast(txt('Le chef recompose votre semaine…','The chef is rebuilding your week…'));
+    const before=clonePlan(state.plan);
+    let plan=null;
+    try{
+      const r=await fetch('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({profile:state.profile,brief:{goal,prompt,budget:state.profile.budget,store:state.profile.store,location:state.profile.location,avoidPlan:before,noConsecutiveDuplicates:true}})});
+      if(r.ok){const d=await r.json();if(Array.isArray(d.plan)&&d.plan.length===7)plan=d.plan}
+    }catch{}
+    state.plan=finalizeGeneratedPlan(plan||buildDiverseBudgetPlan(state.profile.budget,before),before);
+    savePlan();renderWeek();persistCanonicalStore();
+    const changed=countChanged(before,state.plan);
+    toast(txt(`Semaine prête · ${changed} repas changés · budget ${money(state.profile.budget)}.`,`Week ready · ${changed} meals changed · ${money(state.profile.budget)} budget.`));
+  };
+
+  // Initial normalization: saved plan and shopping location are repaired once on load.
+  state.plan=finalizeGeneratedPlan(state.plan,null);savePlan();persistCanonicalStore();renderWeek();
+})();
