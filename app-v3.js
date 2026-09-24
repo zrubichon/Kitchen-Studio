@@ -658,6 +658,13 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
 
 // V7 — removable shopping items + durable store key
 (function(){
+  const saveProfileBaseV7=saveProfileV3;
+  saveProfileV3=function(){
+    localStorage.setItem('miseStore',state.profile.store||'Whole Foods Market');
+    localStorage.setItem('miseLocation',state.profile.location||'');
+    localStorage.setItem('miseBudget',String(state.profile.budget||90));
+    localStorage.setItem('miseProfile',JSON.stringify(state.profile));
+  };
   state.removedShopping=new Set(JSON.parse(localStorage.getItem('miseRemovedShopping')||'[]'));
   const aggregateShoppingBeforeRemoval=aggregateShopping;
   aggregateShopping=function(){
