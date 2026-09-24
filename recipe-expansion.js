@@ -177,6 +177,13 @@
     for(let i=0;i<needed;i++)RECIPES.push(buildRecipe(category,i,cfg));
   });
 
+  // Sweet-only occasion safety pass: savory recipes can never leak into Fêtes & occasions.
+  RECIPES.forEach(r=>{
+    const tags=new Set(r.tags||[]);
+    const sweet=tags.has('dessert')||tags.has('sweet')||tags.has('bakery')||/gâteau|gateau|cake|cookie|tarte|tart|brownie|cupcake|cheesecake|mousse|tiramisu|panna cotta|macaron|madeleine|cinnamon roll|banana bread|crumble/i.test(r.name||'');
+    if(tags.has('occasion')&&!sweet)r.tags=(r.tags||[]).filter(t=>t!=='occasion');
+  });
+
   // Semantic image assignment for every recipe
   function semanticRecipeImage(r){
     const names=(r.ingredients||[]).map(i=>i[0]).slice(0,6).join('|');
