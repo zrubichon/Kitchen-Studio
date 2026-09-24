@@ -5,11 +5,14 @@ Prototype fonctionnel d'une application de planification de repas personnalisée
 ## Ce qui fonctionne dans cette V1
 - Planning hebdomadaire 7 jours × petit-déjeuner / déjeuner / dîner.
 - Questionnaire hebdomadaire et brief libre en langage naturel.
+- Choix de langue **français / anglais**, mémorisé pour les prochaines visites.
+- Choix des mesures **grammes / mL** ou **cups / oz**, appliqué aux fiches recettes et à la liste de courses.
+- Section **Idées recettes** indépendante du planning de la semaine.
 - Générateur local de secours qui adapte la sélection de recettes aux critères clés.
 - Point d'extension `/api/generate-plan` pour connecter une IA via Vercel AI Gateway (`AI_GATEWAY_API_KEY` + `AI_MODEL`).
 - Fiches recettes avec ingrédients, étapes, macros et adaptation par appareil de cuisson.
-- Bibliothèque appareil par marque/modèle avec sources constructeur.
-- Liste de courses agrégée et persistante.
+- Bibliothèque étendue à **14 profils d'appareils** : Air Fryers identifiables par photo, four, plaques, micro-ondes, rice cooker, multicuiseur, blender, slow cooker et grill.
+- Liste de courses agrégée et persistante avec **estimation de prix par produit et estimation du panier total**, recalculées selon les repas planifiés et les produits déjà disponibles.
 - Endpoint `/api/instacart-shopping-list` pour créer une liste achetable via Instacart Developer Platform (`INSTACART_API_KEY`).
 - Profil permanent (régime, portions, budget, magasin, localisation) sauvegardé en localStorage.
 
