@@ -22,7 +22,7 @@ const fallbackAppliances=[
 {id:"ninja-foodi-xl-dt200",brand:"Ninja",model:"Foodi® XL Pro Air Oven DT200 Series",type:"Air Oven",favorite:false,source:"https://support.ninjakitchen.com/hc/en-us/article_attachments/5061879996316",description:"Four multifonction avec Air Fry, Air Roast, Whole Roast et plus.",modes:[{name:"Air Fry",preset:"Selon aliment",goodFor:"Wings, frites, nuggets"},{name:"Air Roast",preset:"Selon aliment",goodFor:"Plaques complètes"},{name:"Whole Roast",preset:"Selon aliment",goodFor:"Grosses pièces"},{name:"Bake",preset:"Selon recette",goodFor:"Cuisson type four"},{name:"Pizza",preset:"Selon pizza",goodFor:"Pizzas"},{name:"Reheat",preset:"Selon aliment",goodFor:"Réchauffer"}]}
 ];
 let appliances=fallbackAppliances;
-fetch("data/appliances.json").then(r=>r.ok?r.json():Promise.reject()).then(x=>{appliances=x;renderAppliances();fillApplianceSelect()}).catch(()=>{});
+fetch("data/appliances.json").then(r=>r.ok?r.json():Promise.reject()).then(x=>{const saved=JSON.parse(localStorage.getItem("miseCustomAppliance")||"null");appliances=saved?[saved,...x.filter(a=>a.id!==saved.id)]:x;renderAppliances();fillApplianceSelect()}).catch(()=>{});
 const defaultPlan=[
 ["overnight-oats","chicken-bowl","sheet-pan"],["egg-toast","turkey-wrap","fried-rice"],["protein-pancakes","chicken-bowl","salmon-rice"],["overnight-oats","greek-salad","chicken-pasta"],["protein-pancakes","turkey-wrap","salmon-rice"],["egg-toast","tofu-bowl","sheet-pan"],["overnight-oats","greek-salad","chicken-pasta"]
 ];
