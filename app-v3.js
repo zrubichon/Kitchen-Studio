@@ -337,9 +337,9 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
 
   // --- Adaptive cooking engine ---
   function cleanText(x){return String(x||'').replace(/[–—]/g,'-')}
-  function parseAirMethod(r){
+  function parseAirMethod(r,applianceOverride=null){
     let method=null;
-    const active=appliances.find(a=>a.id===state.profile.applianceId)||appliances.find(a=>a.favorite);
+    const active=applianceOverride||appliances.find(a=>a.id===state.profile.applianceId)||appliances.find(a=>a.favorite);
     if(active?.brand==='COSORI'&&r.methods?.cosori)method=r.methods.cosori;
     else if(active?.brand==='Instant Pot'&&r.methods?.instant)method=r.methods.instant;
     else if(active?.brand==='Ninja'&&r.methods?.ninja)method=r.methods.ninja;
@@ -371,7 +371,7 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
   function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
   function timeText(min,max){if(!min)return 'Selon cuisson';return min===max?`${min} min`:`${min}–${max} min`}
   function airFryerGuide(r,a){
-    const base=parseAirMethod(r);
+    const base=parseAirMethod(r,a);
     if(!base)return {compatible:false,device:`${a.brand} ${a.model}`,note:txt('Cette recette est mieux adaptée aux plaques, au four ou à un autre appareil.','This recipe is better suited to stovetop, oven, or another appliance.')};
     const factor=Number(a.timeFactor||1);
     const min=base.min?Math.max(1,Math.round(base.min*factor)):null;
