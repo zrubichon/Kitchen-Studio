@@ -1,58 +1,502 @@
 [
   {
-    "id":"cosori-turboblaze-6",
-    "brand":"COSORI",
-    "model":"TurboBlaze™ 6.0-Quart Air Fryer",
-    "type":"Air Fryer",
-    "favorite":true,
-    "source":"https://cosori.com/products/turboblaze%E2%84%A2-6-0-quart-air-fryer-cream",
-    "description":"10 fonctions au total (dont Preheat) ; 9 modes de cuisson principaux et jusqu’à 5 vitesses de ventilation selon le mode.",
-    "modes":[
-      {"name":"Air Fry","preset":"385°F · 10 min","goodFor":"Frites, poulet, poisson, légumes, aliments panés"},
-      {"name":"Roast","preset":"425°F · 12 min","goodFor":"Poulet entier, bœuf rôti, porc, légumes racines"},
-      {"name":"Bake","preset":"330°F · 20 min","goodFor":"Pain, gâteaux, cookies, tartes"},
-      {"name":"Broil","preset":"450°F · 5 min","goodFor":"Steak, côtes de porc, crevettes, poisson, gratins"},
-      {"name":"Dehydrate","preset":"135°F · 6 h","goodFor":"Fruits séchés, jerky, snacks"},
-      {"name":"Frozen","preset":"Variable","goodFor":"Frites surgelées, tenders, waffles, fish sticks"},
-      {"name":"Proof","preset":"Basse température","goodFor":"Pâtes levées"},
-      {"name":"Reheat","preset":"Variable","goodFor":"Restes"},
-      {"name":"Preheat","preset":"Selon mode","goodFor":"Préchauffage avant cuisson"},{"name":"Keep Warm","preset":"170°F · 30 min","goodFor":"Maintien au chaud"}
+    "id": "cosori-turboblaze-6",
+    "brand": "COSORI",
+    "model": "TurboBlaze™ 6.0-Quart Smart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": true,
+    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/825dc676-eb16-459c-bf8f-5b167fcf4fc2.png%3BmaxHeight%3D1920%3BmaxWidth%3D900?format=webp",
+    "source": "https://cosori.com/products/turboblaze%E2%84%A2-6-0-quart-air-fryer-cream",
+    "description": "6.2 L, 90–450°F et 10 fonctions, avec contrôle précis de la ventilation selon le mode.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "385°F · 10 min",
+        "goodFor": "Frites, poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "425°F · 12 min",
+        "goodFor": "Poulet entier, bœuf rôti, porc, légumes racines"
+      },
+      {
+        "name": "Bake",
+        "preset": "330°F · 20 min",
+        "goodFor": "Pain, gâteaux, cookies, tartes"
+      },
+      {
+        "name": "Broil",
+        "preset": "450°F · 5 min",
+        "goodFor": "Steak, crevettes, poisson, gratins"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "135°F · 6 h",
+        "goodFor": "Fruits séchés, jerky, snacks"
+      },
+      {
+        "name": "Frozen",
+        "preset": "390°F · 14 min",
+        "goodFor": "Frites, tenders et snacks surgelés"
+      },
+      {
+        "name": "Proof",
+        "preset": "90°F · 1 h",
+        "goodFor": "Pâtes levées"
+      },
+      {
+        "name": "Preheat",
+        "preset": "Selon mode",
+        "goodFor": "Préchauffage"
+      },
+      {
+        "name": "Reheat",
+        "preset": "390°F · 5 min",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Keep Warm",
+        "preset": "170°F · 30 min",
+        "goodFor": "Maintien au chaud"
+      }
     ]
   },
   {
-    "id":"instant-vortex-plus-6",
-    "brand":"Instant Pot",
-    "model":"Vortex® Plus 6QT ClearCook",
-    "type":"Air Fryer",
-    "favorite":false,
-    "source":"https://instantpot.com/products/instant-pot-vortex-plus-6qt-clearcook-air-fryer",
-    "description":"6 fonctions : Air Fry, Roast, Broil, Bake, Reheat et Dehydrate.",
-    "modes":[
-      {"name":"Air Fry","preset":"95–400°F","goodFor":"Cuisson croustillante avec peu d’huile"},
-      {"name":"Roast","preset":"95–400°F","goodFor":"Viandes et légumes rôtis"},
-      {"name":"Broil","preset":"95–400°F","goodFor":"Dorer et saisir en surface"},
-      {"name":"Bake","preset":"95–400°F","goodFor":"Pâtisserie et cuisson type four"},
-      {"name":"Reheat","preset":"95–400°F","goodFor":"Réchauffer les restes"},
-      {"name":"Dehydrate","preset":"95–400°F","goodFor":"Déshydratation à basse température"}
+    "id": "instant-vortex-plus-6",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus 6QT ClearCook",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://d.dlnws.com/64599/1782228213-71gbagobpsl-ac_sl1500.jpg?h=1024&w=926",
+    "source": "https://instantpot.com/products/instant-pot-vortex-plus-6qt-clearcook-air-fryer",
+    "description": "6QT ClearCook avec 6 fonctions et fenêtre de contrôle de cuisson.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "95–400°F",
+        "goodFor": "Cuisson croustillante avec peu d’huile"
+      },
+      {
+        "name": "Roast",
+        "preset": "95–400°F",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Broil",
+        "preset": "95–400°F",
+        "goodFor": "Dorer et saisir en surface"
+      },
+      {
+        "name": "Bake",
+        "preset": "95–400°F",
+        "goodFor": "Pâtisserie et cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "95–400°F",
+        "goodFor": "Réchauffer les restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "95–400°F",
+        "goodFor": "Déshydratation"
+      }
     ]
   },
   {
-    "id":"ninja-foodi-xl-dt200",
-    "brand":"Ninja",
-    "model":"Foodi® XL Pro Air Oven DT200 Series",
-    "type":"Air Oven",
-    "favorite":false,
-    "source":"https://support.ninjakitchen.com/hc/en-us/article_attachments/5061879996316",
-    "description":"Four multifonction avec Air Fry, Air Roast, Whole Roast, Broil, Bake, Pizza, Toast, Bagel, Reheat et Dehydrate.",
-    "modes":[
-      {"name":"Air Fry","preset":"Selon aliment","goodFor":"Wings, frites, nuggets"},
-      {"name":"Air Roast","preset":"Selon aliment","goodFor":"Plaques complètes, protéines épaisses, légumes"},
-      {"name":"Whole Roast","preset":"Selon aliment","goodFor":"Grosses pièces et accompagnements"},
-      {"name":"Broil","preset":"Selon aliment","goodFor":"Viandes, poisson, gratins"},
-      {"name":"Bake","preset":"Selon recette","goodFor":"Cuisson type four"},
-      {"name":"Pizza","preset":"Selon pizza","goodFor":"Pizzas maison ou surgelées"},
-      {"name":"Reheat","preset":"Selon aliment","goodFor":"Réchauffer sans surcuire"},
-      {"name":"Dehydrate","preset":"Selon aliment","goodFor":"Déshydratation"}
+    "id": "ninja-dz550",
+    "brand": "Ninja",
+    "model": "Foodi® 6-in-1 10-qt XL 2-Basket DZ550",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://c.dlnws.com/image/upload/f_auto%2Ct_maximum%2Cq_auto/content/satkdj1ptghpxghfyyx5.jpg",
+    "source": "https://www.ninjakitchen.com/products/ninja-foodi-6-in-1-smart-10-qt.-2-basket-air-fryer-zidDZ550",
+    "description": "Deux zones de cuisson indépendantes, 10QT, pour cuire deux préparations en parallèle.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon aliment",
+        "goodFor": "Frites, poulet, légumes"
+      },
+      {
+        "name": "Air Broil",
+        "preset": "Selon aliment",
+        "goodFor": "Dorer rapidement"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon aliment",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon recette",
+        "goodFor": "Pâtisserie et cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Selon aliment",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Basse température",
+        "goodFor": "Fruits et snacks"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9650",
+    "brand": "Philips",
+    "model": "Premium Airfryer XXL HD9650",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://www.dateks.lv/images/pic/2400/2400/000/892.jpg",
+    "source": "https://www.usa.philips.com/c-p/HD9650_90/premium-airfryer-xxl",
+    "description": "Airfryer XXL avec technologie Rapid Air, format familial et mode maintien au chaud.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon aliment",
+        "goodFor": "Frites, poulet, snacks"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon recette",
+        "goodFor": "Gâteaux et pâtisseries"
+      },
+      {
+        "name": "Grill",
+        "preset": "Selon aliment",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon aliment",
+        "goodFor": "Poulet et légumes"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Selon aliment",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Keep Warm",
+        "preset": "Jusqu’à 30 min",
+        "goodFor": "Maintien au chaud"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa70",
+    "brand": "Cuisinart",
+    "model": "Air Fryer Toaster Oven with Grill TOA-70NAS",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://sc-images.jcpenney.com/JCPenney/DP0901202515065830M?height=550&impolicy=product_detail&width=550",
+    "source": "https://www.cuisinart.com/air-fryer-toaster-oven-with-grill/TOA-70NAS.html",
+    "description": "Air fryer toaster oven 8 fonctions avec grill/griddle réversible et température jusqu’à 450°F.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Jusqu’à 450°F",
+        "goodFor": "Poulet, saumon, légumes, frites"
+      },
+      {
+        "name": "Convection Bake",
+        "preset": "Selon recette",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Convection Broil",
+        "preset": "Selon aliment",
+        "goodFor": "Dorer"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon recette",
+        "goodFor": "Pâtisserie"
+      },
+      {
+        "name": "Broil",
+        "preset": "Selon aliment",
+        "goodFor": "Gratins et protéines"
+      },
+      {
+        "name": "Warm",
+        "preset": "Basse température",
+        "goodFor": "Maintien au chaud"
+      },
+      {
+        "name": "Toast",
+        "preset": "Selon coloration",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Grill",
+        "preset": "Selon aliment",
+        "goodFor": "Steaks et légumes"
+      }
+    ]
+  },
+  {
+    "id": "breville-bov900",
+    "brand": "Breville",
+    "model": "Smart Oven® Air Fryer Pro BOV900",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://cdn-tp2.mozu.com/28945-m4/cms/files/L8998023.jpg",
+    "source": "https://www.breville.com/en-us/product/bov900",
+    "description": "Four de comptoir avec 13 fonctions intelligentes, Air Fry, déshydratation et super convection.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon aliment",
+        "goodFor": "Frites, wings et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon recette",
+        "goodFor": "Pâtisserie et plats au four"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon aliment",
+        "goodFor": "Grosses pièces"
+      },
+      {
+        "name": "Broil",
+        "preset": "Selon aliment",
+        "goodFor": "Dorer et gratiner"
+      },
+      {
+        "name": "Pizza",
+        "preset": "Selon taille",
+        "goodFor": "Pizza"
+      },
+      {
+        "name": "Proof",
+        "preset": "Basse température",
+        "goodFor": "Pâtes levées"
+      },
+      {
+        "name": "Slow Cook",
+        "preset": "Selon recette",
+        "goodFor": "Cuisson lente"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Basse température",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "generic-oven",
+    "brand": "Profil cuisine",
+    "model": "Four traditionnel / convection",
+    "type": "Four",
+    "favorite": false,
+    "source": "",
+    "description": "Profil générique pour adapter températures, préchauffage, convection et grill.",
+    "modes": [
+      {
+        "name": "Bake",
+        "preset": "Selon recette",
+        "goodFor": "Cuisson classique"
+      },
+      {
+        "name": "Convection",
+        "preset": "-15 à -20°C vs statique",
+        "goodFor": "Cuisson plus homogène"
+      },
+      {
+        "name": "Broil / Grill",
+        "preset": "Haute température",
+        "goodFor": "Gratiner et saisir"
+      }
+    ]
+  },
+  {
+    "id": "generic-stovetop",
+    "brand": "Profil cuisine",
+    "model": "Plaques induction / gaz / électriques",
+    "type": "Plaques",
+    "favorite": false,
+    "source": "",
+    "description": "Profil pour poêle, casserole, wok et gestion de l’intensité du feu.",
+    "modes": [
+      {
+        "name": "Low",
+        "preset": "Feu doux",
+        "goodFor": "Sauces et mijotage"
+      },
+      {
+        "name": "Medium",
+        "preset": "Feu moyen",
+        "goodFor": "Cuisson courante"
+      },
+      {
+        "name": "High",
+        "preset": "Feu vif",
+        "goodFor": "Saisir et wok"
+      }
+    ]
+  },
+  {
+    "id": "generic-microwave",
+    "brand": "Profil cuisine",
+    "model": "Micro-ondes",
+    "type": "Micro-ondes",
+    "favorite": false,
+    "source": "",
+    "description": "Pour réchauffer, décongeler et cuire rapidement selon la puissance de votre appareil.",
+    "modes": [
+      {
+        "name": "Reheat",
+        "preset": "60–100% puissance",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Defrost",
+        "preset": "Selon poids",
+        "goodFor": "Décongélation"
+      },
+      {
+        "name": "Steam",
+        "preset": "Selon aliment",
+        "goodFor": "Légumes avec récipient adapté"
+      }
+    ]
+  },
+  {
+    "id": "generic-rice-cooker",
+    "brand": "Profil cuisine",
+    "model": "Rice cooker",
+    "type": "Rice Cooker",
+    "favorite": false,
+    "source": "",
+    "description": "Pour riz blanc, complet, quinoa et maintien au chaud.",
+    "modes": [
+      {
+        "name": "White Rice",
+        "preset": "Cycle auto",
+        "goodFor": "Riz blanc"
+      },
+      {
+        "name": "Brown Rice",
+        "preset": "Cycle long",
+        "goodFor": "Riz complet"
+      },
+      {
+        "name": "Keep Warm",
+        "preset": "Auto",
+        "goodFor": "Maintien au chaud"
+      }
+    ]
+  },
+  {
+    "id": "generic-multicooker",
+    "brand": "Profil cuisine",
+    "model": "Instant Pot / multicuiseur pression",
+    "type": "Multicuiseur",
+    "favorite": false,
+    "source": "",
+    "description": "Profil pression pour soupes, grains, légumineuses, cuisson lente et sauté.",
+    "modes": [
+      {
+        "name": "Pressure Cook",
+        "preset": "Selon recette",
+        "goodFor": "Cuisson rapide sous pression"
+      },
+      {
+        "name": "Sauté",
+        "preset": "Low/Med/High",
+        "goodFor": "Saisir avant cuisson"
+      },
+      {
+        "name": "Slow Cook",
+        "preset": "Selon recette",
+        "goodFor": "Mijotage"
+      },
+      {
+        "name": "Steam",
+        "preset": "Selon aliment",
+        "goodFor": "Légumes et protéines"
+      }
+    ]
+  },
+  {
+    "id": "generic-blender",
+    "brand": "Profil cuisine",
+    "model": "Blender haute puissance",
+    "type": "Blender",
+    "favorite": false,
+    "source": "",
+    "description": "Pour smoothies, sauces, soupes mixées, pesto et pâtes liquides.",
+    "modes": [
+      {
+        "name": "Blend",
+        "preset": "30–60 sec",
+        "goodFor": "Smoothies et sauces"
+      },
+      {
+        "name": "Pulse",
+        "preset": "Impulsions",
+        "goodFor": "Textures grossières"
+      },
+      {
+        "name": "Soup",
+        "preset": "Selon appareil",
+        "goodFor": "Soupe mixée"
+      }
+    ]
+  },
+  {
+    "id": "generic-slow-cooker",
+    "brand": "Profil cuisine",
+    "model": "Slow cooker / mijoteuse",
+    "type": "Slow Cooker",
+    "favorite": false,
+    "source": "",
+    "description": "Pour plats mijotés, chili, viandes effilochées et meal prep longue durée.",
+    "modes": [
+      {
+        "name": "Low",
+        "preset": "6–8 h",
+        "goodFor": "Cuisson lente"
+      },
+      {
+        "name": "High",
+        "preset": "3–4 h",
+        "goodFor": "Cuisson plus rapide"
+      },
+      {
+        "name": "Warm",
+        "preset": "Maintien",
+        "goodFor": "Service"
+      }
+    ]
+  },
+  {
+    "id": "generic-grill",
+    "brand": "Profil cuisine",
+    "model": "Grill / presse / plancha",
+    "type": "Grill",
+    "favorite": false,
+    "source": "",
+    "description": "Pour saisir viandes, poissons, légumes et sandwiches pressés.",
+    "modes": [
+      {
+        "name": "Grill",
+        "preset": "Moyen à fort",
+        "goodFor": "Protéines et légumes"
+      },
+      {
+        "name": "Press",
+        "preset": "Selon épaisseur",
+        "goodFor": "Paninis et sandwiches"
+      }
     ]
   }
 ]
