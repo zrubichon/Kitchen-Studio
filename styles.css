@@ -29,3 +29,33 @@
 
 /* V4 recipe taxonomy and hard budget */
 .category-group{margin:14px 0 18px}.category-group-title{font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:800;margin:0 0 8px 3px}.recipe-category-groups{margin-bottom:10px}.budget-insight{min-width:150px}.budget-insight strong{display:block}.budget-insight em{display:block;font-style:normal;font-size:8px;color:#54704f;margin-top:3px}.budget-insight em.over{color:#a53f32;font-weight:800}.budget-mini-progress{height:5px;background:#e8ddd0;border-radius:99px;overflow:hidden;margin-top:5px}.budget-mini-progress span{display:block;height:100%;width:0;background:#627b59;border-radius:99px;transition:width .25s ease}.budget-mini-progress span.over{background:#ad493d}.insight-strip .budget-insight{background:#fff9f3;border:1px solid #ead5c8;border-radius:10px;padding:8px 10px;margin:-4px 0}
+
+/* V5 appliance search + adaptive cooking guide */
+.appliance-search-toolbar{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:10px;align-items:center;margin:0 0 14px}
+.appliance-search{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px}
+.appliance-search span{font-size:18px;color:var(--muted)}
+.appliance-search input{width:100%;border:0;outline:0;background:transparent;font:inherit;color:var(--ink)}
+#applianceBrandFilter{border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 12px;color:var(--ink);font:700 11px var(--sans)}
+.appliance-device-placeholder{height:200px;margin:-18px -18px 15px;border-radius:14px 14px 0 0;background:linear-gradient(145deg,#fff,#f3ece3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
+.appliance-device-placeholder>span{font-size:46px;margin-bottom:8px;color:var(--wine)}
+.appliance-device-placeholder strong{font:24px/1 var(--serif);max-width:90%}
+.appliance-device-placeholder small{margin-top:7px;color:var(--muted);font-weight:800}
+.appliance-spec-line{display:flex;justify-content:space-between;gap:8px;min-height:19px;margin-top:9px;font-size:9px;color:var(--muted);font-weight:700}
+.appliance-photo-wrap{height:210px!important;background:#fff!important;padding:16px!important;display:grid!important;place-items:center!important}
+.appliance-photo{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;background:#fff!important}
+.cook-launch{margin:14px 0 18px}.cook-launch small{display:block;text-align:center;color:var(--muted);font-size:9px;margin-top:7px}
+.cook-guide-panel{border:1px solid #dccabd;border-radius:15px;background:#fffaf4;padding:18px;margin:0 0 22px}
+.cook-guide-panel[hidden]{display:none}
+.cook-guide-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.cook-guide-head h3{font:28px/1 var(--serif);margin:5px 0 0}
+.compatibility-badge{display:inline-flex;align-items:center;border-radius:999px;background:#e4efe2;color:#42613d;padding:7px 10px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+.compatibility-badge.not-compatible{background:#f2dfdc;color:#9b382e}
+.cook-method-switch{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0}
+.cook-method{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;color:var(--ink);font:800 10px var(--sans);cursor:pointer}
+.cook-method.active,.cook-method:hover{background:var(--wine);border-color:var(--wine);color:#fff}
+.cook-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0 14px}
+.cook-guide-grid>div{border:1px solid #e7d9ca;background:#fff;border-radius:10px;padding:10px;min-height:66px}
+.cook-guide-grid small,.cook-guide-grid strong{display:block}.cook-guide-grid small{font-size:8px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px}.cook-guide-grid strong{font-size:11px;line-height:1.35}
+.cook-guide-note{border-left:3px solid var(--wine);background:#f4e9df;padding:10px 12px;border-radius:0 8px 8px 0;color:#55473d;font-size:10px;line-height:1.45;margin-bottom:15px}
+.cook-guide-note:empty{display:none}.cook-guide-panel h4{font:20px var(--serif);margin:13px 0 7px}
+@media(max-width:820px){.appliance-search-toolbar{grid-template-columns:1fr}.cook-guide-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.cook-guide-grid{grid-template-columns:1fr}.appliance-device-placeholder,.appliance-photo-wrap{height:235px!important}}
