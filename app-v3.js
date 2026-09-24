@@ -212,3 +212,236 @@ navigate=function(page){baseNavigate(page);if(page==='account')renderAccount();i
 $$('[data-page]').forEach(b=>{b.onclick=()=>navigate(b.dataset.page)});
 
 renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforceCurrentBudget(false);
+
+
+// V5 — verified appliance cooking engine + category intelligence
+(function(){
+  // Clean incorrect legacy categorization first.
+  const burger=RECIPES.find(r=>r.id==='beef-burger');
+  if(burger) burger.tags=(burger.tags||[]).filter(t=>t!=='occasion');
+
+  function recipeTextBlob(r){
+    return [r.name,...(r.tags||[]),...(r.ingredients||[]).map(i=>i[0])].join(' ').toLowerCase();
+  }
+  function inferredCategories(r){
+    const out=new Set(r.tags||[]),blob=recipeTextBlob(r),name=(r.name||'').toLowerCase();
+    const has=(re)=>re.test(blob);
+    if(has(/saumon|cabillaud|crevette|thon|poisson/)) out.add('fish');
+    if(has(/poulet|chicken|dinde/)){out.add('chicken');out.add('meat')}
+    if(has(/bœuf|boeuf|beef|steak|burger/)){out.add('beef');out.add('meat')}
+    if(has(/porc|pork|jambon/)){out.add('pork');out.add('meat')}
+    if(has(/pâtes|pasta|lasagn|nouilles/)) out.add('pasta');
+    if(/bowl/.test(name)) out.add('bowl');
+    if(/salade|salad/.test(name)) out.add('salad');
+    if(/soupe|pho|soup/.test(name)) out.add('soup');
+    if(/smoothie/.test(name)) out.add('smoothie');
+    if(/latte|boisson|chocolat chaud|smoothie/.test(name)) out.add('drink');
+    if(r.slot==='breakfast') out.add('breakfast');
+    if((r.tags||[]).includes('high-protein') || r.protein>=30) out.add('protein');
+    if((r.tags||[]).includes('vegan')){out.add('vegan');out.add('vegetarian')}
+    if((r.tags||[]).includes('vegetarian')) out.add('vegetarian');
+    if(out.has('fish')&&!out.has('meat')) out.add('pescatarian');
+
+    // "Fêtes & occasions" is deliberately curated: normal burgers/tacos/etc do not qualify.
+    const explicitSpecial=(r.tags||[]).some(t=>['date-night','holiday','birthday'].includes(t));
+    const festiveName=/anniversaire|birthday|gâteau|gateau|cake|cookie|tarte|holiday|fête|fete|noël|noel|thanksgiving|saint.?valentin/.test(name);
+    if(!(explicitSpecial||festiveName||((r.tags||[]).includes('dessert')&&(r.tags||[]).includes('occasion')))) out.delete('occasion');
+    else out.add('occasion');
+
+    // Avoid cuisine leakage: infer cuisine from explicit curated tags only.
+    ['french','italian','mediterranean','greek','spanish','mexican','american','japanese','korean','chinese','thai','vietnamese','indian','moroccan','middle-eastern','lebanese'].forEach(c=>{
+      if(!(r.tags||[]).includes(c)) out.delete(c);
+    });
+    return out;
+  }
+  function categoryLabelSmart(r){
+    const cats=inferredCategories(r);
+    const priority=['japanese','korean','thai','chinese','vietnamese','indian','moroccan','lebanese','middle-eastern','mexican','greek','mediterranean','italian','french','american','fish','chicken','beef','pork','vegan','vegetarian','smoothie','drink','breakfast','dessert','protein'];
+    return priority.find(x=>cats.has(x))||'recipe';
+  }
+  recipeCategory=categoryLabelSmart;
+
+  const oldEligible=eligibleByProfile;
+  eligibleByProfile=function(r){
+    if(!oldEligible(r))return false;
+    const cats=inferredCategories(r);
+    if(state.profile.diet==='pescatarian' && (cats.has('chicken')||cats.has('beef')||cats.has('pork'))) return false;
+    return true;
+  };
+
+  renderRecipes=function(filter='all'){
+    window.__recipeFilter=filter;
+    const cat=window.__recipeCategory||'all';
+    let list=RECIPES.filter(eligibleByProfile);
+    if(filter==='favorite') list=list.filter(r=>state.favorites.has(r.id));
+    else if(filter!=='all') list=list.filter(r=>filter==='quick'?r.time<=20:inferredCategories(r).has(filter));
+    if(cat==='favorite') list=list.filter(r=>state.favorites.has(r.id));
+    else if(cat==='quick') list=list.filter(r=>r.time<=20);
+    else if(cat!=='all') list=list.filter(r=>inferredCategories(r).has(cat));
+    const grid=$('#recipeGrid');if(!grid)return;
+    grid.innerHTML=list.length?list.map(recipeCard).join(''):`<div class="empty-state">${isEN()?'No recipe matches these filters yet.':'Aucune recette ne correspond encore à ces filtres.'}</div>`;
+    $$('[data-recipe]').forEach(el=>el.onclick=e=>{if(e.target.closest('[data-fav],[data-add-week]'))return;openRecipe(recipeById(el.dataset.recipe),txt('Carnet de recettes','Recipe book'))});
+    $$('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();favoriteRecipe(b.dataset.fav)});
+    $$('[data-add-week]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendar(recipeById(b.dataset.addWeek))});
+  };
+  $$('[data-recipe-category]').forEach(b=>b.onclick=()=>{
+    $$('[data-recipe-category]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    window.__recipeCategory=b.dataset.recipeCategory;
+    renderRecipes(window.__recipeFilter||'all');
+  });
+
+  // Appliance catalog search / brand filter.
+  function populateBrandFilter(){
+    const sel=$('#applianceBrandFilter');if(!sel)return;
+    const current=sel.value||'all';
+    const brands=[...new Set(appliances.filter(a=>a.type==='Air Fryer').map(a=>a.brand))].sort();
+    sel.innerHTML=`<option value="all">${txt('Toutes les marques','All brands')}</option>`+brands.map(b=>`<option value="${b}">${b}</option>`).join('');
+    if([...sel.options].some(o=>o.value===current))sel.value=current;
+  }
+  function applianceMatches(a){
+    const q=($('#applianceSearchInput')?.value||'').trim().toLowerCase();
+    const brand=$('#applianceBrandFilter')?.value||'all';
+    if(brand!=='all'&&a.brand!==brand)return false;
+    if(!q)return true;
+    return [a.brand,a.model,a.modelCode,a.description].filter(Boolean).join(' ').toLowerCase().includes(q);
+  }
+  renderAppliances=function(filter=state.applianceFilter||'all'){
+    state.applianceFilter=filter;populateBrandFilter();
+    if(state.profile.applianceId) appliances.forEach(a=>a.favorite=a.id===state.profile.applianceId);
+    const fav=appliances.find(a=>a.favorite)||appliances.find(a=>a.type==='Air Fryer')||appliances[0];
+    if(fav){
+      const d=applianceDisplay(fav);
+      $('#favoriteApplianceName').textContent=`${d.brand} ${d.model}`;
+      $('#favoriteApplianceMeta').textContent=`${fav.description||''}${fav.modelCode?' · '+fav.modelCode:''}`;
+      $('#favoriteModes').innerHTML=(fav.modes||[]).slice(0,7).map(m=>`<span>${m.name}</span>`).join('');
+      $('#viewFavoriteManual').onclick=()=>openAppliance(fav.id);
+    }
+    let list=filter==='all'?appliances:appliances.filter(a=>a.type===filter);
+    list=list.filter(applianceMatches);
+    $('#applianceCount').textContent=`${list.length} ${UI[state.profile.language].appliances}`;
+    $('#applianceGrid').innerHTML=list.map(a=>{
+      const d=applianceDisplay(a);
+      const visual=a.image
+        ?`<div class="appliance-photo-wrap"><img class="appliance-photo" src="${a.image}" alt="${d.brand} ${d.model}" loading="lazy"></div>`
+        :`<div class="appliance-device-placeholder"><span>♨</span><strong>${a.brand}</strong><small>${a.modelCode||''}</small></div>`;
+      return `<article class="appliance-card" data-appliance="${a.id}">${visual}<div class="eyebrow">${a.type} · ${d.brand}</div><h3>${d.model}</h3><p>${isEN()?(APPLIANCE_DESC_EN[a.id]||a.description):a.description}</p><div class="appliance-spec-line"><span>${a.modelCode||''}</span><span>${a.tempRangeF?a.tempRangeF[0]+'–'+a.tempRangeF[1]+'°F':''}</span></div><footer><span>${(a.modes||[]).length} ${UI[state.profile.language].modes}</span><span>${UI[state.profile.language].guide}</span></footer></article>`;
+    }).join('');
+    $$('[data-appliance]').forEach(c=>c.onclick=()=>openAppliance(c.dataset.appliance));
+  };
+  $('#applianceSearchInput')?.addEventListener('input',()=>renderAppliances(state.applianceFilter||'all'));
+  $('#applianceBrandFilter')?.addEventListener('change',()=>renderAppliances(state.applianceFilter||'all'));
+  $$('[data-appliance-filter]').forEach(b=>b.onclick=()=>{
+    $$('[data-appliance-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderAppliances(b.dataset.applianceFilter);
+  });
+
+  // --- Adaptive cooking engine ---
+  function cleanText(x){return String(x||'').replace(/[–—]/g,'-')}
+  function parseAirMethod(r){
+    let method=null;
+    const active=appliances.find(a=>a.id===state.profile.applianceId)||appliances.find(a=>a.favorite);
+    if(active?.brand==='COSORI'&&r.methods?.cosori)method=r.methods.cosori;
+    else if(active?.brand==='Instant Pot'&&r.methods?.instant)method=r.methods.instant;
+    else if(active?.brand==='Ninja'&&r.methods?.ninja)method=r.methods.ninja;
+    else method=r.methods?.airfryer;
+    if(!method)return null;
+    const text=cleanText(method.join(' '));
+    if(/plaques recommandées|wok reste|sans cuisson air fryer|aucune cuisson nécessaire/i.test(text))return null;
+    const temp=Number((text.match(/(\d{3})\s*°?F/i)||[])[1]||0)||null;
+    const tm=text.match(/(\d+)\s*(?:-|à)\s*(\d+)\s*min/i)||text.match(/(\d+)\s*min/i);
+    const min=tm?Number(tm[1]):null,max=tm?Number(tm[2]||tm[1]):null;
+    return {mode:method[0]||'Air Fry',temp,min,max,raw:method[1]||''};
+  }
+  function recipeNeedsBake(r){
+    const cats=inferredCategories(r),n=(r.name||'').toLowerCase();
+    return cats.has('dessert')||/cake|gâteau|gateau|cookie|tarte|pancake|lasagn/.test(n);
+  }
+  function recipeNeedsRoast(r){
+    const n=(r.name||'').toLowerCase();return /filet mignon|whole|rôti|roti|sheet.pan|légumes rôtis|legumes rotis/.test(n);
+  }
+  function chooseSupportedMode(a,r,base){
+    const modes=(a?.modes||[]).map(m=>m.name);
+    const find=(names)=>modes.find(m=>names.some(n=>m.toLowerCase().includes(n)));
+    if(recipeNeedsBake(r))return find(['bake','cuisson'])||find(['air fry'])||base||modes[0]||'Air Fry';
+    if(recipeNeedsRoast(r))return find(['roast'])||find(['air fry'])||base||modes[0]||'Air Fry';
+    if(/toast|croque|gratin/.test((r.name||'').toLowerCase()))return find(['broil','grill','air fry'])||base||modes[0]||'Air Fry';
+    return find([String(base||'air fry').toLowerCase()])||find(['air fry','max crisp'])||base||modes[0]||'Air Fry';
+  }
+  function fToC(f){return Math.round((f-32)*5/9)}
+  function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
+  function timeText(min,max){if(!min)return 'Selon cuisson';return min===max?`${min} min`:`${min}–${max} min`}
+  function airFryerGuide(r,a){
+    const base=parseAirMethod(r);
+    if(!base)return {compatible:false,device:`${a.brand} ${a.model}`,note:txt('Cette recette est mieux adaptée aux plaques, au four ou à un autre appareil.','This recipe is better suited to stovetop, oven, or another appliance.')};
+    const factor=Number(a.timeFactor||1);
+    const min=base.min?Math.max(1,Math.round(base.min*factor)):null;
+    const max=base.max?Math.max(min||1,Math.round(base.max*factor)):min;
+    let temp=base.temp||390;
+    if(a.style==='oven')temp+=5;
+    if(a.tempRangeF)temp=clamp(temp,a.tempRangeF[0],a.tempRangeF[1]);
+    const mode=chooseSupportedMode(a,r,base.mode);
+    let container=a.container||txt('Panier + plaque croustillante','Basket + crisper plate');
+    if(recipeNeedsBake(r)&&a.style!=='oven'&&a.style!=='glass')container=txt('Petit moule silicone/métal compatible Air Fryer placé dans le panier','Small heat-safe silicone/metal pan placed in basket');
+    if(recipeNeedsBake(r)&&a.style==='oven')container=txt('Plaque ou moule sur grille centrale','Baking pan on middle rack');
+    const pre=a.preheat==='not-required'||a.preheat==='usually-not-needed'?txt('Non requis en général','Usually not required'):a.preheat==='recommended'?txt('Oui, 3–5 min','Yes, 3–5 min'):txt('Optionnel, 2–3 min pour plus de régularité','Optional, 2–3 min for consistency');
+    const dual=a.style==='dual'?txt('Utilisez une seule zone pour cette recette, ou Sync/Match si vous doublez les portions.','Use one zone for this recipe, or Sync/Match when doubling portions.'):'';
+    const dualBlaze=/dual blaze/i.test(a.model)?txt('Le double élément chauffe dessus/dessous : pas besoin de retourner systématiquement.','Dual heating cooks top and bottom, so flipping is not always necessary.'):'';
+    const steps=[...recipeText(r).steps];
+    if(!recipeNeedsBake(r)&&a.style!=='oven'&&!/dual blaze/i.test(a.model))steps.splice(Math.min(2,steps.length),0,txt('À mi-cuisson, secouez le panier ou retournez les pièces pour une coloration uniforme.','Halfway through, shake the basket or flip pieces for even browning.'));
+    return {compatible:true,device:`${a.brand} ${a.model}${a.modelCode?' ('+a.modelCode+')':''}`,mode,temp:`${temp}°F / ${fToC(temp)}°C`,time:timeText(min,max),container,preheat:pre,note:[dual,dualBlaze,a.notes].filter(Boolean).join(' '),steps};
+  }
+  function ovenGuide(r){
+    const def=r.methods?.default||['Four traditionnel',`${r.time} min`];
+    const text=cleanText(def.join(' '));
+    let temp=Number((text.match(/(\d{3})\s*°?F/i)||[])[1]||0)||null;
+    const tm=text.match(/(\d+)\s*(?:-|à)\s*(\d+)\s*min/i)||text.match(/(\d+)\s*min/i);
+    let min=tm?Number(tm[1]):null,max=tm?Number(tm[2]||tm[1]):null;
+    const air=parseAirMethod(r);
+    if(!temp&&air?.temp)temp=Math.min(475,air.temp+25);
+    if(!min&&air?.min){min=Math.round(air.min*1.25);max=Math.round((air.max||air.min)*1.25)}
+    temp=temp||400;min=min||Math.max(10,r.time);max=max||min+5;
+    return {compatible:true,device:txt('Four traditionnel','Conventional oven'),mode:txt('Chaleur tournante / Bake','Convection / Bake'),temp:`${temp}°F / ${fToC(temp)}°C`,time:timeText(min,max),container:recipeNeedsBake(r)?txt('Moule ou plat allant au four','Oven-safe pan or dish'):txt('Plaque avec papier cuisson ou plat adapté','Sheet pan or oven-safe dish'),preheat:txt('Oui, préchauffez complètement','Yes, fully preheat'),note:txt('Les temps restent indicatifs : vérifiez la cuisson réelle selon l’épaisseur et votre four.','Times are guidance; verify actual doneness based on thickness and your oven.'),steps:recipeText(r).steps};
+  }
+  function selectedGuide(method){
+    const r=currentRecipe;if(!r)return null;
+    if(method==='oven')return ovenGuide(r);
+    let a=null;
+    if(method==='airfryer')a=appliances.find(x=>x.id===state.profile.applianceId&&x.type==='Air Fryer')||appliances.find(x=>x.favorite&&x.type==='Air Fryer')||appliances.find(x=>x.type==='Air Fryer');
+    else{
+      const id=$('#detailApplianceSelect')?.value;
+      a=appliances.find(x=>x.id===id);
+      if(id==='default'||!a)return ovenGuide(r);
+    }
+    if(a?.type==='Air Fryer')return airFryerGuide(r,a);
+    return {compatible:true,device:a?`${a.brand} ${a.model}`:txt('Cuisson classique','Classic cooking'),mode:r.methods?.default?.[0]||txt('Selon recette','Per recipe'),temp:'—',time:r.methods?.default?.[1]||`${r.time} min`,container:txt('Récipient adapté à l’appareil','Appliance-safe cookware'),preheat:txt('Selon appareil','Depends on appliance'),note:'',steps:recipeText(r).steps};
+  }
+  function showCookGuide(method='selected'){
+    const g=selectedGuide(method);if(!g)return;
+    $('#cookGuidePanel').hidden=false;
+    $$('.cook-method').forEach(b=>b.classList.toggle('active',b.dataset.cookMethod===method));
+    $('#cookGuideDevice').textContent=g.device||'—';
+    $('#cookGuideMode').textContent=g.mode||txt('Non recommandé','Not recommended');
+    $('#cookGuideTemp').textContent=g.temp||'—';
+    $('#cookGuideTime').textContent=g.time||'—';
+    $('#cookGuideContainer').textContent=g.container||'—';
+    $('#cookGuidePreheat').textContent=g.preheat||'—';
+    $('#cookCompatibility').textContent=g.compatible?txt('Compatible','Compatible'):txt('Non recommandé','Not recommended');
+    $('#cookCompatibility').classList.toggle('not-compatible',!g.compatible);
+    $('#cookGuideNote').textContent=g.note||'';
+    $('#cookGuideSteps').innerHTML=(g.steps||recipeText(currentRecipe).steps).map(x=>`<li>${x}</li>`).join('');
+    $('#cookGuidePanel').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  $('#startCookingBtn')?.addEventListener('click',()=>showCookGuide('selected'));
+  $$('.cook-method').forEach(b=>b.addEventListener('click',()=>showCookGuide(b.dataset.cookMethod)));
+  $('#detailApplianceSelect')?.addEventListener('change',()=>{if(!$('#cookGuidePanel').hidden)showCookGuide('selected')});
+
+  const previousOpenRecipe=openRecipe;
+  openRecipe=function(r,slot){
+    previousOpenRecipe(r,slot);
+    if($('#cookGuidePanel'))$('#cookGuidePanel').hidden=true;
+    if($('#startCookingBtn'))$('#startCookingBtn').textContent=txt('👩‍🍳 Cuisiner cette recette','👩‍🍳 Cook this recipe');
+  };
+
+  // Re-render with full catalog after async appliance JSON load.
+  setTimeout(()=>{renderAppliances(state.applianceFilter||'all');populateApplianceSelect();renderRecipes(window.__recipeFilter||'all')},250);
+})();
