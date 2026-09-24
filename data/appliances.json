@@ -1,0 +1,58 @@
+[
+  {
+    "id":"cosori-turboblaze-6",
+    "brand":"COSORI",
+    "model":"TurboBlaze™ 6.0-Quart Air Fryer",
+    "type":"Air Fryer",
+    "favorite":true,
+    "source":"https://cosori.com/products/turboblaze%E2%84%A2-6-0-quart-air-fryer-cream",
+    "description":"10 fonctions au total (dont Preheat) ; 9 modes de cuisson principaux et jusqu’à 5 vitesses de ventilation selon le mode.",
+    "modes":[
+      {"name":"Air Fry","preset":"385°F · 10 min","goodFor":"Frites, poulet, poisson, légumes, aliments panés"},
+      {"name":"Roast","preset":"425°F · 12 min","goodFor":"Poulet entier, bœuf rôti, porc, légumes racines"},
+      {"name":"Bake","preset":"330°F · 20 min","goodFor":"Pain, gâteaux, cookies, tartes"},
+      {"name":"Broil","preset":"450°F · 5 min","goodFor":"Steak, côtes de porc, crevettes, poisson, gratins"},
+      {"name":"Dehydrate","preset":"135°F · 6 h","goodFor":"Fruits séchés, jerky, snacks"},
+      {"name":"Frozen","preset":"Variable","goodFor":"Frites surgelées, tenders, waffles, fish sticks"},
+      {"name":"Proof","preset":"Basse température","goodFor":"Pâtes levées"},
+      {"name":"Reheat","preset":"Variable","goodFor":"Restes"},
+      {"name":"Preheat","preset":"Selon mode","goodFor":"Préchauffage avant cuisson"},{"name":"Keep Warm","preset":"170°F · 30 min","goodFor":"Maintien au chaud"}
+    ]
+  },
+  {
+    "id":"instant-vortex-plus-6",
+    "brand":"Instant Pot",
+    "model":"Vortex® Plus 6QT ClearCook",
+    "type":"Air Fryer",
+    "favorite":false,
+    "source":"https://instantpot.com/products/instant-pot-vortex-plus-6qt-clearcook-air-fryer",
+    "description":"6 fonctions : Air Fry, Roast, Broil, Bake, Reheat et Dehydrate.",
+    "modes":[
+      {"name":"Air Fry","preset":"95–400°F","goodFor":"Cuisson croustillante avec peu d’huile"},
+      {"name":"Roast","preset":"95–400°F","goodFor":"Viandes et légumes rôtis"},
+      {"name":"Broil","preset":"95–400°F","goodFor":"Dorer et saisir en surface"},
+      {"name":"Bake","preset":"95–400°F","goodFor":"Pâtisserie et cuisson type four"},
+      {"name":"Reheat","preset":"95–400°F","goodFor":"Réchauffer les restes"},
+      {"name":"Dehydrate","preset":"95–400°F","goodFor":"Déshydratation à basse température"}
+    ]
+  },
+  {
+    "id":"ninja-foodi-xl-dt200",
+    "brand":"Ninja",
+    "model":"Foodi® XL Pro Air Oven DT200 Series",
+    "type":"Air Oven",
+    "favorite":false,
+    "source":"https://support.ninjakitchen.com/hc/en-us/article_attachments/5061879996316",
+    "description":"Four multifonction avec Air Fry, Air Roast, Whole Roast, Broil, Bake, Pizza, Toast, Bagel, Reheat et Dehydrate.",
+    "modes":[
+      {"name":"Air Fry","preset":"Selon aliment","goodFor":"Wings, frites, nuggets"},
+      {"name":"Air Roast","preset":"Selon aliment","goodFor":"Plaques complètes, protéines épaisses, légumes"},
+      {"name":"Whole Roast","preset":"Selon aliment","goodFor":"Grosses pièces et accompagnements"},
+      {"name":"Broil","preset":"Selon aliment","goodFor":"Viandes, poisson, gratins"},
+      {"name":"Bake","preset":"Selon recette","goodFor":"Cuisson type four"},
+      {"name":"Pizza","preset":"Selon pizza","goodFor":"Pizzas maison ou surgelées"},
+      {"name":"Reheat","preset":"Selon aliment","goodFor":"Réchauffer sans surcuire"},
+      {"name":"Dehydrate","preset":"Selon aliment","goodFor":"Déshydratation"}
+    ]
+  }
+]
