@@ -211,4 +211,4 @@ const baseNavigate=navigate;
 navigate=function(page){baseNavigate(page);if(page==='account')renderAccount();if(page==='recipes')renderRecipes(window.__recipeFilter||'all')};
 $$('[data-page]').forEach(b=>{b.onclick=()=>navigate(b.dataset.page)});
 
-renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();
+renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforceCurrentBudget(false);
