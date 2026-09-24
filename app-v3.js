@@ -309,8 +309,7 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
     return [a.brand,a.model,a.modelCode].filter(Boolean).join(' ');
   }
   function applianceResolvedImage(a){
-    if(a.image)return a.image;
-    return '/api/appliance-image?q='+encodeURIComponent(applianceImageQuery(a))+'&source='+encodeURIComponent(a.source||'');
+    return '/api/appliance-image?brand='+encodeURIComponent(a.brand||'')+'&model='+encodeURIComponent(a.model||'')+'&code='+encodeURIComponent(a.modelCode||'')+'&source='+encodeURIComponent(a.source||'');
   }
   function populateBrandFilter(){
     const sel=$('#applianceBrandFilter');if(!sel)return;
