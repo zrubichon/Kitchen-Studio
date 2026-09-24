@@ -80,7 +80,7 @@ export default async function handler(req,res){
     if(r.ok){
       const html=await r.text(),candidates=extractBingCandidates(html);
       const ranked=candidates.map(c=>({c,score:scoreCandidate(c,{brand,model,code,host})})).sort((a,b)=>b.score-a.score);
-      const best=ranked.find(x=>x.score>=10)||ranked[0];
+      const best=ranked.find(x=>x.score>=10);
       const img=best?safeImage(best.c.murl):null;
       if(img)return res.redirect(302,img);
     }
