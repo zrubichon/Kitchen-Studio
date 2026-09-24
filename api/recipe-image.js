@@ -7,7 +7,10 @@ const WORDS={
   citron:'lemon',herbes:'herbs',paprika:'paprika',fume:'smoked','fumé':'smoked',gingembre:'ginger',sesame:'sesame','sésame':'sesame',basilic:'basil',curry:'curry',miso:'miso',
   moutarde:'mustard',coco:'coconut',orange:'orange',pesto:'pesto',ail:'garlic',parmesan:'parmesan',fruits:'berries',rouges:'berries',banane:'banana',chocolat:'chocolate',
   omelette:'omelette',tarte:'tart',gateau:'cake','gâteau':'cake',cookies:'cookies',smoothie:'smoothie',burger:'burger',tacos:'tacos',burrito:'burrito',lasagnes:'lasagna',
-  bowl:'bowl',assiette:'plate',wok:'wok',curry:'curry',tajine:'tagine',paella:'paella',pho:'pho',bibimbap:'bibimbap',falafel:'falafel',shakshuka:'shakshuka'
+  bowl:'bowl',assiette:'plate',wok:'wok',curry:'curry',tajine:'tagine',paella:'paella',pho:'pho',bibimbap:'bibimbap',falafel:'falafel',shakshuka:'shakshuka',
+  pain:'bread',focaccia:'focaccia',naan:'naan',pita:'pita',flatbread:'flatbread',breadsticks:'breadsticks',croutons:'croutons',crackers:'crackers',
+  houmous:'hummus',hummus:'hummus',tzatziki:'tzatziki',guacamole:'guacamole',vinaigrette:'vinaigrette',pesto:'pesto',oignons:'onions',pickles:'pickled',
+  pommes:'potatoes',terre:'potatoes',brocoli:'broccoli',haricots:'green beans',verts:'green beans',couscous:'couscous',beurre:'butter'
 };
 function translateTokens(text=''){
   const parts=norm(text).split(' ').filter(Boolean);
