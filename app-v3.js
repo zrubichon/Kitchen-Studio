@@ -385,10 +385,11 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
     if(recipeNeedsBake(r)&&a.style==='oven')container=txt('Plaque ou moule sur grille centrale','Baking pan on middle rack');
     const pre=a.preheat==='not-required'||a.preheat==='usually-not-needed'?txt('Non requis en général','Usually not required'):a.preheat==='recommended'?txt('Oui, 3–5 min','Yes, 3–5 min'):txt('Optionnel, 2–3 min pour plus de régularité','Optional, 2–3 min for consistency');
     const dual=a.style==='dual'?txt('Utilisez une seule zone pour cette recette, ou Sync/Match si vous doublez les portions.','Use one zone for this recipe, or Sync/Match when doubling portions.'):'';
-    const dualBlaze=/dual blaze/i.test(a.model)?txt('Le double élément chauffe dessus/dessous : pas besoin de retourner systématiquement.','Dual heating cooks top and bottom, so flipping is not always necessary.'):'';
+    const dualHeat=/dual blaze|dome 2/i.test(a.model)?txt('Le double élément chauffe dessus/dessous : pas besoin de retourner systématiquement.','Dual heating cooks top and bottom, so flipping is not always necessary.'):'';
+    const catalogOnly=a.profileConfidence==='catalog'?txt('Profil catalogue : le modèle est identifié, mais sa plage exacte n’est pas encore validée dans le manuel. Confirmez température et mode sur l’écran de votre appareil avant de lancer.','Catalog profile: the model is identified, but its exact range is not yet manual-verified. Confirm temperature and mode on the appliance display before starting.'):'';
     const steps=[...recipeText(r).steps];
-    if(!recipeNeedsBake(r)&&a.style!=='oven'&&!/dual blaze/i.test(a.model))steps.splice(Math.min(2,steps.length),0,txt('À mi-cuisson, secouez le panier ou retournez les pièces pour une coloration uniforme.','Halfway through, shake the basket or flip pieces for even browning.'));
-    return {compatible:true,device:`${a.brand} ${a.model}${a.modelCode?' ('+a.modelCode+')':''}`,mode,temp:`${temp}°F / ${fToC(temp)}°C`,time:timeText(min,max),container,preheat:pre,note:[dual,dualBlaze,a.notes].filter(Boolean).join(' '),steps};
+    if(!recipeNeedsBake(r)&&a.style!=='oven'&&!/dual blaze|dome 2/i.test(a.model))steps.splice(Math.min(2,steps.length),0,txt('À mi-cuisson, secouez le panier ou retournez les pièces pour une coloration uniforme.','Halfway through, shake the basket or flip pieces for even browning.'));
+    return {compatible:true,device:`${a.brand} ${a.model}${a.modelCode?' ('+a.modelCode+')':''}`,mode,temp:`${temp}°F / ${fToC(temp)}°C`,time:timeText(min,max),container,preheat:pre,note:[dual,dualHeat,catalogOnly,a.notes].filter(Boolean).join(' '),steps};
   }
   function ovenGuide(r){
     const def=r.methods?.default||['Four traditionnel',`${r.time} min`];
