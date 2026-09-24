@@ -48,12 +48,13 @@ Les routes `/api/*` sont prévues pour Vercel et fonctionnent une fois le projet
 Les presets de démo sont des points de départ. Toujours vérifier la cuisson finale des aliments sensibles et suivre les instructions du constructeur.
 
 
-## Air Fryer model engine
-- 101 profils Air Fryer dans la bibliothèque, sur 10 marques : COSORI, Ninja, Instant Pot, Philips, Cuisinart, Breville, Chefman, Typhur, DREO et Gourmia.
-- Recherche par marque, nom ou référence modèle.
-- Les profils détaillés stockent selon disponibilité : plage de température, modes supportés, capacité, type de panier/four, accessoire/récipient, comportement de préchauffage et particularités de cuisson.
-- Le bouton **Cuisiner cette recette** permet de comparer **Mon appareil / Four traditionnel / Air Fryer** et adapte mode, température °F/°C, durée, accessoire, préchauffage et étapes.
-- Les modèles seulement répertoriés dans un catalogue officiel mais sans manuel détaillé validé sont marqués comme profils catalogue : l'app ne force pas une plage de température inventée et demande de confirmer le réglage sur l'appareil.
-- La reconnaissance photo compare l'appareil aux références enregistrées et conserve un niveau de confiance.
+## Intelligent appliance engine
+- L'interface ne présente plus un catalogue d'Air Fryers à parcourir. L'utilisateur saisit directement sa **marque + modèle / référence**.
+- Kitchen Studio vérifie d'abord son cache interne de modèles connus, puis peut lancer une recherche web + IA pour identifier un appareil non encore enregistré.
+- Le profil enregistré conserve selon les informations trouvées : marque, modèle, référence, type d'appareil, modes, plage de température, capacité, récipient/accessoire, préchauffage et sources.
+- L'appareil actif est sauvegardé dans le navigateur et réinjecté après rechargement.
+- Au clic sur **Cuisiner cette recette**, l'app envoie la recette et le profil de l'appareil au moteur d'adaptation IA, qui renvoie : compatibilité, mode, température °F/°C, durée, récipient, préchauffage, préparation et étapes adaptées.
+- Si l'appareil n'est pas approprié à la recette, le moteur doit le signaler au lieu de forcer une méthode.
+- Les anciens profils détaillés restent disponibles uniquement comme cache interne de reconnaissance rapide et de secours ; ils ne sont plus affichés comme une bibliothèque à parcourir.
 
-Les réglages recette sont des recommandations Kitchen Studio dérivées de la recette et des capacités du modèle ; ils ne doivent pas être présentés comme une instruction constructeur spécifique à chaque aliment. Vérifier la cuisson finale des aliments sensibles.
+Les réglages proposés sont des recommandations culinaires dérivées de la recette et des capacités documentées de l'appareil. Les caractéristiques non confirmées restent inconnues plutôt que d'être inventées, et la cuisson finale des aliments sensibles doit toujours être vérifiée.
