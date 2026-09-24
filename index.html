@@ -132,25 +132,84 @@
           <div class="recipe-ideas-grid" id="recipeIdeasGrid"></div>
         </div>
         <div class="filter-row"><button class="filter-chip active" data-filter="all">Toutes</button><button class="filter-chip" data-filter="high-protein">Protéinées</button><button class="filter-chip" data-filter="quick">≤ 20 min</button><button class="filter-chip" data-filter="vegetarian">Végé</button><button class="filter-chip" data-filter="airfryer">Air Fryer</button><button class="filter-chip" data-filter="favorite">♡ Favoris</button></div>
-        <div class="recipe-category-scroll" id="recipeCategoryFilters">
-          <button class="category-chip active" data-recipe-category="all">Tout explorer</button>
-          <button class="category-chip" data-recipe-category="fish">Poissons</button>
-          <button class="category-chip" data-recipe-category="meat">Viandes</button>
-          <button class="category-chip" data-recipe-category="chicken">Poulet</button>
-          <button class="category-chip" data-recipe-category="beef">Bœuf</button>
-          <button class="category-chip" data-recipe-category="pork">Porc</button>
-          <button class="category-chip" data-recipe-category="vegan">Vegan</button>
-          <button class="category-chip" data-recipe-category="breakfast">Petit-déj</button>
-          <button class="category-chip" data-recipe-category="smoothie">Smoothies</button>
-          <button class="category-chip" data-recipe-category="drink">Boissons</button>
-          <button class="category-chip" data-recipe-category="protein">Protéinées</button>
-          <button class="category-chip" data-recipe-category="french">Français</button>
-          <button class="category-chip" data-recipe-category="american">Américain</button>
-          <button class="category-chip" data-recipe-category="chinese">Chinois</button>
-          <button class="category-chip" data-recipe-category="thai">Thaï</button>
-          <button class="category-chip" data-recipe-category="italian">Italien</button>
-          <button class="category-chip" data-recipe-category="dessert">Desserts</button>
-          <button class="category-chip" data-recipe-category="occasion">Fêtes & occasions</button>
+        <div class="recipe-category-groups" id="recipeCategoryFilters">
+          <div class="category-group">
+            <div class="category-group-title">À explorer</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip active" data-recipe-category="all">Tout explorer</button>
+              <button class="category-chip" data-recipe-category="favorite">Favoris</button>
+              <button class="category-chip" data-recipe-category="quick">Rapide</button>
+              <button class="category-chip" data-recipe-category="occasion">Fêtes & occasions</button>
+            </div>
+          </div>
+          <div class="category-group">
+            <div class="category-group-title">Cuisines du monde</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip" data-recipe-category="french">Français</button>
+              <button class="category-chip" data-recipe-category="italian">Italien</button>
+              <button class="category-chip" data-recipe-category="mediterranean">Méditerranéen</button>
+              <button class="category-chip" data-recipe-category="greek">Grec</button>
+              <button class="category-chip" data-recipe-category="spanish">Espagnol</button>
+              <button class="category-chip" data-recipe-category="mexican">Mexicain</button>
+              <button class="category-chip" data-recipe-category="american">Américain</button>
+              <button class="category-chip" data-recipe-category="japanese">Japonais</button>
+              <button class="category-chip" data-recipe-category="korean">Coréen</button>
+              <button class="category-chip" data-recipe-category="chinese">Chinois</button>
+              <button class="category-chip" data-recipe-category="thai">Thaï</button>
+              <button class="category-chip" data-recipe-category="vietnamese">Vietnamien</button>
+              <button class="category-chip" data-recipe-category="indian">Indien</button>
+              <button class="category-chip" data-recipe-category="moroccan">Marocain</button>
+              <button class="category-chip" data-recipe-category="middle-eastern">Moyen-Orient</button>
+              <button class="category-chip" data-recipe-category="lebanese">Libanais</button>
+            </div>
+          </div>
+          <div class="category-group">
+            <div class="category-group-title">Régimes & objectifs</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip" data-recipe-category="protein">Protéiné</button>
+              <button class="category-chip" data-recipe-category="vegetarian">Végétarien</button>
+              <button class="category-chip" data-recipe-category="vegan">Vegan</button>
+              <button class="category-chip" data-recipe-category="pescatarian">Pescatarien</button>
+              <button class="category-chip" data-recipe-category="gluten-free">Sans gluten</button>
+              <button class="category-chip" data-recipe-category="dairy-free">Sans lactose</button>
+              <button class="category-chip" data-recipe-category="low-carb">Low carb</button>
+              <button class="category-chip" data-recipe-category="high-fiber">Riche en fibres</button>
+              <button class="category-chip" data-recipe-category="low-sugar">Peu sucré</button>
+              <button class="category-chip" data-recipe-category="budget">Petit budget</button>
+            </div>
+          </div>
+          <div class="category-group">
+            <div class="category-group-title">Ingrédients & type de plat</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip" data-recipe-category="fish">Poissons</button>
+              <button class="category-chip" data-recipe-category="meat">Viandes</button>
+              <button class="category-chip" data-recipe-category="chicken">Poulet</button>
+              <button class="category-chip" data-recipe-category="beef">Bœuf</button>
+              <button class="category-chip" data-recipe-category="pork">Porc</button>
+              <button class="category-chip" data-recipe-category="breakfast">Petit-déj</button>
+              <button class="category-chip" data-recipe-category="smoothie">Smoothies</button>
+              <button class="category-chip" data-recipe-category="drink">Boissons</button>
+              <button class="category-chip" data-recipe-category="dessert">Desserts</button>
+              <button class="category-chip" data-recipe-category="salad">Salades</button>
+              <button class="category-chip" data-recipe-category="soup">Soupes</button>
+              <button class="category-chip" data-recipe-category="pasta">Pâtes</button>
+              <button class="category-chip" data-recipe-category="bowl">Bowls</button>
+            </div>
+          </div>
+          <div class="category-group">
+            <div class="category-group-title">Envies & moments</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip" data-recipe-category="brunch">Brunch</button>
+              <button class="category-chip" data-recipe-category="comfort">Comfort food</button>
+              <button class="category-chip" data-recipe-category="meal-prep">Meal prep</button>
+              <button class="category-chip" data-recipe-category="one-pot">One-pot</button>
+              <button class="category-chip" data-recipe-category="airfryer">Air Fryer</button>
+              <button class="category-chip" data-recipe-category="summer">Été</button>
+              <button class="category-chip" data-recipe-category="winter">Hiver</button>
+              <button class="category-chip" data-recipe-category="date-night">Dîner à deux</button>
+              <button class="category-chip" data-recipe-category="family">Famille</button>
+            </div>
+          </div>
         </div>
         <div class="recipe-grid" id="recipeGrid"></div>
       </section>
