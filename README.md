@@ -46,3 +46,14 @@ Les routes `/api/*` sont prévues pour Vercel et fonctionnent une fois le projet
 - Ninja Foodi XL Pro Air Oven DT200 Series : guide officiel.
 
 Les presets de démo sont des points de départ. Toujours vérifier la cuisson finale des aliments sensibles et suivre les instructions du constructeur.
+
+
+## Air Fryer model engine
+- 101 profils Air Fryer dans la bibliothèque, sur 10 marques : COSORI, Ninja, Instant Pot, Philips, Cuisinart, Breville, Chefman, Typhur, DREO et Gourmia.
+- Recherche par marque, nom ou référence modèle.
+- Les profils détaillés stockent selon disponibilité : plage de température, modes supportés, capacité, type de panier/four, accessoire/récipient, comportement de préchauffage et particularités de cuisson.
+- Le bouton **Cuisiner cette recette** permet de comparer **Mon appareil / Four traditionnel / Air Fryer** et adapte mode, température °F/°C, durée, accessoire, préchauffage et étapes.
+- Les modèles seulement répertoriés dans un catalogue officiel mais sans manuel détaillé validé sont marqués comme profils catalogue : l'app ne force pas une plage de température inventée et demande de confirmer le réglage sur l'appareil.
+- La reconnaissance photo compare l'appareil aux références enregistrées et conserve un niveau de confiance.
+
+Les réglages recette sont des recommandations Kitchen Studio dérivées de la recette et des capacités du modèle ; ils ne doivent pas être présentés comme une instruction constructeur spécifique à chaque aliment. Vérifier la cuisson finale des aliments sensibles.
