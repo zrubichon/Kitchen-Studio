@@ -42,6 +42,10 @@
       <header class="topbar">
         <div class="mobile-brand"><div class="brand-mark small">M</div><strong>Mise</strong></div>
         <div class="topbar-spacer"></div>
+        <div class="global-preferences">
+          <label><span id="languageLabel">Langue</span><select id="languageSelect" aria-label="Langue"><option value="fr">FR</option><option value="en">EN</option></select></label>
+          <label><span id="unitsLabel">Mesures</span><select id="unitsSelect" aria-label="Mesures"><option value="metric">Grammes / mL</option><option value="cups">Cups / oz</option></select></label>
+        </div>
         <div class="store-pill" id="storePill"><span>◉</span><div><small>Courses chez</small><strong id="storePillName">Whole Foods · Seattle</strong></div></div>
         <button class="icon-btn round" id="notifBtn" aria-label="Notifications">◌</button>
       </header>
@@ -111,7 +115,11 @@
       </section>
 
       <section class="page" id="page-recipes">
-        <div class="page-head"><div><div class="eyebrow">Le carnet Mise</div><h2>Des recettes qui connaissent votre cuisine.</h2><p>Chaque fiche s’adapte au matériel, au nombre de portions et aux préférences.</p></div><button class="btn btn-primary" id="recipeAiBtn">✦ Inventer une recette</button></div>
+        <div class="page-head"><div><div class="eyebrow" id="recipesEyebrow">Le carnet Mise</div><h2 id="recipesTitle">Des recettes qui connaissent votre cuisine.</h2><p id="recipesLead">Chaque fiche s’adapte au matériel, au nombre de portions et aux préférences.</p></div><button class="btn btn-primary" id="recipeAiBtn">✦ Inventer une recette</button></div>
+        <div class="recipe-ideas-section">
+          <div class="ideas-head"><div><div class="eyebrow" id="ideasEyebrow">Idées recettes</div><h3 id="ideasTitle">Inspirations pour changer de votre semaine.</h3></div><button class="text-btn" id="refreshIdeas">↻ Nouvelles idées</button></div>
+          <div class="recipe-ideas-grid" id="recipeIdeasGrid"></div>
+        </div>
         <div class="filter-row"><button class="filter-chip active" data-filter="all">Toutes</button><button class="filter-chip" data-filter="high-protein">Protéinées</button><button class="filter-chip" data-filter="quick">≤ 20 min</button><button class="filter-chip" data-filter="vegetarian">Végé</button><button class="filter-chip" data-filter="airfryer">Air Fryer</button></div>
         <div class="recipe-grid" id="recipeGrid"></div>
       </section>
@@ -125,7 +133,16 @@
           <div class="mode-pills" id="favoriteModes"></div>
           <button class="btn btn-cream" id="viewFavoriteManual">Voir modes & guide</button>
         </div>
-        <div class="section-label"><span>Appareils enregistrés</span><span id="applianceCount">3 appareils</span></div>
+        <div class="section-label"><span id="applianceLibraryLabel">Bibliothèque d’appareils</span><span id="applianceCount">14 appareils</span></div>
+        <div class="filter-row appliance-filters" id="applianceFilters">
+          <button class="appliance-filter-chip active" data-appliance-filter="all">Tous</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Air Fryer">Air Fryers</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Four">Fours</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Multicuiseur">Multicuiseurs</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Rice Cooker">Rice cookers</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Blender">Blenders</button>
+          <button class="appliance-filter-chip" data-appliance-filter="Micro-ondes">Micro-ondes</button>
+        </div>
         <div class="appliance-grid" id="applianceGrid"></div>
         <div class="source-note"><strong>Principe de sécurité :</strong> Mise conserve la source constructeur de chaque modèle. Les températures/temps restent des aides culinaires et la cuisson finale des aliments sensibles doit être vérifiée avec les recommandations de sécurité alimentaire et, si pertinent, un thermomètre.</div>
       </section>
@@ -136,7 +153,7 @@
           <div class="form-card"><h3>Objectif & style</h3><div class="field-grid two"><label>Objectif principal<select name="goal"><option value="balanced">Manger équilibré</option><option value="protein" selected>Énergie & protéines</option><option value="muscle">Prise de muscle</option><option value="light">Repas plus légers</option><option value="budget">Économiser</option></select></label><label>Style alimentaire<select name="diet"><option value="balanced" selected>Omnivore équilibré</option><option value="vegetarian">Végétarien</option><option value="vegan">Vegan</option><option value="pescatarian">Pescatarien</option><option value="mediterranean">Méditerranéen</option></select></label><label>Portions<input name="servings" type="number" min="1" max="8" value="1" /></label><label>Temps max un soir<select name="maxTime"><option>15 min</option><option selected>25 min</option><option>35 min</option><option>45 min</option></select></label></div></div>
           <div class="form-card"><h3>À respecter absolument</h3><label>Allergies / intolérances<input name="allergies" placeholder="Ex. cacahuètes, lactose…" /></label><label>Je n’aime pas<input name="dislikes" placeholder="Ex. champignons, coriandre…" /></label><div><span class="field-title">Préférences rapides</span><div class="check-pills"><label><input type="checkbox" name="pref" value="high-protein" checked> Riche en protéines</label><label><input type="checkbox" name="pref" value="meal-prep" checked> Meal prep</label><label><input type="checkbox" name="pref" value="few-dishes"> Peu de vaisselle</label><label><input type="checkbox" name="pref" value="seasonal"> De saison</label><label><input type="checkbox" name="pref" value="frozen"> Surgelés acceptés</label></div></div></div>
           <div class="form-card"><h3>Courses</h3><div class="field-grid two"><label>Enseigne<select name="store" id="profileStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option><option>Target</option><option>Carrefour</option><option>Monoprix</option><option>Auchan</option></select></label><label>Ville / code postal<input name="location" id="profileLocation" value="Seattle, WA" /></label><label>Budget hebdomadaire<input name="budget" type="number" value="90" min="20" step="5" /></label><label>Priorité produits<select name="productPriority"><option value="value">Meilleur rapport qualité/prix</option><option value="organic">Bio quand possible</option><option value="brand">Mes marques favorites</option><option value="cheapest">Prix le plus bas</option></select></label></div></div>
-          <div class="form-card"><h3>Comment je cuisine</h3><p class="muted">Les appareils enregistrés sont utilisés pour adapter chaque recette.</p><div class="check-pills"><label><input type="checkbox" checked> Air Fryer</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox"> Rice cooker</label><label><input type="checkbox"> Instant Pot</label><label><input type="checkbox"> Blender</label></div><button type="button" class="text-btn" data-page="appliances">Gérer les modèles exacts →</button></div>
+          <div class="form-card"><h3>Comment je cuisine</h3><p class="muted">Les appareils enregistrés sont utilisés pour adapter chaque recette.</p><div class="check-pills"><label><input type="checkbox" checked> Air Fryer</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox"> Micro-ondes</label><label><input type="checkbox"> Rice cooker</label><label><input type="checkbox"> Instant Pot / multicuiseur</label><label><input type="checkbox"> Blender</label><label><input type="checkbox"> Slow cooker</label><label><input type="checkbox"> Grill</label><label><input type="checkbox"> Toaster oven</label><label><input type="checkbox"> Robot cuiseur</label></div><button type="button" class="text-btn" data-page="appliances">Gérer les modèles exacts →</button></div>
         </form>
       </section>
     </main>
@@ -166,7 +183,7 @@
       </div>
       <div class="wizard-step" data-step="1"><h3>2. Vos contraintes réelles</h3><div class="field-grid two"><label>Budget cible<input type="number" name="weekBudget" value="90" /></label><label>Temps max en semaine<select name="weekTime"><option>15 min</option><option selected>25 min</option><option>35 min</option></select></label><label>Soirs où je ne veux presque pas cuisiner<input name="lowCookDays" placeholder="Ex. mardi, jeudi" /></label><label>Nombre de personnes<input name="weekServings" type="number" min="1" value="1" /></label></div><div class="check-pills"><label><input type="checkbox" name="batch" checked> Cuisiner 2 fois, réutiliser</label><label><input type="checkbox" name="freeze"> Prévoir du congélateur</label><label><input type="checkbox" name="portable" checked> Déjeuners transportables</label></div></div>
       <div class="wizard-step" data-step="2"><h3>3. Ce que vous voulez vraiment manger</h3><label>Écrivez comme vous parleriez à un chef<textarea name="prompt" rows="5" placeholder="Ex. beaucoup de poulet et saumon, petits déjeuners rapides, une pasta réconfortante vendredi, pas trop épicé, j’ai déjà du riz…">Beaucoup de protéines, déjeuners faciles à emporter, je veux cuisiner peu le mardi et garder un dîner plus fun vendredi.</textarea></label><div class="cuisine-choice"><span class="field-title">Cuisines</span><div class="check-pills"><label><input type="checkbox" checked> Méditerranéenne</label><label><input type="checkbox" checked> Asiatique</label><label><input type="checkbox"> Mexicaine</label><label><input type="checkbox"> Italienne</label><label><input type="checkbox"> Française</label></div></div></div>
-      <div class="wizard-step" data-step="3"><h3>4. Courses & matériel</h3><div class="field-grid two"><label>Je fais mes courses chez<select name="weekStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option></select></label><label>Zone<input name="weekLocation" value="Seattle, WA" /></label></div><div class="appliance-choice"><span class="field-title">Matériel disponible cette semaine</span><div class="check-pills"><label><input type="checkbox" checked> COSORI TurboBlaze</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox"> Blender</label></div></div><div class="wizard-summary"><span>✦</span><p>Mise cherchera d’abord des recettes compatibles avec ces choix, puis optimisera les ingrédients communs pour limiter le gaspillage et la facture.</p></div></div>
+      <div class="wizard-step" data-step="3"><h3>4. Courses & matériel</h3><div class="field-grid two"><label>Je fais mes courses chez<select name="weekStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option></select></label><label>Zone<input name="weekLocation" value="Seattle, WA" /></label></div><div class="appliance-choice"><span class="field-title">Matériel disponible cette semaine</span><div class="check-pills"><label><input type="checkbox" checked> Air Fryer</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox"> Micro-ondes</label><label><input type="checkbox"> Rice cooker</label><label><input type="checkbox"> Multicuiseur</label><label><input type="checkbox"> Blender</label><label><input type="checkbox"> Slow cooker</label></div></div><div class="wizard-summary"><span>✦</span><p>Mise cherchera d’abord des recettes compatibles avec ces choix, puis optimisera les ingrédients communs pour limiter le gaspillage et la facture.</p></div></div>
       <div class="wizard-actions"><button type="button" class="btn btn-outline" id="wizardBack" disabled>Retour</button><button type="button" class="btn btn-primary" id="wizardNext">Continuer</button></div>
     </form>
   </dialog>
@@ -182,5 +199,6 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="app.js"></script>
+  <script src="app-v2.js"></script>
 </body>
 </html>
