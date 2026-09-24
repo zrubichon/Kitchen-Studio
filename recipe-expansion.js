@@ -108,6 +108,16 @@
     const needed=Math.max(0,20-count);
     for(let i=0;i<needed;i++)RECIPES.push(buildRecipe(category,i,cfg));
   });
+
+  // Semantic image assignment for every recipe
+  function semanticRecipeImage(r){
+    const names=(r.ingredients||[]).map(i=>i[0]).slice(0,6).join('|');
+    return '/api/recipe-image?id='+encodeURIComponent(r.id||r.name)
+      +'&name='+encodeURIComponent(r.name||'')
+      +'&ingredients='+encodeURIComponent(names)
+      +'&tags='+encodeURIComponent((r.tags||[]).join('|'));
+  }
+  RECIPES.forEach(r=>{r.image=semanticRecipeImage(r)});
   // Re-render after expansion.
   if(typeof renderRecipes==='function')renderRecipes(window.__recipeFilter||'all');
 })();
