@@ -59,3 +59,15 @@
 .cook-guide-note:empty{display:none}.cook-guide-panel h4{font:20px var(--serif);margin:13px 0 7px}
 @media(max-width:820px){.appliance-search-toolbar{grid-template-columns:1fr}.cook-guide-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.cook-guide-grid{grid-template-columns:1fr}.appliance-device-placeholder,.appliance-photo-wrap{height:235px!important}}
+
+/* V7 shopping removal + recipe usage */
+.shop-row{grid-template-columns:24px minmax(0,1fr) auto auto 30px!important;align-items:center}
+.shop-name{min-width:0}
+.shop-name strong{display:block}
+.shop-recipes{display:block!important;margin-top:3px!important;color:#8b8178!important;font-size:8px!important;line-height:1.35!important;font-weight:600!important;white-space:normal!important}
+.shop-product{display:block!important;margin-top:3px!important;color:#aaa097!important;font-size:8px!important}
+.shop-remove{width:27px;height:27px;border-radius:50%;border:1px solid #ded2c6;background:#fff;color:#8f8175;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.15s}
+.shop-remove:hover{background:#f4e6e2;color:var(--wine);border-color:#d6b7ae}
+.removed-shopping-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;padding:9px 12px;border:1px dashed #d8c9ba;border-radius:10px;background:#faf5ef;color:var(--muted);font-size:9px}
+.removed-shopping-bar button{border:0;background:transparent;color:var(--wine);font-weight:800;cursor:pointer}
+@media(max-width:720px){.shop-row{grid-template-columns:24px minmax(0,1fr) 30px!important}.shop-price{grid-column:2}.shop-qty{grid-column:2}.shop-remove{grid-column:3;grid-row:1/4}}
