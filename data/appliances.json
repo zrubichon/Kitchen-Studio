@@ -3637,6 +3637,1435 @@
     ]
   },
   {
+    "id": "chefman-rj38-4t",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch 4-Quart Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-4-quart-digital-air-fryer",
+    "description": "4 qt · panier Air Fryer · 200–450°F.",
+    "modelCode": "RJ38-4T-BLACK",
+    "capacityQt": 4,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Réglage normal annoncé 200–400°F; Hi-Fry peut atteindre 450°F.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et aliments panés"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-6t",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch 6-Qt Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-6-qt-digital-air-fryer",
+    "description": "6 qt · panier Air Fryer · 200–450°F.",
+    "modelCode": "RJ38-6T-BLACK",
+    "capacityQt": 6,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Hi-Fry jusqu’à 450°F; rappel de secouage.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et aliments panés"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-35t-v2",
+    "brand": "Chefman",
+    "model": "TurboFry® 3.5-Qt 4-in-1 Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-3-5-qt-4-in-1-air-fryer",
+    "description": "3.5 qt · panier Air Fryer · plage selon manuel.",
+    "modelCode": "RJ38-35T-V2",
+    "capacityQt": 3.5,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Max 450°F; rappel de secouage automatique. La borne basse n’est pas forcée tant qu’elle n’est pas vérifiée dans le profil.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low",
+        "goodFor": "Dehydrate"
+      },
+      {
+        "name": "Frozen",
+        "preset": "Preset",
+        "goodFor": "Surgelés"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-ss-6t-v2",
+    "brand": "Chefman",
+    "model": "TurboFry® 6-Qt Stainless Steel 5-in-1",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-6-quart-digital-air-fryer-touch-controls-w-5-cooking-functions-stainless-steel",
+    "description": "6 qt · panier Air Fryer · 90–450°F.",
+    "modelCode": "RJ38-SS-6T-V2",
+    "capacityQt": 6,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Pas de préchauffage requis selon la fiche produit; Hi-Fry à 450°F pour les 2 dernières minutes.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "90–400°F",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "90–400°F",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Reheat",
+        "preset": "90–400°F",
+        "goodFor": "Reheat"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "90–400°F",
+        "goodFor": "Dehydrate"
+      },
+      {
+        "name": "Frozen",
+        "preset": "Preset",
+        "goodFor": "Surgelés"
+      },
+      {
+        "name": "Hi-Fry",
+        "preset": "450°F · final 2 min",
+        "goodFor": "Finition extra-croustillante"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-6tw",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch 6-Quart Easy-View Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-easy-view-6-quart-digital-air-fryer",
+    "description": "6 qt · panier Air Fryer · 90–450°F.",
+    "modelCode": "RJ38-6TW-BLACK",
+    "capacityQt": 6,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Fenêtre Easy-View et rappel de secouage.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et aliments panés"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-dualwindow",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch 6-Qt Dual-Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-dual-window-air-fryer",
+    "description": "6 qt · double panier · 200–450°F.",
+    "modelCode": "RJ38-SQPF-3TDB-2W",
+    "capacityQt": 6,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers + racks/crisper plates",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "Fonction Sync Finish pour terminer les deux paniers en même temps.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-sqss-5t",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch Stainless-Steel 5-Qt Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-air-fryer-1",
+    "description": "5 qt · panier Air Fryer · 200–400°F.",
+    "modelCode": "RJ38-SQSS-5T",
+    "capacityQt": 5,
+    "tempRangeF": [
+      200,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et aliments panés"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "chefman-rj38-sqss-8t",
+    "brand": "Chefman",
+    "model": "TurboFry® Touch Stainless-Steel 8-Qt Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://chefman.com/products/turbofry-touch-air-fryer-1",
+    "description": "8 qt · panier Air Fryer · 200–400°F.",
+    "modelCode": "RJ38-SQSS-8T",
+    "capacityQt": 8,
+    "tempRangeF": [
+      200,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier antiadhésif + rack/crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et aliments panés"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "typhur-dome2-af03",
+    "brand": "Typhur",
+    "model": "Dome 2 Air Fryer — Classic Silver + Black",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.typhur.com/products/dome-air-fryer",
+    "description": "5.6 qt · panier extra-large · double élément chauffant · 15 fonctions.",
+    "modelCode": "AF03",
+    "capacityQt": 5.6,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier céramique PFAS-free extra-large + grill plate",
+    "timeFactor": 0.9,
+    "preheat": "optional",
+    "notes": "Double chauffe haut + bas : moins besoin de secouer/retourner. AF05 propose 15 fonctions et 3 vitesses de ventilation Air Fry via l’app.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Air Fry"
+      },
+      {
+        "name": "Toast",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Toast"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Dehydrate"
+      },
+      {
+        "name": "Reheat",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Reheat"
+      },
+      {
+        "name": "Pizza",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Pizza"
+      },
+      {
+        "name": "Bacon",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Bacon"
+      },
+      {
+        "name": "Steak",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Steak"
+      },
+      {
+        "name": "Wings",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Wings"
+      },
+      {
+        "name": "Bake",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Broil",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Broil"
+      },
+      {
+        "name": "Grill",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Grill"
+      },
+      {
+        "name": "Griddle",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Griddle"
+      },
+      {
+        "name": "Fries",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Fries"
+      },
+      {
+        "name": "Roast",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Frozen",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Frozen"
+      }
+    ]
+  },
+  {
+    "id": "typhur-dome2-af05",
+    "brand": "Typhur",
+    "model": "Dome 2 Air Fryer — Graphite Gray + Black",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.typhur.com/products/dome-air-fryer-af05",
+    "description": "5.6 qt · panier extra-large · double élément chauffant · 15 fonctions.",
+    "modelCode": "AF05",
+    "capacityQt": 5.6,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier céramique PFAS-free extra-large + grill plate",
+    "timeFactor": 0.9,
+    "preheat": "optional",
+    "notes": "Double chauffe haut + bas : moins besoin de secouer/retourner. AF05 propose 15 fonctions et 3 vitesses de ventilation Air Fry via l’app.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Air Fry"
+      },
+      {
+        "name": "Toast",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Toast"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Dehydrate"
+      },
+      {
+        "name": "Reheat",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Reheat"
+      },
+      {
+        "name": "Pizza",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Pizza"
+      },
+      {
+        "name": "Bacon",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Bacon"
+      },
+      {
+        "name": "Steak",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Steak"
+      },
+      {
+        "name": "Wings",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Wings"
+      },
+      {
+        "name": "Bake",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Broil",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Broil"
+      },
+      {
+        "name": "Grill",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Grill"
+      },
+      {
+        "name": "Griddle",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Griddle"
+      },
+      {
+        "name": "Fries",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Fries"
+      },
+      {
+        "name": "Roast",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Frozen",
+        "preset": "105–450°F selon mode",
+        "goodFor": "Frozen"
+      }
+    ]
+  },
+  {
+    "id": "dreo-chefmaker-6",
+    "brand": "DREO",
+    "model": "ChefMaker Combi Fryer 6QT",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.dreo.com/pages/chefmaker-combi-fryer",
+    "description": "6 qt · 100–450°F · convection + sonde + brumisation.",
+    "modelCode": "ChefMaker",
+    "capacityQt": 6,
+    "tempRangeF": [
+      100,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier ChefMaker + cooking tray; sonde pour protéines quand approprié",
+    "timeFactor": 0.96,
+    "preheat": "optional",
+    "notes": "Chef Mode utilise des programmes intelligents; Classic Cook permet le réglage manuel; Probe Cook suit la température à cœur.",
+    "modes": [
+      {
+        "name": "Chef Mode",
+        "preset": "Programme automatique",
+        "goodFor": "Protéines et ingrédients guidés"
+      },
+      {
+        "name": "Classic Cook",
+        "preset": "100–450°F",
+        "goodFor": "Réglage manuel convection"
+      },
+      {
+        "name": "Probe Cook",
+        "preset": "Selon température cible",
+        "goodFor": "Viandes/poissons avec sonde"
+      },
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf7020b",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF7020B.",
+    "modelCode": "GAF7020B",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf7020g",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF7020G.",
+    "modelCode": "GAF7020G",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf7020p",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF7020P.",
+    "modelCode": "GAF7020P",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf7020w",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF7020W.",
+    "modelCode": "GAF7020W",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf823b",
+    "brand": "Gourmia",
+    "model": "8-QT Digital Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "8 qt · modèle officiel Gourmia GAF823B.",
+    "modelCode": "GAF823B",
+    "capacityQt": 8,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf823g",
+    "brand": "Gourmia",
+    "model": "8-QT Digital Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "8 qt · modèle officiel Gourmia GAF823G.",
+    "modelCode": "GAF823G",
+    "capacityQt": 8,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf823p",
+    "brand": "Gourmia",
+    "model": "8-QT Digital Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "8 qt · modèle officiel Gourmia GAF823P.",
+    "modelCode": "GAF823P",
+    "capacityQt": 8,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf823w",
+    "brand": "Gourmia",
+    "model": "8-QT Digital Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "8 qt · modèle officiel Gourmia GAF823W.",
+    "modelCode": "GAF823W",
+    "capacityQt": 8,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf1190",
+    "brand": "Gourmia",
+    "model": "11-QT Dual Basket Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "11 qt · modèle officiel Gourmia GAF1190.",
+    "modelCode": "GAF1190",
+    "capacityQt": 11,
+    "tempRangeF": null,
+    "style": "dual",
+    "container": "Deux paniers + crisper trays",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf966",
+    "brand": "Gourmia",
+    "model": "10-QT Dual Basket Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "10 qt · modèle officiel Gourmia GAF966.",
+    "modelCode": "GAF966",
+    "capacityQt": 10,
+    "tempRangeF": null,
+    "style": "dual",
+    "container": "Deux paniers + crisper trays",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf1290",
+    "brand": "Gourmia",
+    "model": "14-Quart Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "14 qt · modèle officiel Gourmia GAF1290.",
+    "modelCode": "GAF1290",
+    "capacityQt": 14,
+    "tempRangeF": null,
+    "style": "oven",
+    "container": "Air Fry tray/rack + baking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf1220",
+    "brand": "Gourmia",
+    "model": "14-Quart Digital Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "14 qt · modèle officiel Gourmia GAF1220.",
+    "modelCode": "GAF1220",
+    "capacityQt": 14,
+    "tempRangeF": null,
+    "style": "oven",
+    "container": "Air Fry tray/rack + baking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf616",
+    "brand": "Gourmia",
+    "model": "6-QT Digital Window Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "6 qt · modèle officiel Gourmia GAF616.",
+    "modelCode": "GAF616",
+    "capacityQt": 6,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf798",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF798.",
+    "modelCode": "GAF798",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf778",
+    "brand": "Gourmia",
+    "model": "7-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF778.",
+    "modelCode": "GAF778",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf826",
+    "brand": "Gourmia",
+    "model": "8-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "8 qt · modèle officiel Gourmia GAF826.",
+    "modelCode": "GAF826",
+    "capacityQt": 8,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf956",
+    "brand": "Gourmia",
+    "model": "9-QT Dual Basket Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "9 qt · modèle officiel Gourmia GAF956.",
+    "modelCode": "GAF956",
+    "capacityQt": 9,
+    "tempRangeF": null,
+    "style": "dual",
+    "container": "Deux paniers + crisper trays",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf789",
+    "brand": "Gourmia",
+    "model": "7-QT Fry ’N Fold Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "7 qt · modèle officiel Gourmia GAF789.",
+    "modelCode": "GAF789",
+    "capacityQt": 7,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf575",
+    "brand": "Gourmia",
+    "model": "5-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "5 qt · modèle officiel Gourmia GAF575.",
+    "modelCode": "GAF575",
+    "capacityQt": 5,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf486",
+    "brand": "Gourmia",
+    "model": "4-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "4 qt · modèle officiel Gourmia GAF486.",
+    "modelCode": "GAF486",
+    "capacityQt": 4,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "gourmia-gaf249",
+    "brand": "Gourmia",
+    "model": "Compact 2-QT Digital Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "source": "https://www.gourmia.com/products/gourmia-air-fryer-accessories",
+    "description": "2 qt · modèle officiel Gourmia GAF249.",
+    "modelCode": "GAF249",
+    "capacityQt": 2,
+    "tempRangeF": null,
+    "style": "basket",
+    "container": "Panier + crisper tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "profileConfidence": "catalog",
+    "notes": "Modèle répertorié dans le catalogue constructeur. Les limites exactes de température ne sont pas forcées tant que le manuel de ce modèle n’est pas vérifié.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Selon manuel",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Selon manuel",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Bake",
+        "preset": "Selon manuel",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Selon manuel",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
     "id": "generic-oven",
     "brand": "Profil cuisine",
     "model": "Four traditionnel / convection",
