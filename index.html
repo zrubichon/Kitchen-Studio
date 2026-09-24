@@ -232,7 +232,11 @@
           <div class="mode-pills" id="favoriteModes"></div>
           <button class="btn btn-cream" id="viewFavoriteManual">Voir modes & guide</button>
         </div>
-        <div class="section-label"><span id="applianceLibraryLabel">Bibliothèque d’appareils</span><span id="applianceCount">14 appareils</span></div>
+        <div class="section-label"><span id="applianceLibraryLabel">Bibliothèque d’appareils</span><span id="applianceCount">77 appareils</span></div>
+        <div class="appliance-search-toolbar">
+          <label class="appliance-search"><span>⌕</span><input id="applianceSearchInput" type="search" placeholder="Rechercher marque, modèle ou référence (ex. AF181, Vortex, TurboBlaze…)" /></label>
+          <select id="applianceBrandFilter" aria-label="Filtrer par marque"><option value="all">Toutes les marques</option></select>
+        </div>
         <div class="filter-row appliance-filters" id="applianceFilters">
           <button class="appliance-filter-chip active" data-appliance-filter="all">Tous</button>
           <button class="appliance-filter-chip" data-appliance-filter="Air Fryer">Air Fryers</button>
@@ -285,6 +289,26 @@
       <div class="detail-heading"><div><div class="eyebrow" id="detailTags">Protéiné · 18 min</div><h2 id="detailTitle">Bowl poulet citron & feta</h2><p id="detailSubtitle">Frais, rapide et pensé pour utiliser les restes intelligemment.</p></div><button class="save-heart" aria-label="Enregistrer">♡</button></div>
       <div class="macro-row" id="detailMacros"></div>
       <div class="cook-with"><div><small>Je cuisine avec</small><select id="detailApplianceSelect"></select></div><div class="cook-setting" id="cookSetting"><span>Air Fry</span><strong>390°F · 12–14 min</strong></div></div>
+      <div class="cook-launch"><button class="btn btn-dark full" id="startCookingBtn">👩‍🍳 Cuisiner cette recette</button><small>Les réglages et les étapes s’adaptent à l’appareil choisi.</small></div>
+      <section class="cook-guide-panel" id="cookGuidePanel" hidden>
+        <div class="cook-guide-head"><div><div class="eyebrow">Mode cuisine</div><h3 id="cookGuideTitle">Cuisson adaptée</h3></div><span class="compatibility-badge" id="cookCompatibility">Compatible</span></div>
+        <div class="cook-method-switch">
+          <button class="cook-method active" type="button" data-cook-method="selected">Mon appareil</button>
+          <button class="cook-method" type="button" data-cook-method="oven">Four traditionnel</button>
+          <button class="cook-method" type="button" data-cook-method="airfryer">Air Fryer</button>
+        </div>
+        <div class="cook-guide-grid">
+          <div><small>Appareil</small><strong id="cookGuideDevice">—</strong></div>
+          <div><small>Mode</small><strong id="cookGuideMode">—</strong></div>
+          <div><small>Température</small><strong id="cookGuideTemp">—</strong></div>
+          <div><small>Durée</small><strong id="cookGuideTime">—</strong></div>
+          <div><small>Récipient / accessoire</small><strong id="cookGuideContainer">—</strong></div>
+          <div><small>Préchauffage</small><strong id="cookGuidePreheat">—</strong></div>
+        </div>
+        <div class="cook-guide-note" id="cookGuideNote"></div>
+        <h4>Étapes adaptées</h4>
+        <ol id="cookGuideSteps" class="steps-list"></ol>
+      </section>
       <div class="detail-columns"><div><h3>Ingrédients</h3><div id="detailIngredients" class="ingredients-list"></div></div><div><h3>Étapes</h3><ol id="detailSteps" class="steps-list"></ol></div></div>
       <div class="recipe-detail-actions"><button class="btn btn-outline" id="detailFavoriteBtn">♡ Ajouter aux favoris</button><button class="btn btn-primary" id="detailAddWeekBtn">+ Ajouter à la semaine</button></div>
       <div class="chef-tip"><span>✦</span><div><strong>Conseil Mise</strong><p id="detailTip">Préparez deux portions du poulet : la seconde est déjà prévue dans le déjeuner de demain.</p></div></div>
