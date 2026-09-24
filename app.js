@@ -33,6 +33,11 @@ const state={
   checked:new Set(JSON.parse(localStorage.getItem("miseShoppingChecked")||"[]")),
   profile:JSON.parse(localStorage.getItem("miseProfile")||"null")||{goal:"protein",diet:"balanced",servings:1,store:"Whole Foods Market",location:"Seattle, WA",budget:90}
 };
+state.profile.store=localStorage.getItem("miseStore")||state.profile.store||"Whole Foods Market";
+state.profile.location=localStorage.getItem("miseLocation")||state.profile.location||"Seattle, WA";
+const persistedBudget=Number(localStorage.getItem("miseBudget"));
+if(Number.isFinite(persistedBudget)&&persistedBudget>0)state.profile.budget=persistedBudget;
+localStorage.setItem("miseProfile",JSON.stringify(state.profile));
 let currentRecipe=RECIPES[0], wizardStep=0;
 function recipe(id){return RECIPES.find(r=>r.id===id)}
 function monday(){
@@ -131,7 +136,7 @@ function updateProfileUI(){
 }
 $("#saveProfile")?.addEventListener("click",()=>{
   const fd=new FormData($("#profileForm")); state.profile={...state.profile,goal:fd.get("goal"),diet:fd.get("diet"),servings:Number(fd.get("servings")),store:fd.get("store"),location:fd.get("location"),budget:Number(fd.get("budget"))};
-  localStorage.setItem("miseProfile",JSON.stringify(state.profile)); updateProfileUI(); renderShopping(); toast("Profil culinaire enregistré.");
+  localStorage.setItem("miseStore",state.profile.store); localStorage.setItem("miseLocation",state.profile.location); localStorage.setItem("miseBudget",String(state.profile.budget)); localStorage.setItem("miseProfile",JSON.stringify(state.profile)); updateProfileUI(); renderShopping(); toast("Profil culinaire enregistré.");
 });
 $("#profileForm")?.addEventListener("submit",e=>e.preventDefault());
 function showWizard(){wizardStep=0;syncWizard();openModal($("#wizardModal"))}
