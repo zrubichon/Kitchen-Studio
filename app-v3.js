@@ -292,6 +292,26 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
   });
 
   // Appliance catalog search / brand filter.
+  function applianceImageQuery(a){
+    if(a.brand==='Profil cuisine'){
+      const map={
+        'Four':'countertop convection oven full product',
+        'Plaques':'induction cooktop full product',
+        'Micro-ondes':'countertop microwave full product',
+        'Rice Cooker':'rice cooker full product',
+        'Multicuiseur':'electric pressure cooker multicooker full product',
+        'Blender':'countertop blender full product',
+        'Slow Cooker':'slow cooker full product',
+        'Grill':'countertop grill panini press full product'
+      };
+      return map[a.type]||a.model;
+    }
+    return [a.brand,a.model,a.modelCode].filter(Boolean).join(' ');
+  }
+  function applianceResolvedImage(a){
+    if(a.image)return a.image;
+    return '/api/appliance-image?q='+encodeURIComponent(applianceImageQuery(a))+'&source='+encodeURIComponent(a.source||'');
+  }
   function populateBrandFilter(){
     const sel=$('#applianceBrandFilter');if(!sel)return;
     const current=sel.value||'all';
@@ -322,9 +342,7 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
     $('#applianceCount').textContent=`${list.length} ${UI[state.profile.language].appliances}`;
     $('#applianceGrid').innerHTML=list.map(a=>{
       const d=applianceDisplay(a);
-      const visual=a.image
-        ?`<div class="appliance-photo-wrap"><img class="appliance-photo" src="${a.image}" alt="${d.brand} ${d.model}" loading="lazy"></div>`
-        :`<div class="appliance-device-placeholder"><span>♨</span><strong>${a.brand}</strong><small>${a.modelCode||''}</small></div>`;
+      const visual=`<div class="appliance-photo-wrap"><img class="appliance-photo" src="${applianceResolvedImage(a)}" alt="${d.brand} ${d.model}" loading="lazy" referrerpolicy="no-referrer"></div>`;
       return `<article class="appliance-card" data-appliance="${a.id}">${visual}<div class="eyebrow">${a.type} · ${d.brand}</div><h3>${d.model}</h3><p>${isEN()?(APPLIANCE_DESC_EN[a.id]||a.description):a.description}</p><div class="appliance-spec-line"><span>${a.modelCode||''}</span><span>${a.tempRangeF?a.tempRangeF[0]+'–'+a.tempRangeF[1]+'°F':''}</span></div><footer><span>${(a.modes||[]).length} ${UI[state.profile.language].modes}</span><span>${UI[state.profile.language].guide}</span></footer></article>`;
     }).join('');
     $$('[data-appliance]').forEach(c=>c.onclick=()=>openAppliance(c.dataset.appliance));
