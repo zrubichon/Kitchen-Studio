@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#7a2f24" />
+  <title>Mise — Planificateur repas IA</title>
+  <meta name="description" content="Mise transforme vos envies, votre régime, votre budget, vos appareils et votre magasin en une semaine de repas adaptée." />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand" data-go="planner" role="button" tabindex="0" aria-label="Accueil Mise">
+        <div class="brand-mark">M</div>
+        <div><div class="brand-name">Mise</div><div class="brand-kicker">AI Kitchen Studio</div></div>
+      </div>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <button class="nav-item active" data-page="planner"><span>⌂</span> Ma semaine</button>
+        <button class="nav-item" data-page="shopping"><span>⌁</span> Courses <span class="nav-count" id="shoppingCount">18</span></button>
+        <button class="nav-item" data-page="recipes"><span>♨</span> Recettes</button>
+        <button class="nav-item" data-page="appliances"><span>◫</span> Mes appareils</button>
+        <button class="nav-item" data-page="profile"><span>◎</span> Préférences</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="eyebrow light">Chef IA</div>
+        <p>“Cette semaine je veux des repas très protéinés, peu de cuisine mardi et rien de trop épicé.”</p>
+        <button class="btn btn-cream btn-small" id="openAiPrompt">Parler au chef</button>
+      </div>
+
+      <div class="profile-mini">
+        <div class="avatar">Z</div>
+        <div><strong>Mon profil</strong><small id="profileSummary">Équilibré · 1 pers.</small></div>
+        <button class="icon-btn" data-page="profile" aria-label="Modifier le profil">›</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><div class="brand-mark small">M</div><strong>Mise</strong></div>
+        <div class="topbar-spacer"></div>
+        <div class="store-pill" id="storePill"><span>◉</span><div><small>Courses chez</small><strong id="storePillName">Whole Foods · Seattle</strong></div></div>
+        <button class="icon-btn round" id="notifBtn" aria-label="Notifications">◌</button>
+      </header>
+
+      <section class="page active" id="page-planner">
+        <div class="hero-row">
+          <div>
+            <div class="eyebrow">Votre brigade personnelle</div>
+            <h1>Une semaine pensée<br/>comme un <em>menu de chef.</em></h1>
+            <p class="lead">Objectifs, allergies, budget, temps, envies, magasin et même votre Air Fryer : Mise assemble tout avant de choisir un seul plat.</p>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-outline" id="weekSettings">Critères de la semaine</button>
+            <button class="btn btn-primary" id="generateWeek"><span>✦</span> Composer avec l’IA</button>
+          </div>
+        </div>
+
+        <div class="insight-strip">
+          <div><small>Cette semaine</small><strong id="weekRange">21–27 septembre</strong></div>
+          <div class="insight-divider"></div>
+          <div><small>Objectif</small><strong id="goalChip">Énergie & protéines</strong></div>
+          <div class="insight-divider"></div>
+          <div><small>Temps cuisine moyen</small><strong id="avgTime">19 min</strong></div>
+          <div class="insight-divider"></div>
+          <div><small>Budget estimé</small><strong id="budgetEstimate">$78–92</strong></div>
+          <button class="text-btn" id="viewNutrition">Voir nutrition →</button>
+        </div>
+
+        <div class="planner-toolbar">
+          <div class="week-nav"><button class="icon-btn" id="prevWeek">‹</button><strong id="weekLabel">Semaine du 21 septembre</strong><button class="icon-btn" id="nextWeek">›</button></div>
+          <div class="toolbar-right">
+            <label class="toggle"><input type="checkbox" id="leftoversToggle" checked><span></span> Optimiser les restes</label>
+            <button class="btn btn-outline btn-small" id="regenerateSelected">↻ Recomposer</button>
+          </div>
+        </div>
+
+        <div class="week-grid" id="weekGrid"></div>
+
+        <div class="chef-note">
+          <div class="chef-seal">✦</div>
+          <div><div class="eyebrow">Note du chef IA</div><strong id="chefNoteTitle">J’ai fait travailler vos ingrédients deux fois.</strong><p id="chefNoteText">Le poulet rôti de lundi devient le bowl de mardi, les herbes servent dans trois recettes et votre avocat est utilisé avant qu’il ne mûrisse trop.</p></div>
+          <button class="btn btn-dark" id="askWhy">Pourquoi ces choix ?</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-shopping">
+        <div class="page-head">
+          <div><div class="eyebrow">Liste intelligente</div><h2>Vos courses, déjà organisées.</h2><p>Quantités regroupées pour toute la semaine. Cochez ce que vous avez déjà.</p></div>
+          <div class="page-head-actions"><button class="btn btn-outline" id="clearChecked">Masquer ce que j’ai</button><button class="btn btn-primary" id="shopRealProducts">Trouver les produits réels</button></div>
+        </div>
+        <div class="shopping-layout">
+          <div class="shopping-list-card">
+            <div class="shopping-meta"><div><small>Magasin sélectionné</small><strong id="shoppingStoreName">Whole Foods Market</strong></div><div><small>Zone</small><strong id="shoppingLocation">Seattle, WA</strong></div><button class="text-btn" data-page="profile">Modifier</button></div>
+            <div id="shoppingList"></div>
+          </div>
+          <aside class="cart-summary">
+            <div class="eyebrow">Panier estimé</div>
+            <div class="price-big" id="cartEstimate">$84<span>.30</span></div>
+            <p>Estimation de démonstration. Avec Instacart connecté, les articles, disponibilités et prix peuvent être liés au retailer local.</p>
+            <div class="summary-line"><span>Produits</span><strong id="cartItems">18</strong></div>
+            <div class="summary-line"><span>Repas couverts</span><strong>21</strong></div>
+            <div class="summary-line"><span>Déjà dans le placard</span><strong id="pantryCount">5</strong></div>
+            <button class="btn btn-primary full" id="shopRealProducts2">Ouvrir la liste achetable</button>
+            <small class="muted">La connexion magasin nécessite une clé développeur du fournisseur.</small>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-recipes">
+        <div class="page-head"><div><div class="eyebrow">Le carnet Mise</div><h2>Des recettes qui connaissent votre cuisine.</h2><p>Chaque fiche s’adapte au matériel, au nombre de portions et aux préférences.</p></div><button class="btn btn-primary" id="recipeAiBtn">✦ Inventer une recette</button></div>
+        <div class="filter-row"><button class="filter-chip active" data-filter="all">Toutes</button><button class="filter-chip" data-filter="high-protein">Protéinées</button><button class="filter-chip" data-filter="quick">≤ 20 min</button><button class="filter-chip" data-filter="vegetarian">Végé</button><button class="filter-chip" data-filter="airfryer">Air Fryer</button></div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+      </section>
+
+      <section class="page" id="page-appliances">
+        <div class="page-head"><div><div class="eyebrow">Votre vraie cuisine</div><h2>L’IA cuisine avec <em>vos</em> appareils.</h2><p>Ajoutez marque + modèle. Les instructions changent selon les modes, plages de température et capacités réelles.</p></div><button class="btn btn-primary" id="addAppliance">+ Ajouter un appareil</button></div>
+        <div class="appliance-hero">
+          <div><span class="status-dot"></span> Appareil favori</div>
+          <h3 id="favoriteApplianceName">COSORI TurboBlaze™ 6.0-Quart</h3>
+          <p id="favoriteApplianceMeta">Air Fryer · 9 fonctions de cuisson · 5 vitesses de ventilation</p>
+          <div class="mode-pills" id="favoriteModes"></div>
+          <button class="btn btn-cream" id="viewFavoriteManual">Voir modes & guide</button>
+        </div>
+        <div class="section-label"><span>Appareils enregistrés</span><span id="applianceCount">3 appareils</span></div>
+        <div class="appliance-grid" id="applianceGrid"></div>
+        <div class="source-note"><strong>Principe de sécurité :</strong> Mise conserve la source constructeur de chaque modèle. Les températures/temps restent des aides culinaires et la cuisson finale des aliments sensibles doit être vérifiée avec les recommandations de sécurité alimentaire et, si pertinent, un thermomètre.</div>
+      </section>
+
+      <section class="page" id="page-profile">
+        <div class="page-head"><div><div class="eyebrow">Votre profil culinaire</div><h2>Plus Mise vous connaît, moins vous planifiez.</h2><p>Ces préférences sont la base permanente. Les critères de semaine peuvent les modifier temporairement.</p></div><button class="btn btn-primary" id="saveProfile">Enregistrer</button></div>
+        <form class="profile-form" id="profileForm">
+          <div class="form-card"><h3>Objectif & style</h3><div class="field-grid two"><label>Objectif principal<select name="goal"><option value="balanced">Manger équilibré</option><option value="protein" selected>Énergie & protéines</option><option value="muscle">Prise de muscle</option><option value="light">Repas plus légers</option><option value="budget">Économiser</option></select></label><label>Style alimentaire<select name="diet"><option value="balanced" selected>Omnivore équilibré</option><option value="vegetarian">Végétarien</option><option value="vegan">Vegan</option><option value="pescatarian">Pescatarien</option><option value="mediterranean">Méditerranéen</option></select></label><label>Portions<input name="servings" type="number" min="1" max="8" value="1" /></label><label>Temps max un soir<select name="maxTime"><option>15 min</option><option selected>25 min</option><option>35 min</option><option>45 min</option></select></label></div></div>
+          <div class="form-card"><h3>À respecter absolument</h3><label>Allergies / intolérances<input name="allergies" placeholder="Ex. cacahuètes, lactose…" /></label><label>Je n’aime pas<input name="dislikes" placeholder="Ex. champignons, coriandre…" /></label><div><span class="field-title">Préférences rapides</span><div class="check-pills"><label><input type="checkbox" name="pref" value="high-protein" checked> Riche en protéines</label><label><input type="checkbox" name="pref" value="meal-prep" checked> Meal prep</label><label><input type="checkbox" name="pref" value="few-dishes"> Peu de vaisselle</label><label><input type="checkbox" name="pref" value="seasonal"> De saison</label><label><input type="checkbox" name="pref" value="frozen"> Surgelés acceptés</label></div></div></div>
+          <div class="form-card"><h3>Courses</h3><div class="field-grid two"><label>Enseigne<select name="store" id="profileStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option><option>Target</option><option>Carrefour</option><option>Monoprix</option><option>Auchan</option></select></label><label>Ville / code postal<input name="location" id="profileLocation" value="Seattle, WA" /></label><label>Budget hebdomadaire<input name="budget" type="number" value="90" min="20" step="5" /></label><label>Priorité produits<select name="productPriority"><option value="value">Meilleur rapport qualité/prix</option><option value="organic">Bio quand possible</option><option value="brand">Mes marques favorites</option><option value="cheapest">Prix le plus bas</option></select></label></div></div>
+          <div class="form-card"><h3>Comment je cuisine</h3><p class="muted">Les appareils enregistrés sont utilisés pour adapter chaque recette.</p><div class="check-pills"><label><input type="checkbox" checked> Air Fryer</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox"> Rice cooker</label><label><input type="checkbox"> Instant Pot</label><label><input type="checkbox"> Blender</label></div><button type="button" class="text-btn" data-page="appliances">Gérer les modèles exacts →</button></div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+
+  <dialog class="modal recipe-modal" id="recipeModal">
+    <button class="modal-close" data-close>×</button>
+    <div class="recipe-photo" id="detailPhoto"><div class="photo-badge" id="detailMealSlot">Mardi · Déjeuner</div></div>
+    <div class="recipe-detail-body">
+      <div class="detail-heading"><div><div class="eyebrow" id="detailTags">Protéiné · 18 min</div><h2 id="detailTitle">Bowl poulet citron & feta</h2><p id="detailSubtitle">Frais, rapide et pensé pour utiliser les restes intelligemment.</p></div><button class="save-heart" aria-label="Enregistrer">♡</button></div>
+      <div class="macro-row" id="detailMacros"></div>
+      <div class="cook-with"><div><small>Je cuisine avec</small><select id="detailApplianceSelect"></select></div><div class="cook-setting" id="cookSetting"><span>Air Fry</span><strong>390°F · 12–14 min</strong></div></div>
+      <div class="detail-columns"><div><h3>Ingrédients</h3><div id="detailIngredients" class="ingredients-list"></div></div><div><h3>Étapes</h3><ol id="detailSteps" class="steps-list"></ol></div></div>
+      <div class="chef-tip"><span>✦</span><div><strong>Conseil Mise</strong><p id="detailTip">Préparez deux portions du poulet : la seconde est déjà prévue dans le déjeuner de demain.</p></div></div>
+    </div>
+  </dialog>
+
+  <dialog class="modal wizard-modal" id="wizardModal">
+    <button class="modal-close" data-close>×</button>
+    <div class="wizard-header"><div class="chef-seal dark">✦</div><div><div class="eyebrow">Brief de la semaine</div><h2>Qu’est-ce qu’on cuisine ?</h2><p>Répondez en 60 secondes. Tout peut être modifié ensuite.</p></div></div>
+    <div class="wizard-progress"><span class="active"></span><span></span><span></span><span></span></div>
+    <form id="wizardForm">
+      <div class="wizard-step active" data-step="0">
+        <h3>1. Quel est le ton de cette semaine ?</h3><div class="option-grid"><label class="option-card"><input type="radio" name="weekGoal" value="high-protein" checked><span>⚡</span><strong>Très protéinée</strong><small>Priorité satiété & récupération</small></label><label class="option-card"><input type="radio" name="weekGoal" value="balanced"><span>◐</span><strong>Équilibrée</strong><small>Variété & simplicité</small></label><label class="option-card"><input type="radio" name="weekGoal" value="light"><span>☘</span><strong>Plus légère</strong><small>Fraîche & digeste</small></label><label class="option-card"><input type="radio" name="weekGoal" value="budget"><span>¤</span><strong>Petit budget</strong><small>Moins d’ingrédients, zéro gaspillage</small></label></div>
+      </div>
+      <div class="wizard-step" data-step="1"><h3>2. Vos contraintes réelles</h3><div class="field-grid two"><label>Budget cible<input type="number" name="weekBudget" value="90" /></label><label>Temps max en semaine<select name="weekTime"><option>15 min</option><option selected>25 min</option><option>35 min</option></select></label><label>Soirs où je ne veux presque pas cuisiner<input name="lowCookDays" placeholder="Ex. mardi, jeudi" /></label><label>Nombre de personnes<input name="weekServings" type="number" min="1" value="1" /></label></div><div class="check-pills"><label><input type="checkbox" name="batch" checked> Cuisiner 2 fois, réutiliser</label><label><input type="checkbox" name="freeze"> Prévoir du congélateur</label><label><input type="checkbox" name="portable" checked> Déjeuners transportables</label></div></div>
+      <div class="wizard-step" data-step="2"><h3>3. Ce que vous voulez vraiment manger</h3><label>Écrivez comme vous parleriez à un chef<textarea name="prompt" rows="5" placeholder="Ex. beaucoup de poulet et saumon, petits déjeuners rapides, une pasta réconfortante vendredi, pas trop épicé, j’ai déjà du riz…">Beaucoup de protéines, déjeuners faciles à emporter, je veux cuisiner peu le mardi et garder un dîner plus fun vendredi.</textarea></label><div class="cuisine-choice"><span class="field-title">Cuisines</span><div class="check-pills"><label><input type="checkbox" checked> Méditerranéenne</label><label><input type="checkbox" checked> Asiatique</label><label><input type="checkbox"> Mexicaine</label><label><input type="checkbox"> Italienne</label><label><input type="checkbox"> Française</label></div></div></div>
+      <div class="wizard-step" data-step="3"><h3>4. Courses & matériel</h3><div class="field-grid two"><label>Je fais mes courses chez<select name="weekStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option></select></label><label>Zone<input name="weekLocation" value="Seattle, WA" /></label></div><div class="appliance-choice"><span class="field-title">Matériel disponible cette semaine</span><div class="check-pills"><label><input type="checkbox" checked> COSORI TurboBlaze</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox"> Blender</label></div></div><div class="wizard-summary"><span>✦</span><p>Mise cherchera d’abord des recettes compatibles avec ces choix, puis optimisera les ingrédients communs pour limiter le gaspillage et la facture.</p></div></div>
+      <div class="wizard-actions"><button type="button" class="btn btn-outline" id="wizardBack" disabled>Retour</button><button type="button" class="btn btn-primary" id="wizardNext">Continuer</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal ai-modal" id="aiModal">
+    <button class="modal-close" data-close>×</button><div class="chef-seal dark">✦</div><div class="eyebrow">Chef IA</div><h2>Demandez sans remplir de formulaire.</h2><p>Le chef utilise votre profil permanent, votre semaine actuelle et vos appareils.</p><div class="chat-box"><div class="chat-message ai">Je connais déjà votre profil. Qu’est-ce qui change cette semaine ?</div><div class="prompt-input"><textarea id="quickPrompt" rows="4" placeholder="Ex. Je rentre tard mercredi, j’ai envie d’un saumon mardi et j’ai déjà 4 œufs…"></textarea><button class="btn btn-primary" id="sendQuickPrompt">Composer ✦</button></div></div>
+  </dialog>
+
+  <dialog class="modal appliance-modal" id="applianceModal">
+    <button class="modal-close" data-close>×</button><div class="eyebrow">Fiche appareil</div><h2 id="applianceModalTitle">COSORI TurboBlaze™ 6.0-Quart</h2><p id="applianceModalDesc"></p><div class="manual-mode-list" id="manualModeList"></div><div class="manual-source"><strong>Source constructeur</strong><a id="manualSourceLink" target="_blank" rel="noopener">Ouvrir le guide officiel ↗</a></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
