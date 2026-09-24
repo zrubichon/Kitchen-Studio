@@ -215,39 +215,58 @@
       </section>
 
       <section class="page" id="page-appliances">
-        <div class="page-head"><div><div class="eyebrow">Votre vraie cuisine</div><h2>L’IA cuisine avec <em>vos</em> appareils.</h2><p>Ajoutez marque + modèle. Les instructions changent selon les modes, plages de température et capacités réelles.</p></div><button class="btn btn-primary" id="addAppliance">+ Ajouter un appareil</button></div>
-        <div class="appliance-recognition">
-          <div class="recognition-copy"><div class="eyebrow">Reconnaissance IA</div><h3>Photographiez votre appareil.</h3><p>Prenez une photo où l’on voit l’appareil entier et, si possible, le logo ou la référence. Mise essaie de reconnaître le modèle puis adapte les recettes à l’appareil confirmé.</p></div>
-          <label class="camera-drop" for="appliancePhotoInput">
-            <input id="appliancePhotoInput" type="file" accept="image/*" capture="environment" hidden />
-            <div id="appliancePhotoPreview" class="camera-preview"><span>⌁</span><strong>Prendre ou importer une photo</strong><small>Air Fryer, four, multicuiseur, blender…</small></div>
-          </label>
-          <div class="recognition-result" id="applianceRecognitionResult" hidden></div>
-          <button class="btn btn-primary" id="recognizeApplianceBtn" disabled>✦ Reconnaître avec l’IA</button>
+        <div class="page-head"><div><div class="eyebrow">Votre vraie cuisine</div><h2>Entrez <em>votre appareil.</em></h2><p>Pas de catalogue à parcourir : écrivez simplement la marque, le modèle ou la référence. Kitchen Studio recherche l’appareil, construit son profil de cuisson et l’enregistre pour adapter les recettes.</p></div></div>
+
+        <div class="device-research-layout">
+          <section class="device-research-card">
+            <div class="eyebrow">Recherche appareil par IA</div>
+            <h3>Quel appareil utilisez-vous ?</h3>
+            <p class="muted">Exemples : “Ninja AF181”, “COSORI TurboBlaze CAF-DC601”, “Instant Pot Duo Crisp”, “Breville Smart Oven BOV900”, “Vitamix A3500”. Plus la référence est précise, plus le profil sera fiable.</p>
+            <form id="deviceResearchForm" class="device-research-form">
+              <label class="device-main-search"><span>⌕</span><input id="deviceResearchInput" autocomplete="off" placeholder="Rentrez votre appareil : marque + modèle / référence" required /></label>
+              <button class="btn btn-primary" id="deviceResearchBtn" type="submit">✦ Rechercher avec l’IA</button>
+            </form>
+            <div class="device-search-help"><span>Air Fryer</span><span>Four</span><span>Multicuiseur</span><span>Rice cooker</span><span>Blender</span><span>Slow cooker</span><span>Grill</span><span>Micro-ondes</span></div>
+            <div class="device-research-status" id="deviceResearchStatus" hidden></div>
+            <div class="device-research-result" id="deviceResearchResult" hidden></div>
+          </section>
+
+          <aside class="saved-device-card" id="savedDeviceCard">
+            <div class="saved-device-empty" id="savedDeviceEmpty">
+              <span>♨</span>
+              <div class="eyebrow">Appareil actif</div>
+              <h3>Aucun appareil enregistré</h3>
+              <p>Recherchez votre modèle exact pour que les recettes puissent s’adapter automatiquement.</p>
+            </div>
+            <div id="savedDeviceContent" hidden>
+              <div class="saved-device-image"><img id="savedDeviceImage" alt="Appareil enregistré" /></div>
+              <div class="eyebrow">Appareil actif</div>
+              <h3 id="favoriteApplianceName">Votre appareil</h3>
+              <p id="favoriteApplianceMeta"></p>
+              <div class="mode-pills" id="favoriteModes"></div>
+              <div class="saved-device-actions">
+                <button class="btn btn-cream" id="viewFavoriteManual" type="button">Voir la source / le guide</button>
+                <button class="text-btn danger" id="removeSavedDevice" type="button">Retirer l’appareil</button>
+              </div>
+            </div>
+          </aside>
         </div>
-        <div class="appliance-hero">
-          <div><span class="status-dot"></span> Appareil favori</div>
-          <h3 id="favoriteApplianceName">COSORI TurboBlaze™ 6.0-Quart</h3>
-          <p id="favoriteApplianceMeta">Air Fryer · 9 fonctions de cuisson · 5 vitesses de ventilation</p>
-          <div class="mode-pills" id="favoriteModes"></div>
-          <button class="btn btn-cream" id="viewFavoriteManual">Voir modes & guide</button>
+
+        <div class="device-how-it-works">
+          <div><span>1</span><strong>Vous entrez le modèle</strong><small>L’IA cherche la référence et ses caractéristiques.</small></div>
+          <div><span>2</span><strong>Kitchen Studio l’enregistre</strong><small>Modes, températures, capacité, accessoires et sources.</small></div>
+          <div><span>3</span><strong>Chaque recette s’adapte</strong><small>Mode, °F/°C, temps, préchauffage et préparation si l’appareil convient.</small></div>
         </div>
-        <div class="section-label"><span id="applianceLibraryLabel">Bibliothèque d’appareils</span><span id="applianceCount">109 appareils</span></div>
-        <div class="appliance-search-toolbar">
-          <label class="appliance-search"><span>⌕</span><input id="applianceSearchInput" type="search" placeholder="Rechercher marque, modèle ou référence (ex. AF181, Vortex, TurboBlaze…)" /></label>
-          <select id="applianceBrandFilter" aria-label="Filtrer par marque"><option value="all">Toutes les marques</option></select>
+
+        <div class="source-note"><strong>Fiabilité :</strong> si la référence exacte ou certaines caractéristiques ne sont pas suffisamment confirmées, Kitchen Studio les laisse inconnues plutôt que de les inventer. Les temps et températures proposés pour une recette restent des recommandations culinaires à vérifier avec la cuisson réelle et les consignes de sécurité alimentaire.</div>
+
+        <!-- Ancres legacy masquées : évitent qu'une ancienne couche JS ne casse avant l'initialisation du nouveau moteur. -->
+        <div hidden aria-hidden="true">
+          <button id="addAppliance"></button><span id="applianceCount"></span><span id="applianceLibraryLabel"></span>
+          <input id="applianceSearchInput"><select id="applianceBrandFilter"><option value="all">all</option></select>
+          <div id="applianceFilters"></div><div id="applianceGrid"></div>
+          <input id="appliancePhotoInput" type="file"><div id="appliancePhotoPreview"></div><div id="applianceRecognitionResult"></div><button id="recognizeApplianceBtn"></button>
         </div>
-        <div class="filter-row appliance-filters" id="applianceFilters">
-          <button class="appliance-filter-chip active" data-appliance-filter="all">Tous</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Air Fryer">Air Fryers</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Four">Fours</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Multicuiseur">Multicuiseurs</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Rice Cooker">Rice cookers</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Blender">Blenders</button>
-          <button class="appliance-filter-chip" data-appliance-filter="Micro-ondes">Micro-ondes</button>
-        </div>
-        <div class="appliance-grid" id="applianceGrid"></div>
-        <div class="source-note"><strong>Principe de sécurité :</strong> Mise conserve la source constructeur de chaque modèle. Les températures/temps restent des aides culinaires et la cuisson finale des aliments sensibles doit être vérifiée avec les recommandations de sécurité alimentaire et, si pertinent, un thermomètre.</div>
       </section>
 
       <section class="page" id="page-account">
@@ -274,7 +293,7 @@
           <div class="form-card"><h3>Objectif & style</h3><div class="field-grid two"><label>Objectif principal<select name="goal"><option value="balanced">Manger équilibré</option><option value="protein" selected>Énergie & protéines</option><option value="muscle">Prise de muscle</option><option value="light">Repas plus légers</option><option value="budget">Économiser</option></select></label><label>Style alimentaire<select name="diet"><option value="balanced" selected>Omnivore équilibré</option><option value="vegetarian">Végétarien</option><option value="vegan">Vegan</option><option value="pescatarian">Pescatarien</option><option value="mediterranean">Méditerranéen</option></select></label><label>Portions<input name="servings" type="number" min="1" max="8" value="1" /></label><label>Temps max un soir<select name="maxTime"><option>15 min</option><option selected>25 min</option><option>35 min</option><option>45 min</option></select></label></div></div>
           <div class="form-card"><h3>À respecter absolument</h3><label>Allergies / intolérances<input name="allergies" placeholder="Ex. cacahuètes, lactose…" /></label><label>Je n’aime pas<input name="dislikes" placeholder="Ex. champignons, coriandre…" /></label><div><span class="field-title">Préférences rapides</span><div class="check-pills"><label><input type="checkbox" name="pref" value="high-protein" checked> Riche en protéines</label><label><input type="checkbox" name="pref" value="meal-prep" checked> Meal prep</label><label><input type="checkbox" name="pref" value="few-dishes"> Peu de vaisselle</label><label><input type="checkbox" name="pref" value="seasonal"> De saison</label><label><input type="checkbox" name="pref" value="frozen"> Surgelés acceptés</label></div></div></div>
           <div class="form-card"><h3>Courses</h3><div class="field-grid two"><label>Enseigne<select name="store" id="profileStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option><option>Target</option><option>Carrefour</option><option>Monoprix</option><option>Auchan</option></select></label><label>Ville / code postal<input name="location" id="profileLocation" value="Seattle, WA" /></label><label>Budget hebdomadaire<input name="budget" type="number" value="90" min="20" step="5" /></label><label>Priorité produits<select name="productPriority"><option value="value">Meilleur rapport qualité/prix</option><option value="organic">Bio quand possible</option><option value="brand">Mes marques favorites</option><option value="cheapest">Prix le plus bas</option></select></label></div></div>
-          <div class="form-card"><h3>Comment je cuisine</h3><p class="muted">Les appareils enregistrés sont utilisés pour adapter chaque recette.</p><div class="check-pills"><label><input type="checkbox" checked> Air Fryer</label><label><input type="checkbox" checked> Plaques</label><label><input type="checkbox" checked> Four</label><label><input type="checkbox"> Micro-ondes</label><label><input type="checkbox"> Rice cooker</label><label><input type="checkbox"> Instant Pot / multicuiseur</label><label><input type="checkbox"> Blender</label><label><input type="checkbox"> Slow cooker</label><label><input type="checkbox"> Grill</label><label><input type="checkbox"> Toaster oven</label><label><input type="checkbox"> Robot cuiseur</label></div><button type="button" class="text-btn" data-page="appliances">Gérer les modèles exacts →</button></div>
+          <div class="form-card"><h3>Mon appareil de cuisine</h3><p class="muted">L’appareil enregistré devient la référence pour adapter automatiquement les recettes compatibles.</p><div class="profile-device-summary" id="profileDeviceSummary"><strong>Aucun appareil enregistré</strong><small>Ajoutez votre modèle exact dans “Mes appareils”.</small></div><button type="button" class="text-btn" data-page="appliances">Rechercher / changer mon appareil →</button></div>
         </form>
       </section>
     </main>
