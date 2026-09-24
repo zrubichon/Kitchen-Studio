@@ -1,292 +1,3637 @@
 [
   {
+    "id": "cosori-iconic-65",
+    "brand": "COSORI",
+    "model": "Iconic™ Stainless Steel 6.5-Quart Smart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/iconic-air-fryer",
+    "description": "6.5 · panier Air Fryer · 90–450°F.",
+    "modelCode": "CAF-SE601S-CUS",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier céramique + crisper plate",
+    "timeFactor": 0.95,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "90–450°F",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "90–450°F",
+        "goodFor": "Rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "90–450°F",
+        "goodFor": "Pâtisserie"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "90–450°F",
+        "goodFor": "Déshydratation"
+      },
+      {
+        "name": "Proof",
+        "preset": "90–450°F",
+        "goodFor": "Pousse"
+      },
+      {
+        "name": "Reheat",
+        "preset": "90–450°F",
+        "goodFor": "Réchauffage"
+      }
+    ]
+  },
+  {
     "id": "cosori-turboblaze-6",
     "brand": "COSORI",
     "model": "TurboBlaze™ 6.0-Quart Smart Air Fryer",
     "type": "Air Fryer",
-    "favorite": true,
-    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/825dc676-eb16-459c-bf8f-5b167fcf4fc2.png%3BmaxHeight%3D1920%3BmaxWidth%3D900?format=webp",
+    "favorite": false,
+    "image": "https://item-shopping.c.yimg.jp/i/n/kegomaru_kg200844_1_d_20260213173759",
     "source": "https://cosori.com/products/turboblaze%E2%84%A2-6-0-quart-air-fryer-cream",
-    "description": "6.2 L, 90–450°F et 10 fonctions, avec contrôle précis de la ventilation selon le mode.",
+    "description": "6.5 · panier Air Fryer · 90–450°F.",
+    "modelCode": "CAF-DC601S-WUSR",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 0.93,
+    "preheat": "optional",
+    "notes": "",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "385°F · 10 min",
-        "goodFor": "Frites, poulet, poisson, légumes, aliments panés"
+        "preset": "385°F · 10 min preset",
+        "goodFor": "Frites, poulet, poisson, légumes"
       },
       {
         "name": "Roast",
-        "preset": "425°F · 12 min",
-        "goodFor": "Poulet entier, bœuf rôti, porc, légumes racines"
+        "preset": "425°F · 12 min preset",
+        "goodFor": "Grosses pièces et légumes racines"
       },
       {
         "name": "Bake",
-        "preset": "330°F · 20 min",
-        "goodFor": "Pain, gâteaux, cookies, tartes"
+        "preset": "330°F · 20 min preset",
+        "goodFor": "Pain, gâteaux, cookies"
       },
       {
         "name": "Broil",
-        "preset": "450°F · 5 min",
-        "goodFor": "Steak, crevettes, poisson, gratins"
+        "preset": "450°F · 5 min preset",
+        "goodFor": "Dorer, gratiner, saisir"
       },
       {
         "name": "Dehydrate",
-        "preset": "135°F · 6 h",
-        "goodFor": "Fruits séchés, jerky, snacks"
+        "preset": "135°F · 6 h preset",
+        "goodFor": "Fruits, jerky, herbes"
       },
       {
         "name": "Frozen",
-        "preset": "390°F · 14 min",
-        "goodFor": "Frites, tenders et snacks surgelés"
+        "preset": "390°F · 14 min preset",
+        "goodFor": "Aliments surgelés"
       },
       {
         "name": "Proof",
-        "preset": "90°F · 1 h",
+        "preset": "90°F · 1 h preset",
         "goodFor": "Pâtes levées"
+      },
+      {
+        "name": "Reheat",
+        "preset": "390°F · 5 min preset",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Keep Warm",
+        "preset": "170°F · 30 min preset",
+        "goodFor": "Maintien au chaud"
       },
       {
         "name": "Preheat",
         "preset": "Selon mode",
         "goodFor": "Préchauffage"
+      }
+    ]
+  },
+  {
+    "id": "cosori-turboblaze-6-gray",
+    "brand": "COSORI",
+    "model": "TurboBlaze™ 6.0-Quart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/collections/air-fryers/products/turboblaze%E2%84%A2-6-0-quart-smart-air-fryer-gray",
+    "description": "6.5 · panier Air Fryer · 90–450°F.",
+    "modelCode": "CAF-DC601-AUS",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 0.93,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "385°F · 10 min preset",
+        "goodFor": "Frites, poulet, poisson, légumes"
+      },
+      {
+        "name": "Roast",
+        "preset": "425°F · 12 min preset",
+        "goodFor": "Grosses pièces et légumes racines"
+      },
+      {
+        "name": "Bake",
+        "preset": "330°F · 20 min preset",
+        "goodFor": "Pain, gâteaux, cookies"
+      },
+      {
+        "name": "Broil",
+        "preset": "450°F · 5 min preset",
+        "goodFor": "Dorer, gratiner, saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "135°F · 6 h preset",
+        "goodFor": "Fruits, jerky, herbes"
+      },
+      {
+        "name": "Frozen",
+        "preset": "390°F · 14 min preset",
+        "goodFor": "Aliments surgelés"
+      },
+      {
+        "name": "Proof",
+        "preset": "90°F · 1 h preset",
+        "goodFor": "Pâtes levées"
       },
       {
         "name": "Reheat",
-        "preset": "390°F · 5 min",
+        "preset": "390°F · 5 min preset",
         "goodFor": "Restes"
       },
       {
         "name": "Keep Warm",
-        "preset": "170°F · 30 min",
+        "preset": "170°F · 30 min preset",
         "goodFor": "Maintien au chaud"
       }
     ]
   },
   {
-    "id": "instant-vortex-plus-6",
-    "brand": "Instant Pot",
-    "model": "Vortex® Plus 6QT ClearCook",
+    "id": "cosori-twinfry-9",
+    "brand": "COSORI",
+    "model": "TWINFRY 9-Quart Double Air Fryer",
     "type": "Air Fryer",
     "favorite": false,
-    "image": "https://d.dlnws.com/64599/1782228213-71gbagobpsl-ac_sl1500.jpg?h=1024&w=926",
-    "source": "https://instantpot.com/products/instant-pot-vortex-plus-6qt-clearcook-air-fryer",
-    "description": "6QT ClearCook avec 6 fonctions et fenêtre de contrôle de cuisson.",
+    "image": null,
+    "source": "https://cosori.com/collections/air-fryers/products/cosori-twinfry-9-quart-double-air-fryer",
+    "description": "9 · double panier · 95–465°F.",
+    "modelCode": "CAF-TF901-KUS",
+    "capacityQt": 9,
+    "tempRangeF": [
+      95,
+      465
+    ],
+    "style": "dual",
+    "container": "2 paniers 4.5 qt ou 1 zone 9 qt + plaques croustillantes",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "Utiliser la séparation en 2 zones pour des temps/températures différents.",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "95–400°F",
-        "goodFor": "Cuisson croustillante avec peu d’huile"
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
       },
       {
         "name": "Roast",
-        "preset": "95–400°F",
-        "goodFor": "Viandes et légumes rôtis"
-      },
-      {
-        "name": "Broil",
-        "preset": "95–400°F",
-        "goodFor": "Dorer et saisir en surface"
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
       },
       {
         "name": "Bake",
-        "preset": "95–400°F",
-        "goodFor": "Pâtisserie et cuisson type four"
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
       },
       {
         "name": "Reheat",
-        "preset": "95–400°F",
-        "goodFor": "Réchauffer les restes"
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
       },
       {
         "name": "Dehydrate",
-        "preset": "95–400°F",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cosori-dualbasket-9",
+    "brand": "COSORI",
+    "model": "9.0-Quart Dual Basket Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/cosori-9-0-quart-dual-basket-air-fryer",
+    "description": "9 · double panier · 95–450°F.",
+    "modelCode": "CAF-R901-AUS",
+    "capacityQt": 9,
+    "tempRangeF": [
+      95,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 4.5 qt + crisper plates",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cosori-dualblaze-68",
+    "brand": "COSORI",
+    "model": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/dual-blaze-air-fryer",
+    "description": "6.8 · panier Air Fryer · 175–400°F.",
+    "modelCode": "CAF-P583S-KUS",
+    "capacityQt": 6.8,
+    "tempRangeF": [
+      175,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate; double élément chauffant",
+    "timeFactor": 0.92,
+    "preheat": "usually-not-needed",
+    "notes": "Dual heating: généralement pas besoin de retourner/secouer autant.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "175–400°F",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "175–400°F",
+        "goodFor": "Rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "175–400°F",
+        "goodFor": "Pâtisserie"
+      },
+      {
+        "name": "Broil",
+        "preset": "175–400°F",
+        "goodFor": "Dorer"
+      },
+      {
+        "name": "Reheat",
+        "preset": "175–400°F",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Keep Warm",
+        "preset": "175–400°F",
+        "goodFor": "Maintien"
+      }
+    ]
+  },
+  {
+    "id": "cosori-prole-5",
+    "brand": "COSORI",
+    "model": "Pro LE 5.0-Quart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/pro-le-5-0-quart-air-fryer",
+    "description": "5 · panier Air Fryer · 170–450°F.",
+    "modelCode": "CAF-L501-KUS",
+    "capacityQt": 5,
+    "tempRangeF": [
+      170,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + plaque croustillante",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "cosori-lite-21",
+    "brand": "COSORI",
+    "model": "Lite 2.1-Quart Mini Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/lite-2-1-quart-mini-air-fryer",
+    "description": "2.1 · panier Air Fryer · 170–400°F.",
+    "modelCode": "CAF-LI211",
+    "capacityQt": 2.1,
+    "tempRangeF": [
+      170,
+      400
+    ],
+    "style": "basket",
+    "container": "Petit panier + crisper plate",
+    "timeFactor": 0.95,
+    "preheat": "optional",
+    "notes": "Petite capacité: cuire en plusieurs fournées si nécessaire.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "170–400°F",
+        "goodFor": "Petites portions"
+      },
+      {
+        "name": "Roast",
+        "preset": "170–400°F",
+        "goodFor": "Petits rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "170–400°F",
+        "goodFor": "Petites pâtisseries"
+      },
+      {
+        "name": "Reheat",
+        "preset": "170–400°F",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "cosori-13qt-oven",
+    "brand": "COSORI",
+    "model": "13-Quart Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://cosori.com/products/13-quart-air-fryer-oven",
+    "description": "13 · format four Air Fryer · 90–450°F.",
+    "modelCode": "CAF-R121-SUS",
+    "capacityQt": 13,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "oven",
+    "container": "Air Fry tray, food tray, rotisserie basket/forks, drip tray",
+    "timeFactor": 1.08,
+    "preheat": "recommended",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
         "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "ninja-af181",
+    "brand": "Ninja",
+    "model": "Air Fryer Pro XL 6-in-1",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://www.jbhifi.com.au/cdn/shop/files/795713-Product-0-I-638717192402089350.jpg?v=1736122514",
+    "source": "https://www.sharkninja.com/ninja-air-fryer-pro-xl-6-in-1/AF181.html",
+    "description": "6.5 · panier Air Fryer · 105–450°F.",
+    "modelCode": "AF181",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier 6.5 qt + crisper plate",
+    "timeFactor": 0.96,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Max Crisp",
+        "preset": "Jusqu’à 450°F",
+        "goodFor": "Surgelés et finition très croustillante"
+      },
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et snacks"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et petits plats"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "ninja-af141",
+    "brand": "Ninja",
+    "model": "5-QT Air Fryer Pro",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/shop-by-brand/ninja/small-kitchen-appliances/air-fryers",
+    "description": "5 · panier Air Fryer · 105–400°F.",
+    "modelCode": "AF141",
+    "capacityQt": 5,
+    "tempRangeF": [
+      105,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + plaque croustillante",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Rôtis"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "ninja-dz901",
+    "brand": "Ninja",
+    "model": "DualZone™ 10-QT Dual Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers",
+    "description": "10 · double panier · 105–450°F.",
+    "modelCode": "DZ901",
+    "capacityQt": 10,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 5 qt + crisper plates",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-dz401sd",
+    "brand": "Ninja",
+    "model": "Foodi® 10-QT Dual Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers",
+    "description": "10 · double panier · 105–450°F.",
+    "modelCode": "DZ401SD",
+    "capacityQt": 10,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 5 qt + crisper plates",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
       }
     ]
   },
   {
     "id": "ninja-dz550",
     "brand": "Ninja",
-    "model": "Foodi® 6-in-1 10-qt XL 2-Basket DZ550",
+    "model": "Foodi® 6-in-1 Smart 10-QT 2-Basket Air Fryer",
     "type": "Air Fryer",
     "favorite": false,
-    "image": "https://c.dlnws.com/image/upload/f_auto%2Ct_maximum%2Cq_auto/content/satkdj1ptghpxghfyyx5.jpg",
-    "source": "https://www.ninjakitchen.com/products/ninja-foodi-6-in-1-smart-10-qt.-2-basket-air-fryer-zidDZ550",
-    "description": "Deux zones de cuisson indépendantes, 10QT, pour cuire deux préparations en parallèle.",
+    "image": null,
+    "source": "https://www.sharkninja.com/ninja-foodi-6-in-1-smart-10-qt.-2-basket-air-fryer/DZ550.html",
+    "description": "10 · double panier · 105–450°F.",
+    "modelCode": "DZ550",
+    "capacityQt": 10,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 5 qt + crisper plates + thermomètre",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "Selon aliment",
-        "goodFor": "Frites, poulet, légumes"
-      },
-      {
-        "name": "Air Broil",
-        "preset": "Selon aliment",
-        "goodFor": "Dorer rapidement"
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
       },
       {
         "name": "Roast",
-        "preset": "Selon aliment",
+        "preset": "Adjustable",
         "goodFor": "Viandes et légumes"
       },
       {
         "name": "Bake",
-        "preset": "Selon recette",
-        "goodFor": "Pâtisserie et cuisson type four"
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
       },
       {
         "name": "Reheat",
-        "preset": "Selon aliment",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-dz071",
+    "brand": "Ninja",
+    "model": "Foodi FlexBasket™ 7-QT Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/ninja-foodi-flexbasket-air-fryer-with-7qt-megazone/DZ071.html",
+    "description": "7 · double panier · 105–450°F.",
+    "modelCode": "DZ071",
+    "capacityQt": 7,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Panier 7 qt + séparateur + 2 crisper plates",
+    "timeFactor": 1.01,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-sl401",
+    "brand": "Ninja",
+    "model": "DoubleStack™ XL 10-QT 2-Basket Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers",
+    "description": "10 · double panier · 105–450°F.",
+    "modelCode": "SL401",
+    "capacityQt": 10,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 5 qt + crisper plates + stacked meal racks",
+    "timeFactor": 1.06,
+    "preheat": "optional",
+    "notes": "Si 4 niveaux sont utilisés, vérifier/permute les positions en cours de cuisson.",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-sl201",
+    "brand": "Ninja",
+    "model": "DoubleStack™ 8-QT Double Basket Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers/double-stack-air-fryer",
+    "description": "8 · double panier · 105–450°F.",
+    "modelCode": "SL201",
+    "capacityQt": 8,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers + stacked racks",
+    "timeFactor": 1.06,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-sl451",
+    "brand": "Ninja",
+    "model": "DoubleStack™ 10-QT Double Basket Air Fryer + Thermometer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers/double-stack-air-fryer",
+    "description": "10 · double panier · 105–450°F.",
+    "modelCode": "SL451",
+    "capacityQt": 10,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers + stacked racks + thermomètre",
+    "timeFactor": 1.06,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-fn101",
+    "brand": "Ninja",
+    "model": "Crispi® 4-in-1 Glass Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers/single-basket-air-fryers",
+    "description": "4 · cuisson en récipient verre · 300–450°F.",
+    "modelCode": "FN101",
+    "capacityQt": 4,
+    "tempRangeF": [
+      300,
+      450
+    ],
+    "style": "glass",
+    "container": "Récipient CleanCrisp™ en verre + crisper plate",
+    "timeFactor": 1.03,
+    "preheat": "not-required",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "High",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Bake",
+        "preset": "Medium",
+        "goodFor": "Pâtisserie"
+      },
+      {
+        "name": "Recrisp",
+        "preset": "High",
+        "goodFor": "Réchauffer/croustiller"
+      },
+      {
+        "name": "Max Crisp",
+        "preset": "High",
+        "goodFor": "Surgelés"
+      }
+    ]
+  },
+  {
+    "id": "ninja-as101",
+    "brand": "Ninja",
+    "model": "Crispi® Pro 6-in-1 Glass Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers/single-basket-air-fryers",
+    "description": "6 · cuisson en récipient verre · 300–450°F.",
+    "modelCode": "AS101",
+    "capacityQt": 6,
+    "tempRangeF": [
+      300,
+      450
+    ],
+    "style": "glass",
+    "container": "Récipients CleanCrisp™ en verre + crisper plate",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-dd101",
+    "brand": "Ninja",
+    "model": "Crispi® DualZone™ Dual Basket Glass Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers/double-basket-air-fryer",
+    "description": "8 · cuisson en récipient verre · 300–450°F.",
+    "modelCode": "DD101",
+    "capacityQt": 8,
+    "tempRangeF": [
+      300,
+      450
+    ],
+    "style": "glass",
+    "container": "Deux récipients verre 4 qt + crisper plates",
+    "timeFactor": 1.04,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "ninja-af101",
+    "brand": "Ninja",
+    "model": "Air Fryer 4-QT",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://support.ninjakitchen.com/hc/article_attachments/4998281447836",
+    "description": "4 · panier Air Fryer · 105–400°F.",
+    "modelCode": "AF101",
+    "capacityQt": 4,
+    "tempRangeF": [
+      105,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Reheat"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "ninja-af161",
+    "brand": "Ninja",
+    "model": "Air Fryer Max XL",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers",
+    "description": "5.5 · panier Air Fryer · 105–450°F.",
+    "modelCode": "AF161",
+    "capacityQt": 5.5,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 0.97,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Max Crisp",
+        "preset": "Jusqu’à 450°F",
+        "goodFor": "Surgelés et finition très croustillante"
+      },
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes et snacks"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Pâtisserie et petits plats"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
         "goodFor": "Restes"
       },
       {
         "name": "Dehydrate",
-        "preset": "Basse température",
-        "goodFor": "Fruits et snacks"
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "ninja-dz201",
+    "brand": "Ninja",
+    "model": "Foodi® 8-QT 2-Basket DualZone Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.sharkninja.com/kitchen/small-kitchen-appliances/air-fryers",
+    "description": "8 · double panier · 105–450°F.",
+    "modelCode": "DZ201",
+    "capacityQt": 8,
+    "tempRangeF": [
+      105,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers 4 qt + crisper plates",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-mini-4",
+    "brand": "Instant Pot",
+    "model": "4QT VORTEX® Mini Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "4 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-MINI-4QT",
+    "capacityQt": 4,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "95–400°F",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "95–400°F",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Roast",
+        "preset": "95–400°F",
+        "goodFor": "Roast"
+      },
+      {
+        "name": "Reheat",
+        "preset": "95–400°F",
+        "goodFor": "Reheat"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus-6",
+    "brand": "Instant Pot",
+    "model": "VORTEX® Plus 6QT ClearCook Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://d.dlnws.com/64599/1782228213-71gbagobpsl-ac_sl1500.jpg?h=1024&w=926",
+    "source": "https://instantpot.com/products/instant-pot-vortex-plus-6qt-clearcook-air-fryer",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-6QT-CLEARCOOK",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray + fenêtre ClearCook",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-6",
+    "brand": "Instant Pot",
+    "model": "Vortex® 6QT Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-6QT",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus4",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus 4QT Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "4 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-4QT",
+    "capacityQt": 4,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus6",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus 6QT Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-6QT",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus53",
+    "brand": "Instant Pot",
+    "model": "5.3QT VORTEX® Plus Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "5.3 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-5.3QT",
+    "capacityQt": 5.3,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-slim-6",
+    "brand": "Instant Pot",
+    "model": "6QT VORTEX® Slim Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-SLIM-6QT",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier étroit + cooking tray",
+    "timeFactor": 1.01,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-slim-chef-6",
+    "brand": "Instant Pot",
+    "model": "6QT VORTEX® Slim Chef Series Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-SLIM-CHEF-6QT",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier étroit + cooking tray",
+    "timeFactor": 1.01,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-chef-5",
+    "brand": "Instant Pot",
+    "model": "VORTEX® Chef Series 5QT ClearCook Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "5 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-CHEF-5QT",
+    "capacityQt": 5,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray + ClearCook",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-dual8-black",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus Dual Black 8QT ClearCook Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "8 · double panier · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-DUAL-8QT-BLACK",
+    "capacityQt": 8,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "dual",
+    "container": "Deux paniers 4 qt + cooking trays + fenêtres ClearCook",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-dual8-ss",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus Dual 8QT Stainless Steel ClearCook",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/products/instant-pot-vortex-plus-dual-8qt-stainless-steel-air-fryer-with-clearcook",
+    "description": "8 · double panier · 95–400°F.",
+    "modelCode": "140-3118-01",
+    "capacityQt": 8,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "dual",
+    "container": "Deux paniers 4 qt + cooking trays + fenêtres ClearCook",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-versazone9",
+    "brand": "Instant Pot",
+    "model": "9QT VORTEX® Air Fryer with VersaZone™",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/products/instant-pot-vortex-9qt-air-fryer-with-versazone-technology",
+    "description": "9 · double panier · 95–400°F.",
+    "modelCode": "140-3092-01",
+    "capacityQt": 9,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "dual",
+    "container": "Panier 9 qt divisible en deux zones 4.5 qt + tray + divider",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus6-odor",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus 6QT Stainless ClearCook + OdorErase",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/air-fryers",
+    "description": "6 · panier Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-6QT-ODORERASE",
+    "capacityQt": 6,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + cooking tray + ClearCook",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "instant-vortex-plus10-oven",
+    "brand": "Instant Pot",
+    "model": "Vortex® Plus 10QT Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/instant-air-fryers-and-cookware",
+    "description": "10 · format four Air Fryer · 95–400°F.",
+    "modelCode": "VORTEX-PLUS-10QT-OVEN",
+    "capacityQt": 10,
+    "tempRangeF": [
+      95,
+      400
+    ],
+    "style": "oven",
+    "container": "Racks/trays rotisserie selon configuration",
+    "timeFactor": 1.08,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "instant-omni-18l",
+    "brand": "Instant Pot",
+    "model": "Omni® 18L 7-in-1 Air Fryer Toaster Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/instant-air-fryers-and-cookware",
+    "description": "19 · format four Air Fryer · 170–450°F.",
+    "modelCode": "OMNI-18L",
+    "capacityQt": 19,
+    "tempRangeF": [
+      170,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + baking tray",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "instant-omni-plus-18l",
+    "brand": "Instant Pot",
+    "model": "Omni® Plus 18L 10-in-1 Air Fryer Toaster Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://instantpot.com/collections/instant-air-fryers-and-cookware",
+    "description": "19 · format four Air Fryer · 170–450°F.",
+    "modelCode": "OMNI-PLUS-18L",
+    "capacityQt": 19,
+    "tempRangeF": [
+      170,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + baking tray + rotisserie",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "philips-na340",
+    "brand": "Philips",
+    "model": "3000 Series Airfryer 7.2L",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://us.home-appliances.philips/cdn/shop/files/NA331_00_00_hero_image.jpg?v=1775568314",
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "7.6 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA340/00R0",
+    "capacityQt": 7.6,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier RapidAir Plus + grille",
+    "timeFactor": 0.98,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "philips-na351",
+    "brand": "Philips",
+    "model": "3000 Series Dual Basket Airfryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "9.5 · double panier · 100–400°F.",
+    "modelCode": "NA351/00",
+    "capacityQt": 9.5,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "dual",
+    "container": "Deux paniers + grilles",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "philips-na555",
+    "brand": "Philips",
+    "model": "5000 Series Dual-Basket Airfryer with Steam",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "9.6 · double panier · 100–400°F.",
+    "modelCode": "NA555/00",
+    "capacityQt": 9.6,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "dual",
+    "container": "Deux paniers + fonction vapeur",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      },
+      {
+        "name": "Steam",
+        "preset": "Selon aliment",
+        "goodFor": "Cuisson vapeur"
+      },
+      {
+        "name": "Airfry + Steam",
+        "preset": "Selon aliment",
+        "goodFor": "Croustillant + humidité"
+      }
+    ]
+  },
+  {
+    "id": "philips-na331",
+    "brand": "Philips",
+    "model": "3000 Series Airfryer 6.5 Qt",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": "https://us.home-appliances.philips/cdn/shop/files/NA331_00_00_hero_image.jpg?v=1775568314",
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "6.5 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA331/00",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier RapidAir Plus + grille",
+    "timeFactor": 0.98,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "philips-na231",
+    "brand": "Philips",
+    "model": "2000 Series Airfryer 6.2L",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "6.5 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA231/00",
+    "capacityQt": 6.5,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-na220",
+    "brand": "Philips",
+    "model": "2000 Series Airfryer 4.2L",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "4.4 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA220/00",
+    "capacityQt": 4.4,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-na221",
+    "brand": "Philips",
+    "model": "2000 Series Airfryer 4.2L Silver",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "4.4 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA221/00",
+    "capacityQt": 4.4,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-na110",
+    "brand": "Philips",
+    "model": "1000 Series Airfryer 3.4Qt",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "3.4 · panier Air Fryer · 100–400°F.",
+    "modelCode": "NA110/00",
+    "capacityQt": 3.4,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9270",
+    "brand": "Philips",
+    "model": "3000 Series Airfryer XL",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://acc.usa.philips.com/c-m-ho/cooking/airfryer-xl-collection",
+    "description": "6.2 · panier Air Fryer · 80–400°F.",
+    "modelCode": "HD9270/91",
+    "capacityQt": 6.2,
+    "tempRangeF": [
+      80,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9252",
+    "brand": "Philips",
+    "model": "3000 Series Airfryer L",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://acc.usa.philips.com/c-m-ho/cooking/airfryer-xl-collection",
+    "description": "4.1 · panier Air Fryer · 80–400°F.",
+    "modelCode": "HD9252/91",
+    "capacityQt": 4.1,
+    "tempRangeF": [
+      80,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9280",
+    "brand": "Philips",
+    "model": "5000 Series Connected Airfryer XL",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://acc.usa.philips.com/c-m-ho/cooking/airfryer-xl-collection",
+    "description": "6.2 · panier Air Fryer · 80–400°F.",
+    "modelCode": "HD9280/91",
+    "capacityQt": 6.2,
+    "tempRangeF": [
+      80,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9200",
+    "brand": "Philips",
+    "model": "3000 Series Airfryer L",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://acc.usa.philips.com/c-m-ho/cooking/airfryer-xl-collection",
+    "description": "4.1 · panier Air Fryer · 80–400°F.",
+    "modelCode": "HD9200/91",
+    "capacityQt": 4.1,
+    "tempRangeF": [
+      80,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
       }
     ]
   },
   {
     "id": "philips-hd9650",
     "brand": "Philips",
-    "model": "Premium Airfryer XXL HD9650",
+    "model": "Premium Airfryer XXL",
     "type": "Air Fryer",
     "favorite": false,
-    "image": "https://www.dateks.lv/images/pic/2400/2400/000/892.jpg",
+    "image": null,
     "source": "https://www.usa.philips.com/c-p/HD9650_90/premium-airfryer-xxl",
-    "description": "Airfryer XXL avec technologie Rapid Air, format familial et mode maintien au chaud.",
+    "description": "7.3 · panier Air Fryer · 100–400°F.",
+    "modelCode": "HD9650",
+    "capacityQt": 7.3,
+    "tempRangeF": [
+      100,
+      400
+    ],
+    "style": "basket",
+    "container": "Panier XXL + grille",
+    "timeFactor": 0.98,
+    "preheat": "optional",
+    "notes": "",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "Selon aliment",
-        "goodFor": "Frites, poulet, snacks"
-      },
-      {
-        "name": "Bake",
-        "preset": "Selon recette",
-        "goodFor": "Gâteaux et pâtisseries"
-      },
-      {
-        "name": "Grill",
-        "preset": "Selon aliment",
-        "goodFor": "Viandes et légumes"
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
       },
       {
         "name": "Roast",
-        "preset": "Selon aliment",
-        "goodFor": "Poulet et légumes"
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
       },
       {
         "name": "Reheat",
-        "preset": "Selon aliment",
+        "preset": "Adjustable",
         "goodFor": "Réchauffage"
       },
       {
-        "name": "Keep Warm",
-        "preset": "Jusqu’à 30 min",
-        "goodFor": "Maintien au chaud"
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "philips-hd9220",
+    "brand": "Philips",
+    "model": "Viva Collection Airfryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.usa.philips.com/c-m-ho/cooking/airfryer/latest",
+    "description": "3 · panier Air Fryer · 180–390°F.",
+    "modelCode": "HD9220/26B1",
+    "capacityQt": 3,
+    "tempRangeF": [
+      180,
+      390
+    ],
+    "style": "basket",
+    "container": "Panier Rapid Air + grille",
+    "timeFactor": 1.02,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Poulet, poisson, légumes, aliments panés"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes rôtis"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Petites pâtisseries et plats en moule"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-air200",
+    "brand": "Cuisinart",
+    "model": "6-qt Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "6 · panier Air Fryer · 90–450°F.",
+    "modelCode": "AIR-200NAS",
+    "capacityQt": 6,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-air210",
+    "brand": "Cuisinart",
+    "model": "CompactMax™ 8-Qt Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "8 · panier Air Fryer · 90–450°F.",
+    "modelCode": "AIR-210",
+    "capacityQt": 8,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-air160",
+    "brand": "Cuisinart",
+    "model": "AirAdvantage® 4.5-Quart Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "4.5 · panier Air Fryer · 90–450°F.",
+    "modelCode": "AIR-160NAS",
+    "capacityQt": 4.5,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-air220",
+    "brand": "Cuisinart",
+    "model": "9-qt Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "9 · panier Air Fryer · 90–450°F.",
+    "modelCode": "AIR-220",
+    "capacityQt": 9,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "basket",
+    "container": "Panier + crisper plate",
+    "timeFactor": 1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-adz110",
+    "brand": "Cuisinart",
+    "model": "11-qt Dual Basket Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "11 · double panier · 90–450°F.",
+    "modelCode": "ADZ-110",
+    "capacityQt": 11,
+    "tempRangeF": [
+      90,
+      450
+    ],
+    "style": "dual",
+    "container": "Deux paniers + crisper plates",
+    "timeFactor": 1.03,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson croustillante"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Cuisson type four"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Réchauffage"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Dorer et saisir"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Fruits, herbes et snacks"
       }
     ]
   },
   {
     "id": "cuisinart-toa70",
     "brand": "Cuisinart",
-    "model": "Air Fryer Toaster Oven with Grill TOA-70NAS",
+    "model": "Air Fryer Toaster Oven with Grill",
     "type": "Air Fryer",
     "favorite": false,
-    "image": "https://sc-images.jcpenney.com/JCPenney/DP0901202515065830M?height=550&impolicy=product_detail&width=550",
+    "image": null,
     "source": "https://www.cuisinart.com/air-fryer-toaster-oven-with-grill/TOA-70NAS.html",
-    "description": "Air fryer toaster oven 8 fonctions avec grill/griddle réversible et température jusqu’à 450°F.",
+    "description": "18 · format four Air Fryer · 200–450°F.",
+    "modelCode": "TOA-70NAS",
+    "capacityQt": 18,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "oven",
+    "container": "Air Fry rack/basket, baking pan, grill/griddle plate",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "Jusqu’à 450°F",
-        "goodFor": "Poulet, saumon, légumes, frites"
+        "preset": "Up to 450°F",
+        "goodFor": "Air fry"
       },
       {
         "name": "Convection Bake",
-        "preset": "Selon recette",
-        "goodFor": "Cuisson type four"
+        "preset": "Adjustable",
+        "goodFor": "Bake"
       },
       {
         "name": "Convection Broil",
-        "preset": "Selon aliment",
-        "goodFor": "Dorer"
+        "preset": "Adjustable",
+        "goodFor": "Broil"
       },
       {
         "name": "Bake",
-        "preset": "Selon recette",
-        "goodFor": "Pâtisserie"
+        "preset": "Adjustable",
+        "goodFor": "Bake"
       },
       {
         "name": "Broil",
-        "preset": "Selon aliment",
-        "goodFor": "Gratins et protéines"
+        "preset": "Adjustable",
+        "goodFor": "Broil"
       },
       {
         "name": "Warm",
-        "preset": "Basse température",
-        "goodFor": "Maintien au chaud"
+        "preset": "Low",
+        "goodFor": "Warm"
       },
       {
         "name": "Toast",
-        "preset": "Selon coloration",
-        "goodFor": "Pain"
+        "preset": "Shade",
+        "goodFor": "Toast"
       },
       {
         "name": "Grill",
-        "preset": "Selon aliment",
-        "goodFor": "Steaks et légumes"
+        "preset": "Adjustable",
+        "goodFor": "Grill"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa112",
+    "brand": "Cuisinart",
+    "model": "15-in-1 Extra-Large Digital Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "22 · format four Air Fryer · 80–450°F.",
+    "modelCode": "TOA-112",
+    "capacityQt": 22,
+    "tempRangeF": [
+      80,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + trays",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa110",
+    "brand": "Cuisinart",
+    "model": "10-in-1 XL Digital Air Fryer Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "20 · format four Air Fryer · 80–450°F.",
+    "modelCode": "TOA-110",
+    "capacityQt": 20,
+    "tempRangeF": [
+      80,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + trays",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa95",
+    "brand": "Cuisinart",
+    "model": "Large Air Fryer Toaster Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "18 · format four Air Fryer · 200–450°F.",
+    "modelCode": "TOA-95NAS",
+    "capacityQt": 18,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + baking pan",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa65",
+    "brand": "Cuisinart",
+    "model": "Digital Air Fryer Toaster Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/manuals/airfryers/",
+    "description": "17 · format four Air Fryer · 80–450°F.",
+    "modelCode": "TOA-65",
+    "capacityQt": 17,
+    "tempRangeF": [
+      80,
+      450
+    ],
+    "style": "oven",
+    "container": "Air fry basket/rack + baking pan",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "cuisinart-toa60",
+    "brand": "Cuisinart",
+    "model": "Air Fryer Toaster Oven",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.cuisinart.com/discontinued-cuisinart-air-fryer-toaster-oven/TOA-60.html",
+    "description": "17 · format four Air Fryer · 200–450°F.",
+    "modelCode": "TOA-60",
+    "capacityQt": 17,
+    "tempRangeF": [
+      200,
+      450
+    ],
+    "style": "oven",
+    "container": "Oven rack, baking pan, Air Fry basket",
+    "timeFactor": 1.1,
+    "preheat": "optional",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Air fry"
+      },
+      {
+        "name": "Convection Bake",
+        "preset": "Adjustable",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Convection Broil",
+        "preset": "Adjustable",
+        "goodFor": "Broil"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Bake"
+      },
+      {
+        "name": "Broil",
+        "preset": "Adjustable",
+        "goodFor": "Broil"
+      },
+      {
+        "name": "Warm",
+        "preset": "Low",
+        "goodFor": "Warm"
+      },
+      {
+        "name": "Toast",
+        "preset": "Shade",
+        "goodFor": "Toast"
       }
     ]
   },
   {
     "id": "breville-bov900",
     "brand": "Breville",
-    "model": "Smart Oven® Air Fryer Pro BOV900",
+    "model": "Smart Oven® Air Fryer Pro",
     "type": "Air Fryer",
     "favorite": false,
-    "image": "https://cdn-tp2.mozu.com/28945-m4/cms/files/L8998023.jpg",
+    "image": null,
     "source": "https://www.breville.com/en-us/product/bov900",
-    "description": "Four de comptoir avec 13 fonctions intelligentes, Air Fry, déshydratation et super convection.",
+    "description": "30 · format four Air Fryer · 80–480°F.",
+    "modelCode": "BOV900",
+    "capacityQt": 30,
+    "tempRangeF": [
+      80,
+      480
+    ],
+    "style": "oven",
+    "container": "Mesh Air Fry basket, oven racks, 9x13 roasting pan, pizza pan",
+    "timeFactor": 1.12,
+    "preheat": "recommended",
+    "notes": "",
     "modes": [
       {
         "name": "Air Fry",
-        "preset": "Selon aliment",
-        "goodFor": "Frites, wings et légumes"
+        "preset": "Adjustable",
+        "goodFor": "Air fry"
       },
       {
         "name": "Bake",
-        "preset": "Selon recette",
-        "goodFor": "Pâtisserie et plats au four"
+        "preset": "Adjustable",
+        "goodFor": "Bake"
       },
       {
         "name": "Roast",
-        "preset": "Selon aliment",
-        "goodFor": "Grosses pièces"
+        "preset": "Adjustable",
+        "goodFor": "Roast"
       },
       {
         "name": "Broil",
-        "preset": "Selon aliment",
-        "goodFor": "Dorer et gratiner"
+        "preset": "Adjustable",
+        "goodFor": "Broil"
       },
       {
         "name": "Pizza",
-        "preset": "Selon taille",
+        "preset": "Preset",
         "goodFor": "Pizza"
       },
       {
         "name": "Proof",
-        "preset": "Basse température",
-        "goodFor": "Pâtes levées"
+        "preset": "Low",
+        "goodFor": "Proof"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Reheat"
       },
       {
         "name": "Slow Cook",
-        "preset": "Selon recette",
-        "goodFor": "Cuisson lente"
+        "preset": "Low/High",
+        "goodFor": "Slow cook"
       },
       {
         "name": "Dehydrate",
-        "preset": "Basse température",
+        "preset": "Low",
+        "goodFor": "Dehydrate"
+      }
+    ]
+  },
+  {
+    "id": "breville-bov950",
+    "brand": "Breville",
+    "model": "Joule® Oven Air Fryer Pro",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.breville.com/en-us/product/bov950",
+    "description": "30 · format four Air Fryer · 80–480°F.",
+    "modelCode": "BOV950",
+    "capacityQt": 30,
+    "tempRangeF": [
+      80,
+      480
+    ],
+    "style": "oven",
+    "container": "Mesh Air Fry basket, racks, roasting pan + guided cooks",
+    "timeFactor": 1.12,
+    "preheat": "recommended",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "breville-smart-airfryer",
+    "brand": "Breville",
+    "model": "Smart Oven® Air Fryer",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.breville.com/en-us/landing/ovens-and-air-fryers",
+    "description": "22 · format four Air Fryer · 120–450°F.",
+    "modelCode": "BOV860",
+    "capacityQt": 22,
+    "tempRangeF": [
+      120,
+      450
+    ],
+    "style": "oven",
+    "container": "Air Fry basket, rack, roasting pan",
+    "timeFactor": 1.1,
+    "preheat": "recommended",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
+        "goodFor": "Déshydratation"
+      }
+    ]
+  },
+  {
+    "id": "breville-compact-airfryer",
+    "brand": "Breville",
+    "model": "Smart Oven™ Air Fryer Compact",
+    "type": "Air Fryer",
+    "favorite": false,
+    "image": null,
+    "source": "https://www.breville.com/en-us/landing/ovens-and-air-fryers",
+    "description": "15 · format four Air Fryer · 120–450°F.",
+    "modelCode": "BOV680",
+    "capacityQt": 15,
+    "tempRangeF": [
+      120,
+      450
+    ],
+    "style": "oven",
+    "container": "Air Fry basket + baking pan",
+    "timeFactor": 1.08,
+    "preheat": "recommended",
+    "notes": "",
+    "modes": [
+      {
+        "name": "Air Fry",
+        "preset": "Adjustable",
+        "goodFor": "Panier/grille Air Fry"
+      },
+      {
+        "name": "Bake",
+        "preset": "Adjustable",
+        "goodFor": "Plaque ou moule"
+      },
+      {
+        "name": "Roast",
+        "preset": "Adjustable",
+        "goodFor": "Viandes et légumes"
+      },
+      {
+        "name": "Broil",
+        "preset": "High heat",
+        "goodFor": "Gratiner et saisir"
+      },
+      {
+        "name": "Toast",
+        "preset": "Adjustable",
+        "goodFor": "Pain"
+      },
+      {
+        "name": "Reheat",
+        "preset": "Adjustable",
+        "goodFor": "Restes"
+      },
+      {
+        "name": "Dehydrate",
+        "preset": "Low temperature",
         "goodFor": "Déshydratation"
       }
     ]
