@@ -120,4 +120,5 @@
   RECIPES.forEach(r=>{r.image=semanticRecipeImage(r)});
   // Re-render after expansion.
   if(typeof renderRecipes==='function')renderRecipes(window.__recipeFilter||'all');
+  if(typeof renderRecipeIdeas==='function')renderRecipeIdeas();
 })();
