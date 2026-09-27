@@ -11,7 +11,7 @@
     return new Promise((resolve,reject)=>{
       if(window.supabase?.createClient)return resolve();
       const s=document.createElement('script');
-      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js';
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
       s.integrity='';s.crossOrigin='anonymous';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);
     });
   }
