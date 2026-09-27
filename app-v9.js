@@ -338,6 +338,11 @@
   const oldSaveProfile=saveProfileV3;saveProfileV3=function(){oldSaveProfile();window.KitchenCloud?.saveSoon?.()};
   const oldFavorite=favoriteRecipe;favoriteRecipe=function(id){oldFavorite(id);window.KitchenCloud?.saveSoon?.()};
 
+  $('#extraExpenseForm')?.addEventListener('submit',()=>setTimeout(()=>window.KitchenCloud?.saveSoon?.(),0));
+  document.addEventListener('click',e=>{if(e.target.closest('[data-extra-remove]'))setTimeout(()=>window.KitchenCloud?.saveSoon?.(),0)});
+  $('#languageSelect')?.addEventListener('change',()=>window.KitchenCloud?.saveSoon?.());
+  $('#unitsSelect')?.addEventListener('change',()=>window.KitchenCloud?.saveSoon?.());
+
   renderFridge();renderShopping();renderFridgeCoverage();renderRecipeIdeas();renderPlannerDrawer();renderDevices();populateApplianceSelect();
   window.KitchenStudioV9=V9;
 })();
