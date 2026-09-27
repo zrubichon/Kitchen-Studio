@@ -58,3 +58,36 @@ Les presets de démo sont des points de départ. Toujours vérifier la cuisson f
 - Les anciens profils détaillés restent disponibles uniquement comme cache interne de reconnaissance rapide et de secours ; ils ne sont plus affichés comme une bibliothèque à parcourir.
 
 Les réglages proposés sont des recommandations culinaires dérivées de la recette et des capacités documentées de l'appareil. Les caractéristiques non confirmées restent inconnues plutôt que d'être inventées, et la cuisson finale des aliments sensibles doit toujours être vérifiée.
+
+
+## Smart fridge, accounts and manual memory
+- **Ce qu'il y a dans mon frigo** est l'inventaire alimentaire actif.
+- Cocher un article dans la liste de courses le transfère dans le frigo et le retire du coût restant.
+- Retirer/décocher un article du frigo le remet automatiquement dans les courses s'il est nécessaire au menu.
+- Le bouton Recomposer privilégie exclusivement les recettes dont les ingrédients sont disponibles dans le frigo; si le stock ne permet pas de couvrir les 3 créneaux de repas, l'app le signale au lieu d'inventer la disponibilité.
+- Le bas de la page principale comporte un tiroir Menu + idées, avec **♡** et **+**. Ajouter une recette à la semaine ajoute automatiquement ses ingrédients manquants aux courses.
+- Les surfaces de suggestion utilisent toutes des actions favori + ajout au calendrier.
+
+### Multiple appliances + photographed manuals
+- L'utilisateur peut enregistrer autant d'appareils que souhaité.
+- Chaque appareil peut devenir l'appareil actif pour la recette.
+- Chaque carte appareil contient une zone **Pages de mon manuel** acceptant plusieurs photos.
+- Les images sont conservées localement dans IndexedDB; lorsqu'un compte cloud est actif, elles sont aussi envoyées dans le bucket privé Supabase `manual-pages`.
+- `/api/analyze-manual.js` extrait une mémoire structurée: modes, températures, tableaux de cuisson, accessoires, préchauffage, placement, règles shake/turn, liquides et avertissements.
+- `/api/adapt-cooking.js` traite cette mémoire issue du manuel comme la source prioritaire avant toute hypothèse générique.
+
+### Cloud accounts
+Kitchen Studio inclut maintenant le flux email/mot de passe avec Supabase Auth et la synchronisation du profil, frigo, menu, favoris, dépenses et appareils.
+
+Variables Vercel requises:
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+
+Le navigateur utilise une version épinglée de `@supabase/supabase-js` et la clé publiée n'est jamais une clé `service_role`.
+
+Appliquer le schéma:
+- `supabase/kitchen-studio.sql`
+- Créer un bucket Storage **privé** nommé `manual-pages` avec des types d'images adaptés.
+- Les politiques RLS du fichier SQL limitent l'état et les fichiers à leur propriétaire authentifié.
+
+Le projet Supabase doit être dédié à Kitchen Studio. Ne pas réutiliser un backend d'une autre application uniquement pour éviter de créer le projet.
