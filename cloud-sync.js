@@ -53,11 +53,15 @@
     if(state.profile.store)localStorage.setItem('miseStore',state.profile.store);
     if(state.profile.location)localStorage.setItem('miseLocation',state.profile.location);
     if(state.profile.budget)localStorage.setItem('miseBudget',String(state.profile.budget));
-    window.KitchenStudioV9?.renderDevices?.();
-    window.KitchenStudioV9?.renderPlannerDrawer?.();
-    renderWeek();renderShopping();renderRecipes(window.__recipeFilter||'all');
+    const v9=window.KitchenStudioV9;
+    v9?.renderDevices?.();
+    v9?.renderPlannerDrawer?.();
+    v9?.renderFridge?.();
+    v9?.renderFridgeCoverage?.();
+    v9?.renderShopping?.();
+    renderWeek();renderRecipes(window.__recipeFilter||'all');
+    v9?.renderRecipeIdeas?.();
     if(typeof renderRecipeIdeas==='function')renderRecipeIdeas();
-    const v9=window.KitchenStudioV9;if(v9?.fridgeItems){document.querySelector('#fridgeAddForm')?.dispatchEvent(new Event('kitchen-refresh'))}
   }
   async function saveNow(){
     if(!Cloud.ready||!Cloud.user)return;
