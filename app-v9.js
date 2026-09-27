@@ -195,6 +195,10 @@
   }
   $('#refreshDrawerIdeas')?.addEventListener('click',()=>{drawerOffset+=7;renderPlannerDrawer()});
   V9.renderPlannerDrawer=renderPlannerDrawer;
+  V9.renderFridge=renderFridge;
+  V9.renderFridgeCoverage=renderFridgeCoverage;
+  V9.renderShopping=renderShopping;
+  V9.renderRecipeIdeas=renderRecipeIdeas;
 
   // When calendar "+ Add" changes the plan, the shopping list immediately gains missing ingredients.
   const calendarForm=$('#calendarAddForm');
@@ -287,7 +291,7 @@
       const file=files[k];if(!file.type.startsWith('image/'))continue;
       const dataUrl=await compressImage(file);images.push(dataUrl);
       await dbPutPage({id:deviceId+':'+Date.now()+':'+k,deviceId,name:file.name,dataUrl,createdAt:new Date().toISOString()});
-      window.KitchenCloud?.uploadManualPage?.(deviceId,file).catch(()=>{});
+      const cloudUpload=window.KitchenCloud?.uploadManualPage?.(deviceId,file);if(cloudUpload?.catch)cloudUpload.catch(()=>{});
     }
     if(!images.length)return;
     toast(txt('Analyse du manuel en cours…','Analyzing manual…'));
@@ -296,8 +300,11 @@
     saveDevices(arr);renderDevices();toast(txt('Manuel appris et enregistré pour cet appareil.','Manual learned and saved for this device.'));
   }
   async function renderManualPages(deviceId,box){
-    if(!box)return;const pages=await dbPages(deviceId);
-    box.innerHTML=pages.length?pages.map(p=>'<div class="manual-thumb"><img src="'+p.dataUrl+'" alt="'+p.name+'"><small>'+p.name+'</small></div>').join(''):'<div class="manual-pages-empty">'+txt('Aucune page importée pour le moment.','No manual pages uploaded yet.')+'</div>';
+    if(!box)return;
+    const local=await dbPages(deviceId);
+    let cloud=[];try{cloud=await (window.KitchenCloud?.listManualPages?.(deviceId)||Promise.resolve([]))}catch{}
+    const seen=new Set(local.map(p=>p.name)),merged=[...local,...cloud.filter(p=>!seen.has(p.name))];
+    box.innerHTML=merged.length?merged.map(p=>'<div class="manual-thumb"><img src="'+(p.dataUrl||p.url)+'" alt="'+p.name+'"><small>'+p.name+'</small></div>').join(''):'<div class="manual-pages-empty">'+txt('Aucune page importée pour le moment.','No manual pages uploaded yet.')+'</div>';
   }
   async function renderDevices(){
     const arr=loadDevices(),box=$('#savedDevicesList');if(!box)return;
