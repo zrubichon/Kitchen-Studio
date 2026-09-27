@@ -274,13 +274,13 @@
   async function dbPutPage(page){const db=await dbOpen();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(page);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
   async function dbPages(deviceId){const db=await dbOpen();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readonly'),idx=tx.objectStore(STORE).index('deviceId'),req=idx.getAll(deviceId);req.onsuccess=()=>res(req.result||[]);req.onerror=()=>rej(req.error)})}
   async function dbDeleteDevice(deviceId){const pages=await dbPages(deviceId),db=await dbOpen();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite'),st=tx.objectStore(STORE);pages.forEach(p=>st.delete(p.id));tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
-  function compressImage(file,max=1200,quality=.72){
+  function compressImage(file,max=1100,quality=.65){
     return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',quality))};img.onerror=reject;img.src=reader.result};reader.onerror=reject;reader.readAsDataURL(file)});
   }
   async function analyzeManual(device,images){
     let knowledge=device.manualKnowledge||null;
-    for(let i=0;i<images.length;i+=4){
-      const r=await fetch('/api/analyze-manual',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({device,images:images.slice(i,i+4),existingKnowledge:knowledge})}),data=await r.json();
+    for(let i=0;i<images.length;i+=3){
+      const r=await fetch('/api/analyze-manual',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({device,images:images.slice(i,i+3),existingKnowledge:knowledge})}),data=await r.json();
       if(!r.ok)throw new Error(data.error||'manual analysis failed');knowledge=data.knowledge;
     }return knowledge;
   }
