@@ -91,6 +91,15 @@
           <div><div class="eyebrow">Note du chef IA</div><strong id="chefNoteTitle">J’ai fait travailler vos ingrédients deux fois.</strong><p id="chefNoteText">Le poulet rôti de lundi devient le bowl de mardi, les herbes servent dans trois recettes et votre avocat est utilisé avant qu’il ne mûrisse trop.</p></div>
           <button class="btn btn-dark" id="askWhy">Pourquoi ces choix ?</button>
         </div>
+
+        <details class="planner-menu-drawer" id="plannerMenuDrawer">
+          <summary><span><span class="eyebrow">Menu & inspirations</span><strong>Ma semaine + des idées à ajouter</strong></span><span class="drawer-chevron">⌄</span></summary>
+          <div class="drawer-body">
+            <div class="drawer-week-menu" id="drawerWeekMenu"></div>
+            <div class="drawer-ideas-head"><div><div class="eyebrow">Avec ❤️ et + partout</div><h3>Idées à faire glisser dans votre semaine.</h3></div><button class="text-btn" id="refreshDrawerIdeas">↻ Changer les idées</button></div>
+            <div class="drawer-ideas-track" id="drawerIdeasTrack"></div>
+          </div>
+        </details>
       </section>
 
       <section class="page" id="page-shopping">
@@ -123,6 +132,19 @@
             <small class="muted">La connexion magasin nécessite une clé développeur du fournisseur.</small>
           </aside>
         </div>
+        <section class="fridge-section">
+          <div class="fridge-head">
+            <div><div class="eyebrow">Inventaire cuisine</div><h3>Ce qu’il y a dans mon frigo.</h3><p>Un produit coché dans les courses arrive ici. Retirez-le du frigo et il retourne automatiquement dans la liste à acheter.</p></div>
+            <div class="fridge-count"><strong id="fridgeCount">0</strong><small>produits disponibles</small></div>
+          </div>
+          <form id="fridgeAddForm" class="fridge-add-form">
+            <input id="fridgeAddName" placeholder="Ajouter ce que j’ai déjà : œufs, lait, poulet…" required />
+            <input id="fridgeAddQty" placeholder="Quantité (optionnel)" />
+            <button class="btn btn-primary" type="submit">+ Ajouter au frigo</button>
+          </form>
+          <div class="fridge-coverage" id="fridgeCoverage"></div>
+          <div class="fridge-list" id="fridgeList"></div>
+        </section>
       </section>
 
       <section class="page" id="page-recipes">
@@ -253,6 +275,11 @@
           </aside>
         </div>
 
+        <section class="device-vault">
+          <div class="device-vault-head"><div><div class="eyebrow">Mes outils enregistrés</div><h3>Tous vos appareils, chacun avec son manuel.</h3><p>Ajoutez autant d’appareils que vous voulez. Pour chaque appareil, vous pouvez importer les photos des pages de son manuel afin que l’IA apprenne ses modes et réglages précis.</p></div><span id="savedDevicesCount">0 appareil</span></div>
+          <div class="saved-devices-list" id="savedDevicesList"></div>
+        </section>
+
         <div class="device-how-it-works">
           <div><span>1</span><strong>Vous entrez le modèle</strong><small>L’IA cherche la référence et ses caractéristiques.</small></div>
           <div><span>2</span><strong>Kitchen Studio l’enregistre</strong><small>Modes, températures, capacité, accessoires et sources.</small></div>
@@ -271,21 +298,27 @@
       </section>
 
       <section class="page" id="page-account">
-        <div class="page-head"><div><div class="eyebrow">Compte Kitchen Studio</div><h2>Votre cuisine vous suit.</h2><p>Créez votre profil pour retrouver votre nom, vos préférences, vos favoris et votre appareil principal sur cet appareil.</p></div></div>
-        <div class="account-layout">
-          <form class="form-card account-form" id="accountForm">
-            <h3>Créer / modifier mon compte</h3>
-            <label>Prénom<input id="accountName" name="name" placeholder="Votre prénom" required /></label>
-            <label>Email<input id="accountEmail" name="email" type="email" placeholder="vous@email.com" required /></label>
-            <button class="btn btn-primary" type="submit">Enregistrer mon compte</button>
-            <small class="muted">Cette V1 mémorise le compte dans ce navigateur. Une authentification cloud sera nécessaire pour synchroniser plusieurs appareils.</small>
-          </form>
+        <div class="page-head"><div><div class="eyebrow">Compte Kitchen Studio</div><h2>Votre cuisine vous suit partout.</h2><p>Créez un vrai compte pour retrouver automatiquement votre frigo, votre menu, vos favoris, vos préférences et vos appareils sur vos autres appareils.</p></div></div>
+        <div class="account-layout cloud-account-layout">
+          <section class="form-card cloud-auth-card">
+            <div class="account-tabs"><button class="account-tab active" data-auth-mode="signup" type="button">Créer un compte</button><button class="account-tab" data-auth-mode="signin" type="button">Se connecter</button></div>
+            <form id="cloudAuthForm" class="account-form">
+              <label id="cloudNameLabel">Prénom<input id="cloudAccountName" name="name" autocomplete="given-name" placeholder="Votre prénom" /></label>
+              <label>Email<input id="cloudAccountEmail" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required /></label>
+              <label>Mot de passe<input id="cloudAccountPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /></label>
+              <button class="btn btn-primary full" id="cloudAuthSubmit" type="submit">Créer mon compte</button>
+            </form>
+            <div class="cloud-auth-status" id="cloudAuthStatus"><span class="status-dot"></span><span>Connexion cloud à initialiser.</span></div>
+            <small class="muted">La session reste connectée automatiquement sur cet appareil. Une fois connecté ailleurs avec le même compte, Kitchen Studio recharge votre cuisine synchronisée.</small>
+          </section>
           <div class="form-card account-summary">
             <div class="account-avatar" id="accountAvatar">M</div>
-            <div class="eyebrow">Profil mémorisé</div><h3 id="accountDisplayName">Pas encore de compte</h3><p id="accountDisplayEmail">Créez votre profil pour personnaliser Kitchen Studio.</p>
-            <div class="account-stats"><div><strong id="accountFavoriteCount">0</strong><small>Favoris</small></div><div><strong id="accountExtraCount">0</strong><small>Extras</small></div><div><strong id="accountAppliance">—</strong><small>Appareil actif</small></div></div>
+            <div class="eyebrow">Profil cloud</div><h3 id="accountDisplayName">Pas encore connecté</h3><p id="accountDisplayEmail">Créez votre compte ou connectez-vous.</p>
+            <div class="account-stats"><div><strong id="accountFavoriteCount">0</strong><small>Favoris</small></div><div><strong id="accountExtraCount">0</strong><small>Extras</small></div><div><strong id="accountAppliance">0</strong><small>Appareils</small></div></div>
+            <button class="btn btn-outline" id="cloudSignOut" type="button" hidden>Se déconnecter</button>
           </div>
         </div>
+        <div hidden aria-hidden="true"><form id="accountForm"><input id="accountName" name="name"><input id="accountEmail" name="email"><button type="submit"></button></form></div>
       </section>
 
       <section class="page" id="page-profile">
@@ -389,5 +422,7 @@
   <script src="app-v2.js"></script>
   <script src="app-v3.js"></script>
   <script src="recipe-expansion.js"></script>
+  <script src="app-v9.js"></script>
+  <script src="cloud-sync.js"></script>
 </body>
 </html>
