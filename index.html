@@ -107,6 +107,19 @@
           <div><div class="eyebrow">Liste intelligente</div><h2>Vos courses, déjà organisées.</h2><p>Quantités regroupées pour toute la semaine. Cochez ce que vous avez déjà.</p></div>
           <div class="page-head-actions"><button class="btn btn-outline" id="clearChecked">Masquer ce que j’ai</button><button class="btn btn-primary" id="shopRealProducts">Trouver les produits réels</button></div>
         </div>
+        <section class="fridge-section">
+          <div class="fridge-head">
+            <div><div class="eyebrow">Inventaire cuisine</div><h3>Ce qu’il y a dans mon frigo.</h3><p>Un produit coché dans les courses arrive ici. Retirez-le du frigo et il retourne automatiquement dans la liste à acheter.</p></div>
+            <div class="fridge-count"><strong id="fridgeCount">0</strong><small>produits disponibles</small></div>
+          </div>
+          <form id="fridgeAddForm" class="fridge-add-form">
+            <input id="fridgeAddName" placeholder="Ajouter ce que j’ai déjà : œufs, lait, poulet…" required />
+            <input id="fridgeAddQty" placeholder="Quantité (optionnel)" />
+            <button class="btn btn-primary" type="submit">+ Ajouter au frigo</button>
+          </form>
+          <div class="fridge-coverage" id="fridgeCoverage"></div>
+          <div class="fridge-list" id="fridgeList"></div>
+        </section>
         <div class="shopping-layout">
           <div class="shopping-list-card">
             <div class="shopping-meta"><div><small>Magasin sélectionné</small><strong id="shoppingStoreName">Whole Foods Market</strong></div><div><small>Zone</small><strong id="shoppingLocation">Seattle, WA</strong></div><button class="text-btn" data-page="profile">Modifier</button></div>
@@ -132,19 +145,7 @@
             <small class="muted">La connexion magasin nécessite une clé développeur du fournisseur.</small>
           </aside>
         </div>
-        <section class="fridge-section">
-          <div class="fridge-head">
-            <div><div class="eyebrow">Inventaire cuisine</div><h3>Ce qu’il y a dans mon frigo.</h3><p>Un produit coché dans les courses arrive ici. Retirez-le du frigo et il retourne automatiquement dans la liste à acheter.</p></div>
-            <div class="fridge-count"><strong id="fridgeCount">0</strong><small>produits disponibles</small></div>
-          </div>
-          <form id="fridgeAddForm" class="fridge-add-form">
-            <input id="fridgeAddName" placeholder="Ajouter ce que j’ai déjà : œufs, lait, poulet…" required />
-            <input id="fridgeAddQty" placeholder="Quantité (optionnel)" />
-            <button class="btn btn-primary" type="submit">+ Ajouter au frigo</button>
-          </form>
-          <div class="fridge-coverage" id="fridgeCoverage"></div>
-          <div class="fridge-list" id="fridgeList"></div>
-        </section>
+        
       </section>
 
       <section class="page" id="page-recipes">
