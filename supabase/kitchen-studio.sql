@@ -1,5 +1,5 @@
 -- Kitchen Studio cloud state schema
--- Run on the dedicated Kitchen Studio Supabase project.
+-- Dedicated Supabase backend for Mise / Kitchen Studio.
 
 create table if not exists public.kitchen_user_state (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -9,6 +9,7 @@ create table if not exists public.kitchen_user_state (
 
 alter table public.kitchen_user_state enable row level security;
 
+revoke all on table public.kitchen_user_state from anon;
 grant select, insert, update, delete on table public.kitchen_user_state to authenticated;
 
 drop policy if exists "kitchen_state_select_own" on public.kitchen_user_state;
@@ -40,8 +41,21 @@ for delete
 to authenticated
 using ((select auth.uid()) = user_id);
 
--- Manual-page images belong in a PRIVATE Storage bucket named "manual-pages".
--- Create that bucket in Storage, then these policies keep every user's pages private.
+-- Private bucket for appliance-manual photos.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'manual-pages',
+  'manual-pages',
+  false,
+  10485760,
+  array['image/jpeg','image/png','image/webp','image/heic','image/heif']
+)
+on conflict (id) do update set
+  name = excluded.name,
+  public = false,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
+
 drop policy if exists "manual_pages_insert_own" on storage.objects;
 create policy "manual_pages_insert_own"
 on storage.objects
