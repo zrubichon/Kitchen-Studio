@@ -144,7 +144,7 @@
     const email=document.querySelector('#cloudAccountEmail').value.trim(),password=document.querySelector('#cloudAccountPassword').value,name=document.querySelector('#cloudAccountName').value.trim();
     setStatus(mode==='signup'?'Création du compte…':'Connexion…');
     if(mode==='signup'){
-      const {data,error}=await Cloud.client.auth.signUp({email,password,options:{data:{name}}});
+      const {data,error}=await Cloud.client.auth.signUp({email,password,options:{data:{name},emailRedirectTo:window.location.origin+'/'}});
       if(error){setStatus(error.message);return}
       Cloud.user=data.user||null;
       if(data.session){updateAccountUI(Cloud.user);await saveNow();setStatus('Compte créé et synchronisé',true)}
