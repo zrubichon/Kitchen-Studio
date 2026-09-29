@@ -39,6 +39,12 @@
   }
 
   async function startOffer(type){
+    if(!window.KitchenCloud?.user){
+      toast(tr('Créez ou connectez votre compte avant un achat afin que votre accès puisse être associé à votre profil.','Create or sign in to your account before purchasing so access can be linked to your profile.'));
+      navigate('profile');
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
     await loadCommerce();
     const url=commerce?.links?.[type];
     if(url){
