@@ -163,7 +163,7 @@
     let pool=candidatesForSlot(si,strictFridge);
     const prev=d>0?state.plan[d-1]?.[si]:null;
     pool=pool.filter(r=>r.id!==current&&r.id!==prev);
-    if(!pool.length)pool=candidatesForSlot(si,strictFridge).filter(r=>r.id!==current);
+    if(!pool.length)pool=candidatesForSlot(si,strictFridge);
     if(!pool.length)return strictFridge?null:current;
     pool.sort((a,b)=>{
       let sa=Math.random(),sb=Math.random();
@@ -186,8 +186,8 @@
     for(const key of targetKeys){
       const [d,si]=key.split('-').map(Number);
       if(state.plan[d][si]===FAST_ID)continue;
-      const candidate=generated?.[d]?.[si];
-      state.plan[d][si]=(candidate&&candidate!==FAST_ID&&recipeById(candidate))?candidate:localPick(si,state.plan[d][si],false,d);
+      const candidate=generated?.[d]?.[si],candidateRecipe=candidate?recipeById(candidate):null;
+      state.plan[d][si]=(candidateRecipe&&candidate!==FAST_ID&&candidateRecipe.slot===slots[si])?candidate:localPick(si,state.plan[d][si],false,d);
     }
     window.MiseWellness?.applyFasting?.();persist();renderWeek();
   }
@@ -201,6 +201,15 @@
     }
     window.MiseWellness?.applyFasting?.();persist();renderWeek();
     toast(empty?tr('Menu recomposé avec le frigo. Certaines cases restent vides faute d’ingrédients compatibles.','Menu rebuilt from your fridge. Some slots stay empty because there are not enough compatible ingredients.'):tr('Menu recomposé uniquement avec ce qu’il y a dans votre frigo.','Menu rebuilt only from what is in your fridge.'));
+  }
+
+  if(window.KitchenStudioV9){
+    window.KitchenStudioV9.renderFridgeCoverage=function(){
+      const box=$('#fridgeCoverage');if(!box)return;
+      const meals=state.plan.flat().filter(id=>id&&id!==FAST_ID);
+      const covered=meals.filter(id=>window.KitchenStudioV9.recipeCovered?.(recipeById(id))).length,total=meals.length;
+      box.innerHTML='<div><strong>'+covered+'/'+total+'</strong><span>'+tr('repas prévus entièrement couverts par le frigo','planned meals fully covered by your fridge')+'</span></div><div class="fridge-coverage-bar"><span style="width:'+(total?covered/total*100:0)+'%"></span></div>';
+    };
   }
 
   const regen=$('#regenerateSelected');
