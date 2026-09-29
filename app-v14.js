@@ -1,4 +1,5 @@
 // Mise V14 — verified recipe imagery, 60 student-budget recipes, precise appliance-aware cooking
+// AI Gateway env refresh 2026-09-29
 (function(){
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const tr=(fr,en)=>state.profile.language==='en'?en:fr;
