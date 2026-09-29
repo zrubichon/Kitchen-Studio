@@ -523,6 +523,21 @@
     </div>
   </dialog>
 
+  <dialog class="modal forgot-password-modal" id="forgotPasswordModal">
+    <button class="modal-close" data-close>×</button>
+    <div class="eyebrow">Mot de passe oublié</div>
+    <h2>Recevoir un lien de réinitialisation.</h2>
+    <p class="muted">Entrez l’adresse email utilisée pour votre compte Mise. Vous recevrez un lien permettant de choisir un nouveau mot de passe sans perdre votre compte ni vos données.</p>
+    <form id="forgotPasswordForm" class="account-form">
+      <label>Email
+        <input id="forgotPasswordEmail" type="email" autocomplete="email" placeholder="vous@email.com" required />
+        <small class="auth-field-hint">Le lien de récupération est envoyé uniquement si Supabase peut envoyer des emails à cette adresse.</small>
+      </label>
+      <button class="btn btn-primary full" id="forgotPasswordSend" type="submit">Envoyer le lien</button>
+    </form>
+    <div class="cloud-auth-status" id="forgotPasswordStatus"><span class="status-dot"></span><span>Aucun email n’a encore été envoyé.</span></div>
+  </dialog>
+
   <dialog class="modal password-recovery-modal" id="passwordRecoveryModal">
     <button class="modal-close" data-close>×</button>
     <div class="eyebrow">Sécurité du compte</div>
@@ -612,5 +627,6 @@
   <script src="app-v13.js"></script>
   <script src="app-v14.js"></script>
   <script src="app-v15.js"></script>
+  <script src="app-v18.js"></script>
 </body>
 </html>
