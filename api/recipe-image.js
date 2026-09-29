@@ -5,9 +5,9 @@ function placeholder(res,name){
   return res.status(200).send(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#eee3d7"/><stop offset="1" stop-color="#f8f3ec"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="47%" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#6f6257">Image en préparation</text><text x="50%" y="54%" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" fill="#8b7e72">${n}</text></svg>`);
 }
 async function generateImage(apiKey,model,prompt){
-  const r=await fetch('https://ai-gateway.vercel.sh/v1/images/generations',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,prompt,n:1})});
-  const d=await r.json();if(!r.ok)throw new Error('image generation failed');
-  const item=d?.data?.[0];if(item?.b64_json)return {b64:item.b64_json,mime:'image/png'};
+  const r=await fetch('https://ai-gateway.vercel.sh/v1/images/generations',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,prompt,n:1,response_format:'b64_json',providerOptions:{blackForestLabs:{outputFormat:'jpeg'}}})});
+  const d=await r.json();if(!r.ok){console.error('[recipe-image] generation response',{status:r.status,error:d?.error?.message||d?.error||d?.message||'unknown'});throw new Error('image generation failed: '+r.status);}
+  const item=d?.data?.[0];if(item?.b64_json)return {b64:item.b64_json,mime:'image/jpeg'};
   if(item?.url){
     const img=await fetch(item.url);if(!img.ok)throw new Error('generated image fetch failed');
     const ab=await img.arrayBuffer();return {b64:Buffer.from(ab).toString('base64'),mime:img.headers.get('content-type')||'image/png'};
@@ -34,7 +34,7 @@ export default async function handler(req,res){
   const name=clean(req.query?.name||'').slice(0,220),ingredients=clean(req.query?.ingredients||'').slice(0,900).split('|').map(x=>x.trim()).filter(Boolean),tags=clean(req.query?.tags||'').slice(0,400);
   if(!name)return res.status(400).end();
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
-  const imageModel=process.env.AI_IMAGE_MODEL||'openai/gpt-image-2';
+  const imageModel=process.env.AI_IMAGE_MODEL||'bfl/flux-2-pro';
   const visionModel=process.env.AI_VISION_MODEL||process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey){console.error('[recipe-image] no AI Gateway credential available');return placeholder(res,name);}
   console.log('[recipe-image] start',{name,imageModel,hasVisionModel:Boolean(visionModel)});
