@@ -84,7 +84,7 @@
   // ---------- verified images for every recipe ----------
   function imageUrl(r){
     const p=new URLSearchParams({
-      v:'4',id:r.id||r.name||'recipe',name:r.name||'Recette',
+      v:'5',id:r.id||r.name||'recipe',name:r.name||'Recette',
       ingredients:(r.ingredients||[]).slice(0,10).map(x=>x[0]).join('|'),
       tags:(r.tags||[]).slice(0,10).join('|')
     });
@@ -132,6 +132,40 @@
     renderRecipesBeforeV14(filter);setTimeout(()=>hydrateImages($('#recipeGrid')||document),0);
   };
 
+  function proposalControls(r){
+    const fav=state.favorites.has(r.id);
+    return '<div class="proposal-actions"><button type="button" class="proposal-heart '+(fav?'active':'')+'" data-proposal-fav="'+r.id+'">'+(fav?'♥':'♡')+'</button><button type="button" class="proposal-plus" data-proposal-add="'+r.id+'">+</button></div>';
+  }
+  function bindProposalV14(root){
+    root.querySelectorAll('[data-proposal-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();favoriteRecipe(b.dataset.proposalFav);renderLazyIdeasV14();renderLazyDrawerV14()});
+    root.querySelectorAll('[data-proposal-add]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendar(recipeById(b.dataset.proposalAdd))});
+  }
+  function lazyPhoto(r,cls){
+    return '<div class="'+cls+' recipe-image-placeholder" data-recipe-image="'+r.id+'" data-image-url="'+r.image+'">'+proposalControls(r)+'</div>';
+  }
+  function renderLazyIdeasV14(){
+    const box=$('#recipeIdeasGrid');if(!box)return;
+    const used=new Set(state.plan.flat()),pool=RECIPES.filter(r=>r.id!=='fasting-slot'&&eligibleByProfile(r)&&!used.has(r.id));
+    const picks=Array.from({length:8},(_,i)=>pool[(i+(state.ideaOffset||0))%Math.max(1,pool.length)]).filter(Boolean);
+    box.innerHTML=picks.map(r=>'<article class="idea-card enhanced-proposal" data-idea="'+r.id+'">'+lazyPhoto(r,'idea-photo')+'<div><span>'+r.time+' min · '+r.protein+'g '+tr('prot.','protein')+'</span><h4>'+recipeText(r).name+'</h4><small>'+((window.KitchenStudioV9?.recipeCovered?.(r))?tr('✓ Faisable avec le frigo','✓ Fridge-ready'):tr('Ingrédients manquants → + les ajoute aux courses','Missing ingredients → + adds them to shopping'))+'</small></div></article>').join('');
+    box.querySelectorAll('[data-idea]').forEach(c=>c.onclick=e=>{if(e.target.closest('.proposal-actions'))return;openRecipe(recipeById(c.dataset.idea),tr('Idée recette','Recipe idea'))});
+    bindProposalV14(box);hydrateImages(box);
+  }
+  let drawerOffsetV14=0;
+  function renderLazyDrawerV14(){
+    const week=$('#drawerWeekMenu'),track=$('#drawerIdeasTrack');if(!week||!track)return;
+    week.innerHTML=state.plan.flatMap((day,d)=>day.map((id,si)=>{const r=recipeById(id);if(!r||id==='fasting-slot')return'';return '<button type="button" class="drawer-menu-chip" data-drawer-recipe="'+id+'"><small>'+currentDays()[d]+' · '+[currentMeals().breakfast,currentMeals().lunch,currentMeals().dinner][si]+'</small><strong>'+recipeText(r).name+'</strong></button>'})).join('');
+    week.querySelectorAll('[data-drawer-recipe]').forEach(b=>b.onclick=()=>openRecipe(recipeById(b.dataset.drawerRecipe),tr('Menu de la semaine','Weekly menu')));
+    const pool=RECIPES.filter(r=>r.id!=='fasting-slot'&&eligibleByProfile(r)&&!state.plan.flat().includes(r.id));
+    const picks=Array.from({length:12},(_,i)=>pool[(i+drawerOffsetV14)%Math.max(1,pool.length)]).filter(Boolean);
+    track.innerHTML=picks.map(r=>'<article class="drawer-idea enhanced-proposal" data-drawer-idea="'+r.id+'">'+lazyPhoto(r,'drawer-idea-photo')+'<small>'+r.time+' min</small><h4>'+recipeText(r).name+'</h4></article>').join('');
+    track.querySelectorAll('[data-drawer-idea]').forEach(c=>c.onclick=e=>{if(e.target.closest('.proposal-actions'))return;openRecipe(recipeById(c.dataset.drawerIdea),tr('Idée à ajouter','Idea to add'))});
+    bindProposalV14(track);hydrateImages(track);
+  }
+  $('#refreshIdeas')?.addEventListener('click',()=>setTimeout(renderLazyIdeasV14,0));
+  $('#refreshDrawerIdeas')?.addEventListener('click',()=>{drawerOffsetV14+=6;renderLazyDrawerV14()});
+  renderRecipeIdeas=renderLazyIdeasV14;
+  if(window.KitchenStudioV9){window.KitchenStudioV9.renderRecipeIdeas=renderLazyIdeasV14;window.KitchenStudioV9.renderPlannerDrawer=renderLazyDrawerV14}
   // ---------- servings / quantities ----------
   const FRACTIONS={'¼':.25,'½':.5,'¾':.75,'⅓':1/3,'⅔':2/3,'⅛':.125};
   function scaleQty(qty,servings){
@@ -267,7 +301,7 @@
   // Re-render recipe surfaces so old shared fallback images disappear now.
   try{renderRecipes(window.__recipeFilter||'all')}catch{}
   try{renderWeek()}catch{}
-  try{window.KitchenStudioV9?.renderRecipeIdeas?.();window.KitchenStudioV9?.renderPlannerDrawer?.()}catch{}
+  try{renderLazyIdeasV14();renderLazyDrawerV14()}catch{}
   setTimeout(()=>hydrateImages(document),80);
 
   window.MiseCookingV14={basicsGuide,customGuide,showGuide,budgetRecipeCount:budgetRecipes.length};
