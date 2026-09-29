@@ -33,7 +33,7 @@ export default async function handler(req,res){
   if(req.method!=='GET')return res.status(405).end();
   const name=clean(req.query?.name||'').slice(0,220),ingredients=clean(req.query?.ingredients||'').slice(0,900).split('|').map(x=>x.trim()).filter(Boolean),tags=clean(req.query?.tags||'').slice(0,400);
   if(!name)return res.status(400).end();
-  const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
+  const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
   const imageModel=process.env.AI_IMAGE_MODEL||'openai/gpt-image-2';
   const visionModel=process.env.AI_VISION_MODEL||process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey){console.error('[recipe-image] no AI Gateway credential available');return placeholder(res,name);}
