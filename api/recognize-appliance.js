@@ -1,6 +1,6 @@
 export default async function handler(req,res){
   if(req.method!=='POST') return res.status(405).json({error:'Method not allowed'});
-  const apiKey=process.env.AI_GATEWAY_API_KEY, model=process.env.AI_MODEL;
+  const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN, model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey||!model) return res.status(503).json({error:'AI Gateway not configured'});
   const {imageDataUrl,catalog=[]}=req.body||{};
   if(typeof imageDataUrl!=='string'||!imageDataUrl.startsWith('data:image/')) return res.status(400).json({error:'Valid imageDataUrl required'});
