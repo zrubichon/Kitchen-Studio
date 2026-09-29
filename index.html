@@ -22,8 +22,7 @@
         <button class="nav-item" data-page="shopping"><span>⌁</span> Courses <span class="nav-count" id="shoppingCount">18</span></button>
         <button class="nav-item" data-page="recipes"><span>♨</span> Recettes</button>
         <button class="nav-item" data-page="appliances"><span>◫</span> Mes appareils</button>
-        <button class="nav-item" data-page="profile"><span>◎</span> Préférences</button>
-        <button class="nav-item" data-page="account"><span>◉</span> Mon compte</button>
+        <button class="nav-item" data-page="profile"><span>◎</span> Mon profil</button>
       </nav>
 
       <div class="sidebar-card">
@@ -32,9 +31,9 @@
         <button class="btn btn-cream btn-small" id="openAiPrompt">Parler au chef</button>
       </div>
 
-      <div class="profile-mini">
-        <div class="avatar">Z</div>
-        <div><strong>Mon profil</strong><small id="profileSummary">Équilibré · 1 pers.</small></div>
+      <div class="profile-mini" id="profileMini">
+        <div class="avatar" id="profileMiniAvatar">M</div>
+        <div><strong id="profileMiniName">Mon profil</strong><small id="profileSummary">Équilibré · 1 pers.</small></div>
         <button class="icon-btn" data-page="profile" aria-label="Modifier le profil">›</button>
       </div>
     </aside>
@@ -64,6 +63,14 @@
             <button class="btn btn-primary" id="generateWeek"><span>✦</span> Composer avec l’IA</button>
           </div>
         </div>
+
+        <section class="wellness-coach-card" id="wellnessCoachCard">
+          <div class="wellness-placeholder">
+            <span class="premium-badge">✦ Premium personnalisé</span>
+            <strong>Votre objectif nutritionnel apparaîtra ici.</strong>
+            <p>Créez un compte dans Mon profil pour activer le suivi calories, l’objectif physique et les recommandations adaptées.</p>
+          </div>
+        </section>
 
         <div class="insight-strip">
           <div><small>Cette semaine</small><strong id="weekRange">21–27 septembre</strong></div>
@@ -298,19 +305,22 @@
         </div>
       </section>
 
-      <section class="page" id="page-account">
-        <div class="page-head"><div><div class="eyebrow">Compte Kitchen Studio</div><h2>Votre cuisine vous suit partout.</h2><p>Créez un vrai compte pour retrouver automatiquement votre frigo, votre menu, vos favoris, vos préférences et vos appareils sur vos autres appareils.</p></div></div>
-        <div class="account-layout cloud-account-layout">
+      <section class="page" id="page-profile">
+        <div class="page-head"><div><div class="eyebrow" data-wellness-fr="Votre profil Mise" data-wellness-en="Your Mise profile">Votre profil Mise</div><h2 data-wellness-fr="Votre compte, vos objectifs, vos menus." data-wellness-en="Your account, goals and menus.">Votre compte, vos objectifs, vos menus.</h2><p data-wellness-fr="Mise utilise ici vos préférences culinaires et, avec un compte, votre objectif personnel pour adapter les repas et synchroniser toute votre cuisine." data-wellness-en="Mise uses your food preferences here and, with an account, your personal goal to adapt meals and sync your kitchen.">Mise utilise ici vos préférences culinaires et, avec un compte, votre objectif personnel pour adapter les repas et synchroniser toute votre cuisine.</p></div><button class="btn btn-primary" id="saveProfile">Enregistrer</button></div>
+
+        <div class="profile-account-shell" id="profileAccountShell">
           <section class="form-card cloud-auth-card">
+            <div class="eyebrow">Compte Mise</div>
+            <h3 data-wellness-fr="Activez votre suivi personnalisé." data-wellness-en="Unlock your personalized tracking.">Activez votre suivi personnalisé.</h3>
+            <p class="profile-account-reason" data-wellness-fr="Le compte est obligatoire pour le suivi Premium : il permet de conserver votre objectif, votre frigo, votre liste de courses, vos menus, vos favoris et vos appareils à jour sur tous vos appareils." data-wellness-en="An account is required for Premium tracking: it keeps your goal, fridge, grocery list, menus, favorites and appliances up to date across devices.">Le compte est obligatoire pour le suivi Premium : il permet de conserver votre objectif, votre frigo, votre liste de courses, vos menus, vos favoris et vos appareils à jour sur tous vos appareils.</p>
             <div class="account-tabs"><button class="account-tab active" data-auth-mode="signup" type="button">Créer un compte</button><button class="account-tab" data-auth-mode="signin" type="button">Se connecter</button></div>
             <form id="cloudAuthForm" class="account-form">
-              <label id="cloudNameLabel">Prénom<input id="cloudAccountName" name="name" autocomplete="given-name" placeholder="Votre prénom" /></label>
-              <label>Email<input id="cloudAccountEmail" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required /></label>
-              <label>Mot de passe<input id="cloudAccountPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /></label>
+              <label id="cloudNameLabel"><span data-wellness-fr="Prénom" data-wellness-en="First name">Prénom</span><input id="cloudAccountName" name="name" autocomplete="given-name" placeholder="Votre prénom" /></label>
+              <label><span>Email</span><input id="cloudAccountEmail" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required /></label>
+              <label><span data-wellness-fr="Mot de passe" data-wellness-en="Password">Mot de passe</span><input id="cloudAccountPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /></label>
               <button class="btn btn-primary full" id="cloudAuthSubmit" type="submit">Créer mon compte</button>
             </form>
             <div class="cloud-auth-status" id="cloudAuthStatus"><span class="status-dot"></span><span>Connexion cloud à initialiser.</span></div>
-            <small class="muted">La session reste connectée automatiquement sur cet appareil. Une fois connecté ailleurs avec le même compte, Kitchen Studio recharge votre cuisine synchronisée.</small>
           </section>
           <div class="form-card account-summary">
             <div class="account-avatar" id="accountAvatar">M</div>
@@ -320,12 +330,39 @@
           </div>
         </div>
         <div hidden aria-hidden="true"><form id="accountForm"><input id="accountName" name="name"><input id="accountEmail" name="email"><button type="submit"></button></form></div>
-      </section>
 
-      <section class="page" id="page-profile">
-        <div class="page-head"><div><div class="eyebrow">Votre profil culinaire</div><h2>Plus Mise vous connaît, moins vous planifiez.</h2><p>Ces préférences sont la base permanente. Les critères de semaine peuvent les modifier temporairement.</p></div><button class="btn btn-primary" id="saveProfile">Enregistrer</button></div>
-        <form class="profile-form" id="profileForm">
-          <div class="form-card"><h3>Objectif & style</h3><div class="field-grid two"><label>Objectif principal<select name="goal"><option value="balanced">Manger équilibré</option><option value="protein" selected>Énergie & protéines</option><option value="muscle">Prise de muscle</option><option value="light">Repas plus légers</option><option value="budget">Économiser</option></select></label><label>Style alimentaire<select name="diet"><option value="balanced" selected>Omnivore équilibré</option><option value="vegetarian">Végétarien</option><option value="vegan">Vegan</option><option value="pescatarian">Pescatarien</option><option value="mediterranean">Méditerranéen</option></select></label><label>Portions<input name="servings" type="number" min="1" max="8" value="1" /></label><label>Temps max un soir<select name="maxTime"><option>15 min</option><option selected>25 min</option><option>35 min</option><option>45 min</option></select></label></div></div>
+        <form class="profile-form profile-form-v10" id="profileForm">
+          <div class="form-card premium-goal-card" id="premiumGoalCard">
+            <div class="premium-card-head"><div><span class="premium-badge">✦ Premium personnalisé</span><h3 data-wellness-fr="Mon objectif physique" data-wellness-en="My physical goal">Mon objectif physique</h3></div><span class="premium-status" id="premiumStatus">Compte requis</span></div>
+            <p class="muted" data-wellness-fr="Ces informations servent uniquement à personnaliser les menus et les estimations. Elles sont synchronisées dans votre compte Mise." data-wellness-en="These details are only used to personalize menus and estimates. They are synced to your Mise account.">Ces informations servent uniquement à personnaliser les menus et les estimations. Elles sont synchronisées dans votre compte Mise.</p>
+            <div class="premium-lock" id="premiumHealthLock">
+              <strong data-wellness-fr="Créez ou connectez votre compte pour débloquer cette partie." data-wellness-en="Create or sign in to your account to unlock this section.">Créez ou connectez votre compte pour débloquer cette partie.</strong>
+              <span data-wellness-fr="Le compte est important pour garder le suivi, les menus, le frigo et les courses cohérents d’un appareil à l’autre." data-wellness-en="Your account keeps tracking, menus, fridge and groceries consistent across devices.">Le compte est important pour garder le suivi, les menus, le frigo et les courses cohérents d’un appareil à l’autre.</span>
+              <button class="btn btn-dark btn-small" id="premiumCreateAccountBtn" type="button">Créer mon compte</button>
+            </div>
+            <div class="premium-fields" id="premiumFields">
+              <div class="field-grid two">
+                <label><span data-wellness-fr="Prénom" data-wellness-en="First name">Prénom</span><input name="firstName" autocomplete="given-name" placeholder="Zoé" /></label>
+                <label><span data-wellness-fr="Nom" data-wellness-en="Last name">Nom</span><input name="lastName" autocomplete="family-name" placeholder="Nom" /></label>
+                <label><span data-wellness-fr="Âge" data-wellness-en="Age">Âge</span><input name="age" type="number" min="18" max="100" step="1" placeholder="25" /></label>
+                <label><span data-wellness-fr="Poids actuel (kg)" data-wellness-en="Current weight (kg)">Poids actuel (kg)</span><input name="weightKg" type="number" min="30" max="300" step="0.1" placeholder="65" /></label>
+                <label><span data-wellness-fr="Taille (cm)" data-wellness-en="Height (cm)">Taille (cm)</span><input name="heightCm" type="number" min="120" max="230" step="1" placeholder="170" /></label>
+                <label><span data-wellness-fr="Poids cible (kg)" data-wellness-en="Target weight (kg)">Poids cible (kg)</span><input name="targetWeightKg" type="number" min="30" max="300" step="0.1" placeholder="60" /></label>
+                <label><span data-wellness-fr="Objectif" data-wellness-en="Goal">Objectif</span><select name="bodyGoal"><option value="maintain">Maintenir mon poids</option><option value="loss">Perdre du poids progressivement</option><option value="muscle">Prendre du muscle progressivement</option></select></label>
+                <label><span data-wellness-fr="Niveau d’activité" data-wellness-en="Activity level">Niveau d’activité</span><select name="activityLevel"><option value="low">Peu actif</option><option value="light">Légèrement actif</option><option value="moderate">Actif</option><option value="high">Très actif</option><option value="very-high">Sport / activité intense fréquente</option></select></label>
+              </div>
+              <div class="premium-goal-preview" id="premiumGoalPreview"></div>
+            </div>
+          </div>
+
+          <div class="form-card"><h3 data-wellness-fr="Objectif des menus & régime" data-wellness-en="Menu goal & diet">Objectif des menus & régime</h3><div class="field-grid two">
+            <label><span data-wellness-fr="Objectif des menus" data-wellness-en="Menu goal">Objectif des menus</span><select name="goal"><option value="balanced">Manger équilibré</option><option value="protein" selected>Énergie & protéines</option><option value="muscle">Prise de muscle</option><option value="light">Repas plus légers</option><option value="budget">Économiser</option></select></label>
+            <label><span data-wellness-fr="Style alimentaire" data-wellness-en="Diet style">Style alimentaire</span><select name="diet"><option value="balanced" selected>Omnivore équilibré</option><option value="vegetarian">Végétarien</option><option value="vegan">Vegan</option><option value="pescatarian">Pescatarien</option><option value="mediterranean">Méditerranéen</option></select></label>
+            <label><span data-wellness-fr="Priorité protéines" data-wellness-en="Protein priority">Priorité protéines</span><select name="proteinPriority"><option value="normal">Normale</option><option value="high">Riche en protéines</option><option value="very-high">Très protéiné</option></select></label>
+            <label><span data-wellness-fr="Sucre" data-wellness-en="Sugar">Sucre</span><select name="sugar"><option value="normal">Sans contrainte</option><option value="less">Moins de sucre</option><option value="low">Très peu de sucre ajouté</option></select></label>
+            <label><span data-wellness-fr="Portions" data-wellness-en="Servings">Portions</span><input name="servings" type="number" min="1" max="8" value="1" /></label>
+            <label><span data-wellness-fr="Temps max un soir" data-wellness-en="Max evening cook time">Temps max un soir</span><select name="maxTime"><option>15 min</option><option selected>25 min</option><option>35 min</option><option>45 min</option></select></label>
+          </div></div>
           <div class="form-card"><h3>À respecter absolument</h3><label>Allergies / intolérances<input name="allergies" placeholder="Ex. cacahuètes, lactose…" /></label><label>Je n’aime pas<input name="dislikes" placeholder="Ex. champignons, coriandre…" /></label><div><span class="field-title">Préférences rapides</span><div class="check-pills"><label><input type="checkbox" name="pref" value="high-protein" checked> Riche en protéines</label><label><input type="checkbox" name="pref" value="meal-prep" checked> Meal prep</label><label><input type="checkbox" name="pref" value="few-dishes"> Peu de vaisselle</label><label><input type="checkbox" name="pref" value="seasonal"> De saison</label><label><input type="checkbox" name="pref" value="frozen"> Surgelés acceptés</label></div></div></div>
           <div class="form-card"><h3>Courses</h3><div class="field-grid two"><label>Enseigne<select name="store" id="profileStore"><option>Whole Foods Market</option><option>Trader Joe’s</option><option>Safeway</option><option>QFC</option><option>Costco</option><option>Target</option><option>Carrefour</option><option>Monoprix</option><option>Auchan</option></select></label><label>Ville / code postal<input name="location" id="profileLocation" value="Seattle, WA" /></label><label>Budget hebdomadaire<input name="budget" type="number" value="90" min="20" step="5" /></label><label>Priorité produits<select name="productPriority"><option value="value">Meilleur rapport qualité/prix</option><option value="organic">Bio quand possible</option><option value="brand">Mes marques favorites</option><option value="cheapest">Prix le plus bas</option></select></label></div></div>
           <div class="form-card"><h3>Mon appareil de cuisine</h3><p class="muted">L’appareil enregistré devient la référence pour adapter automatiquement les recettes compatibles.</p><div class="profile-device-summary" id="profileDeviceSummary"><strong>Aucun appareil enregistré</strong><small>Ajoutez votre modèle exact dans “Mes appareils”.</small></div><button type="button" class="text-btn" data-page="appliances">Rechercher / changer mon appareil →</button></div>
@@ -425,5 +462,6 @@
   <script src="recipe-expansion.js"></script>
   <script src="app-v9.js"></script>
   <script src="cloud-sync.js"></script>
+  <script src="app-v10.js"></script>
 </body>
 </html>
