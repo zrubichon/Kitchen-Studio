@@ -17,7 +17,7 @@
   }
   function capture(){
     return {
-      version:9,
+      version:10,
       profile:state.profile,
       plan:state.plan,
       favorites:[...(state.favorites||[])],
