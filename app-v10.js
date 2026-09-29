@@ -293,6 +293,9 @@
     q('#firstRunPassword').autocomplete=firstMode==='signup'?'new-password':'current-password';
     if(q('#firstRunResendConfirmation'))q('#firstRunResendConfirmation').hidden=firstMode!=='signup';
     if(q('#firstRunForgotPassword'))q('#firstRunForgotPassword').hidden=firstMode!=='signin';
+    const eh=q('#firstRunEmailHint'),ph=q('#firstRunPasswordHint');
+    if(eh)eh.textContent=firstMode==='signup'?'Si cette adresse possède déjà un compte, Mise vous proposera de vous connecter.':'Entrez l’adresse utilisée lors de la création de votre compte.';
+    if(ph)ph.textContent=firstMode==='signup'?'8 caractères minimum.':'Mot de passe oublié ? Utilisez le bouton sous le formulaire pour le réinitialiser.';
   }));
   q('#firstRunAuthForm')?.addEventListener('submit',async e=>{
     e.preventDefault();const c=window.KitchenCloud?.client,status=q('#firstRunStatus');if(!c){status.innerHTML='<span class="status-dot"></span><span>'+tr('Connexion en cours d’initialisation…','Cloud connection is initializing…')+'</span>';return}
@@ -304,12 +307,29 @@
         : await c.auth.signUp({email,password,options:{data:{name},emailRedirectTo:'https://mise-kitchen-studio.vercel.app/'}});
       if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
       if(data.session){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
-      else status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Si cette adresse est nouvelle, un email de confirmation vient d’être envoyé. Si vous aviez déjà un compte, choisissez “J’ai déjà un compte” ou “Mot de passe oublié ?”.','If this is a new address, a confirmation email was sent. If you already had an account, choose “I already have an account” or “Forgot password?”.')+'</span>';
+      else if(window.KitchenCloud?.isRepeatedSignup?.(data)){
+        window.KitchenCloud.rememberExistingEmail?.(email);
+        status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Cette adresse est déjà associée à un compte Mise. Choisissez “J’ai déjà un compte”.','This address already has a Mise account. Choose “I already have an account”.')+'</span>';
+        if(q('#firstRunEmailHint')){q('#firstRunEmailHint').textContent=tr('✓ Un compte Mise existe déjà avec cette adresse.','✓ A Mise account already exists with this address.');q('#firstRunEmailHint').classList.add('known-account')}
+        if(q('#firstRunPasswordHint'))q('#firstRunPasswordHint').textContent=tr('Si vous avez oublié le mot de passe, passez sur “J’ai déjà un compte” puis utilisez “Mot de passe oublié ?”.','If you forgot the password, switch to “I already have an account” and use “Forgot password?”.');
+      }else status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Inscription créée. Vérifiez votre boîte mail et vos spams pour confirmer votre adresse.','Signup created. Check your inbox and spam folder to confirm your address.')+'</span>';
     }else{
       const {data,error}=window.KitchenCloud?.signInAccount
         ? await window.KitchenCloud.signInAccount(email,password)
         : await c.auth.signInWithPassword({email,password});
-      if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
+      if(error){
+        const known=window.KitchenCloud?.knownExistingEmail?.(email),invalid=error.code==='invalid_credentials'||/invalid login credentials/i.test(error.message||'');
+        if(invalid&&known){
+          status.innerHTML='<span class="status-dot"></span><span>'+tr('Ce compte existe, mais le mot de passe saisi est incorrect.','This account exists, but the password is incorrect.')+'</span>';
+          if(q('#firstRunEmailHint')){q('#firstRunEmailHint').textContent=tr('✓ Compte existant reconnu.','✓ Existing account recognized.');q('#firstRunEmailHint').classList.add('known-account')}
+          if(q('#firstRunPasswordHint')){q('#firstRunPasswordHint').textContent=tr('Mot de passe incorrect. Cliquez sur “Mot de passe oublié ?” pour en choisir un nouveau.','Incorrect password. Click “Forgot password?” to choose a new one.');q('#firstRunPasswordHint').classList.add('auth-warning')}
+        }else if(invalid){
+          status.innerHTML='<span class="status-dot"></span><span>'+tr('Email ou mot de passe incorrect.','Incorrect email or password.')+'</span>';
+          if(q('#firstRunPasswordHint')){q('#firstRunPasswordHint').textContent=tr('Si vous aviez déjà créé un compte, utilisez “Mot de passe oublié ?” pour réinitialiser votre mot de passe.','If you already created an account, use “Forgot password?” to reset your password.');q('#firstRunPasswordHint').classList.add('auth-warning')}
+        }else status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';
+        return
+      }
+      try{sessionStorage.removeItem('miseKnownExistingEmail')}catch{}
       if(data.user){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
     }
   });
