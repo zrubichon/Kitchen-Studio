@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const key = process.env.INSTACART_API_KEY;
-  if (!key) return res.status(503).json({ error: 'INSTACART_API_KEY is not configured' });
+  if (!key) return res.status(200).json({ configured: false, products_link_url: null, message: 'INSTACART_API_KEY is not configured' });
   const { title = 'Mise — Liste de courses', line_items = [] } = req.body || {};
   const normalizedItems = line_items.map((item) => ({
     name: item.name,
