@@ -308,6 +308,15 @@
     }
   });
   q('#firstRunSkip')?.addEventListener('click',()=>{localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};});
+  q('#firstRunClose')?.addEventListener('click',e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    sessionStorage.setItem('miseFirstRunDismissed','1');
+    const dlg=q('#firstRunModal');
+    if(dlg?.open)dlg.close();
+    const backdrop=q('#modalBackdrop');
+    if(backdrop)backdrop.hidden=true;
+  });
 
   function profileSafeEligible(r){
     try{return typeof eligibleByProfile==='function'?eligibleByProfile(r):true}catch{return true}
