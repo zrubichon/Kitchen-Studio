@@ -386,6 +386,11 @@
               <button class="btn btn-primary full" id="cloudAuthSubmit" type="submit">Créer mon compte</button>
             </form>
             <div class="cloud-auth-status" id="cloudAuthStatus"><span class="status-dot"></span><span>Connexion cloud à initialiser.</span></div>
+            <div class="auth-help-row">
+              <button class="text-btn" id="resendConfirmation" type="button">Renvoyer l’email de confirmation</button>
+              <button class="text-btn" id="forgotPassword" type="button" hidden>Mot de passe oublié ?</button>
+            </div>
+            <small class="auth-persistence-note">Votre compte Mise est conservé indépendamment des mises à jour du site. Après une nouvelle version, reconnectez-vous simplement avec le même email.</small>
           </section>
           <div class="form-card account-summary">
             <div class="account-avatar" id="accountAvatar">M</div>
@@ -507,10 +512,28 @@
           <button class="btn btn-primary full" type="submit" id="firstRunSubmit">Créer mon compte</button>
         </form>
         <div class="cloud-auth-status" id="firstRunStatus"><span class="status-dot"></span><span>Votre compte synchronise l’expérience Mise.</span></div>
+        <div class="auth-help-row first-run-auth-help">
+          <button class="text-btn" id="firstRunResendConfirmation" type="button">Renvoyer l’email de confirmation</button>
+          <button class="text-btn" id="firstRunForgotPassword" type="button" hidden>Mot de passe oublié ?</button>
+        </div>
+        <small class="auth-persistence-note">Déjà inscrit ? Votre compte reste valable après chaque mise à jour de Mise : utilisez “J’ai déjà un compte”.</small>
         <button class="text-btn onboarding-skip" id="firstRunSkip" type="button">Découvrir sans compte pour l’instant</button>
         <small class="muted">Les fonctions Premium de suivi personnalisé restent verrouillées sans compte.</small>
       </section>
     </div>
+  </dialog>
+
+  <dialog class="modal password-recovery-modal" id="passwordRecoveryModal">
+    <button class="modal-close" data-close>×</button>
+    <div class="eyebrow">Sécurité du compte</div>
+    <h2>Choisissez un nouveau mot de passe.</h2>
+    <p class="muted">Votre compte, vos menus, votre frigo et vos données restent les mêmes. Seul le mot de passe change.</p>
+    <form id="passwordRecoveryForm" class="account-form">
+      <label>Nouveau mot de passe<input id="newRecoveryPassword" type="password" minlength="8" autocomplete="new-password" placeholder="8 caractères minimum" required /></label>
+      <label>Confirmer le mot de passe<input id="confirmRecoveryPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Retapez le mot de passe" required /></label>
+      <button class="btn btn-primary full" type="submit">Enregistrer le nouveau mot de passe</button>
+    </form>
+    <div class="cloud-auth-status" id="passwordRecoveryStatus"><span class="status-dot"></span><span>Le lien de récupération a été validé.</span></div>
   </dialog>
 
   <dialog class="modal wizard-modal" id="wizardModal">
