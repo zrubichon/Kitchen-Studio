@@ -291,18 +291,24 @@
     firstMode=b.dataset.firstAuthMode;qa('[data-first-auth-mode]').forEach(x=>x.classList.toggle('active',x===b));
     q('#firstRunNameLabel').hidden=firstMode==='signin';q('#firstRunSubmit').textContent=firstMode==='signup'?tr('Créer mon compte','Create my account'):tr('Se connecter','Sign in');
     q('#firstRunPassword').autocomplete=firstMode==='signup'?'new-password':'current-password';
+    if(q('#firstRunResendConfirmation'))q('#firstRunResendConfirmation').hidden=firstMode!=='signup';
+    if(q('#firstRunForgotPassword'))q('#firstRunForgotPassword').hidden=firstMode!=='signin';
   }));
   q('#firstRunAuthForm')?.addEventListener('submit',async e=>{
     e.preventDefault();const c=window.KitchenCloud?.client,status=q('#firstRunStatus');if(!c){status.innerHTML='<span class="status-dot"></span><span>'+tr('Connexion en cours d’initialisation…','Cloud connection is initializing…')+'</span>';return}
     const email=q('#firstRunEmail').value.trim(),password=q('#firstRunPassword').value,name=q('#firstRunName').value.trim();
     status.innerHTML='<span class="status-dot"></span><span>'+(firstMode==='signup'?tr('Création du compte…','Creating account…'):tr('Connexion…','Signing in…'))+'</span>';
     if(firstMode==='signup'){
-      const {data,error}=await c.auth.signUp({email,password,options:{data:{name},emailRedirectTo:location.origin+'/'}});
+      const {data,error}=window.KitchenCloud?.signUpAccount
+        ? await window.KitchenCloud.signUpAccount(email,password,name)
+        : await c.auth.signUp({email,password,options:{data:{name},emailRedirectTo:'https://mise-kitchen-studio.vercel.app/'}});
       if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
       if(data.session){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
-      else status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Compte créé. Confirmez votre email puis revenez sur Mise.','Account created. Confirm your email, then return to Mise.')+'</span>';
+      else status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Si cette adresse est nouvelle, un email de confirmation vient d’être envoyé. Si vous aviez déjà un compte, choisissez “J’ai déjà un compte” ou “Mot de passe oublié ?”.','If this is a new address, a confirmation email was sent. If you already had an account, choose “I already have an account” or “Forgot password?”.')+'</span>';
     }else{
-      const {data,error}=await c.auth.signInWithPassword({email,password});
+      const {data,error}=window.KitchenCloud?.signInAccount
+        ? await window.KitchenCloud.signInAccount(email,password)
+        : await c.auth.signInWithPassword({email,password});
       if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
       if(data.user){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
     }
