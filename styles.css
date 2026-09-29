@@ -156,3 +156,17 @@
 .meal-card.fasting:hover{transform:none;box-shadow:none}.meal-card.fasting h4{color:#6f6257}.meal-card.fasting .fast-window{font-size:8px;color:#8c7e72;margin-top:auto}.meal-card.fasting .kcal{color:#88786a}
 .fasting-chip{display:inline-flex;border-radius:999px;background:#312c27;color:#fff;padding:5px 8px;font-size:8px;font-weight:800;margin-top:8px}
 @media(max-width:760px){.onboarding-modal{height:calc(100vh - 20px);max-height:calc(100vh - 20px)}.onboarding-grid{display:block;height:auto;min-height:100%}.onboarding-brand-panel{padding:28px;min-height:250px}.onboarding-brand-panel h1{font-size:38px}.onboarding-auth-panel{padding:28px 28px 54px;overflow:visible}.onboarding-modal{overflow-y:auto}.onboarding-close{position:fixed;top:20px;right:20px}}
+
+/* V11 — editable planner */
+.planner-slot{position:relative}
+.calendar-card-actions{position:absolute;top:7px;right:7px;display:flex;gap:4px;z-index:4;opacity:0;transition:.15s}
+.meal-card:hover .calendar-card-actions,.meal-card:focus-within .calendar-card-actions{opacity:1}
+.calendar-card-actions button{width:24px;height:24px;border:1px solid rgba(40,35,30,.12);background:rgba(255,255,255,.9);border-radius:50%;cursor:pointer;font-size:12px;display:grid;place-items:center;color:#51483f}
+.calendar-card-actions button:hover{background:#fff;transform:translateY(-1px)}
+.meal-card.dragging{opacity:.45}.meal-card.drop-ready{outline:2px solid #7a2f24;outline-offset:2px}.meal-card.move-source{outline:2px solid #7a2f24;box-shadow:0 0 0 4px rgba(122,47,36,.10)}
+.meal-card.move-target{cursor:pointer}
+.empty-slot{min-height:128px;border:1.5px dashed #cdbdaf;background:rgba(247,242,235,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+.empty-slot .meal-slot{position:absolute;top:10px;left:12px}.empty-slot-plus{width:42px;height:42px;border-radius:50%;border:1px solid #bba897;background:#fff;color:#7a2f24;font-size:27px;line-height:1;cursor:pointer}.empty-slot-plus:hover{transform:scale(1.06);background:#fff9f3}.empty-slot>small{margin-top:7px;color:var(--muted);font-size:8px}
+.slot-pick-banner{margin:-4px 0 18px;padding:14px 16px;border:1px solid #d7c3b1;border-radius:13px;background:linear-gradient(135deg,#fff9f2,#f2e8dc);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.slot-pick-banner strong,.slot-pick-banner small{display:block}.slot-pick-banner strong{font:20px var(--serif);margin:3px 0}.slot-pick-banner small{color:var(--muted);font-size:9px}
+@media(max-width:800px){.calendar-card-actions{opacity:1}.slot-pick-banner{align-items:flex-start;flex-direction:column}.empty-slot{min-height:112px}}
