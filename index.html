@@ -22,13 +22,14 @@
         <button class="nav-item" data-page="shopping"><span>⌁</span> Courses <span class="nav-count" id="shoppingCount">18</span></button>
         <button class="nav-item" data-page="recipes"><span>♨</span> Recettes</button>
         <button class="nav-item" data-page="appliances"><span>◫</span> Mes appareils</button>
+        <button class="nav-item premium-nav-item" data-page="premium"><span>✦</span> Mise Premium</button>
         <button class="nav-item" data-page="profile"><span>◎</span> Mon profil</button>
       </nav>
 
       <div class="sidebar-card">
         <div class="eyebrow light">Chef IA</div>
         <p>“Cette semaine je veux des repas très protéinés, peu de cuisine mardi et rien de trop épicé.”</p>
-        <button class="btn btn-cream btn-small" id="openAiPrompt">Parler au chef</button>
+        <button class="btn btn-cream btn-small" id="openAiPrompt">Parler au chef <span class="premium-inline-tag">Premium</span></button>
       </div>
 
       <div class="profile-mini" id="profileMini">
@@ -42,7 +43,7 @@
       <header class="topbar">
         <div class="mobile-brand"><div class="brand-mark small">M</div><strong>Mise</strong></div>
         <div class="topbar-spacer"></div>
-        <button class="personal-questions-btn" id="personalQuestionsBtn">✦ Questions personnelles</button>
+        <button class="personal-questions-btn" id="personalQuestionsBtn">✦ Questions personnelles <span class="premium-inline-tag">Premium</span></button>
         <div class="global-preferences">
           <label><span id="languageLabel">Langue</span><select id="languageSelect" aria-label="Langue"><option value="fr">FR</option><option value="en">EN</option></select></label>
           <label><span id="unitsLabel">Mesures</span><select id="unitsSelect" aria-label="Mesures"><option value="metric">Grammes / mL</option><option value="cups">Cups / oz</option></select></label>
@@ -60,7 +61,7 @@
           </div>
           <div class="hero-actions">
             <button class="btn btn-outline" id="weekSettings">Critères de la semaine</button>
-            <button class="btn btn-primary" id="generateWeek"><span>✦</span> Composer avec l’IA</button>
+            <button class="btn btn-primary" id="generateWeek"><span>✦</span> Composer avec l’IA <em class="premium-inline-tag">Premium</em></button>
           </div>
         </div>
 
@@ -318,6 +319,57 @@
         </div>
       </section>
 
+      <section class="page" id="page-premium">
+        <div class="premium-page-hero">
+          <div class="premium-page-copy">
+            <span class="premium-badge">✦ Mise Premium</span>
+            <div class="eyebrow">Plus personnel. Plus automatique.</div>
+            <h2>Votre cuisine, adaptée à vous.</h2>
+            <p>Gardez Mise gratuit pour organiser vos repas, votre frigo et vos courses. Passez à Premium lorsque vous voulez que Mise personnalise automatiquement vos menus, vos objectifs et vos appareils.</p>
+            <div class="premium-hero-points">
+              <span>✓ Menus IA personnalisés</span><span>✓ Objectifs & calories</span><span>✓ Jeûne intermittent</span>
+              <span>✓ Adaptation appareil + manuel</span><span>✓ Synchronisation avancée</span><span>✓ Futures fonctions IA incluses selon quota</span>
+            </div>
+          </div>
+          <div class="premium-hero-price">
+            <span class="plan-kicker">Mise Premium</span>
+            <strong>2,99 €<small>/mois</small></strong>
+            <p>ou <b>24,99 €/an</b> · économisez environ 2 mois</p>
+            <button class="btn btn-primary full" type="button" data-offer="premium-monthly">Choisir 2,99 €/mois</button>
+            <button class="btn btn-outline full" type="button" data-offer="premium-yearly">Choisir 24,99 €/an</button>
+            <small>Paiement Stripe bientôt disponible.</small>
+          </div>
+        </div>
+
+        <div class="premium-comparison">
+          <div class="premium-plan-card free">
+            <div class="eyebrow">Toujours disponible</div><h3>Mise Free</h3><div class="plan-price">0 €</div>
+            <ul><li>Planning hebdomadaire manuel</li><li>Frigo + liste de courses automatique</li><li>Recettes & favoris</li><li>Calendrier modifiable</li><li>Cuisson avec équipement basique</li><li>Aperçu de 6 recettes Student Budget</li></ul>
+            <button class="btn btn-outline full" type="button" data-page="planner">Continuer gratuitement</button>
+          </div>
+          <div class="premium-plan-card premium recommended">
+            <span class="recommended-tag">Le plus complet</span><div class="eyebrow">Abonnement</div><h3>Mise Premium</h3><div class="plan-price">2,99 €<small>/mois</small></div>
+            <ul><li>Tout Mise Free</li><li>Composer/recomposer avec l’IA</li><li>Objectif perte, maintien ou prise de poids</li><li>Calories & recommandations adaptées</li><li>Jeûne intermittent intégré au planning</li><li>Appareils + lecture du manuel</li><li>Modes, températures, accessoires et temps adaptés</li></ul>
+            <button class="btn btn-primary full" type="button" data-offer="premium-monthly">Passer Premium</button>
+          </div>
+          <div class="premium-plan-card pack">
+            <span class="pack-badge">Achat unique</span><div class="eyebrow">Spécial étudiants</div><h3>Student Budget Pack</h3><div class="plan-price">4,99 €<small>une fois</small></div>
+            <ul><li>60 recettes petit budget</li><li>Repas étudiants rapides</li><li>Micro-ondes & sans cuisson</li><li>Prix estimé par portion</li><li>Accès permanent au pack</li><li>Pas d’abonnement nécessaire</li></ul>
+            <button class="btn btn-dark full" type="button" data-offer="student-pack">Débloquer le pack · 4,99 €</button>
+          </div>
+        </div>
+
+        <section class="student-pack-preview">
+          <div><div class="eyebrow">Aperçu gratuit</div><h3>Essayez 6 recettes du Student Pack.</h3><p>Le reste du catalogue sera débloqué après l’achat unique du pack.</p></div>
+          <button class="btn btn-outline" type="button" id="previewStudentPack">Voir les recettes</button>
+        </section>
+
+        <section class="premium-cost-control">
+          <div><div class="eyebrow">Pensé pour rester rentable</div><h3>Les fonctions IA Premium utiliseront un quota raisonnable.</h3></div>
+          <p>Quand l’IA payante sera activée, Mise limitera les générations coûteuses par utilisateur Premium afin que le coût technique reste inférieur au prix de l’abonnement.</p>
+        </section>
+      </section>
+
       <section class="page" id="page-profile">
         <div class="page-head"><div><div class="eyebrow" data-wellness-fr="Votre profil Mise" data-wellness-en="Your Mise profile">Votre profil Mise</div><h2 data-wellness-fr="Votre compte, vos objectifs, vos menus." data-wellness-en="Your account, goals and menus.">Votre compte, vos objectifs, vos menus.</h2><p data-wellness-fr="Mise utilise ici vos préférences culinaires et, avec un compte, votre objectif personnel pour adapter les repas et synchroniser toute votre cuisine." data-wellness-en="Mise uses your food preferences here and, with an account, your personal goal to adapt meals and sync your kitchen.">Mise utilise ici vos préférences culinaires et, avec un compte, votre objectif personnel pour adapter les repas et synchroniser toute votre cuisine.</p></div><button class="btn btn-primary" id="saveProfile">Enregistrer</button></div>
 
@@ -345,7 +397,8 @@
         <div hidden aria-hidden="true"><form id="accountForm"><input id="accountName" name="name"><input id="accountEmail" name="email"><button type="submit"></button></form></div>
 
         <form class="profile-form profile-form-v10" id="profileForm">
-          <div class="form-card premium-goal-card" id="premiumGoalCard">
+          <div class="form-card premium-goal-card" id="premiumGoalCard" data-premium-section>
+            <div class="premium-feature-lock" id="premiumProfileLock" hidden><span>✦</span><strong>Fonction Mise Premium</strong><p>Le suivi objectif, calories et jeûne personnalisé fait partie de Mise Premium.</p><button class="btn btn-dark btn-small" type="button" data-go-premium>Voir Premium</button></div>
             <div class="premium-card-head"><div><span class="premium-badge">✦ Premium personnalisé</span><h3 data-wellness-fr="Mon objectif physique" data-wellness-en="My physical goal">Mon objectif physique</h3></div><span class="premium-status" id="premiumStatus">Compte requis</span></div>
             <p class="muted" data-wellness-fr="Ces informations servent uniquement à personnaliser les menus et les estimations. Elles sont synchronisées dans votre compte Mise." data-wellness-en="These details are only used to personalize menus and estimates. They are synced to your Mise account.">Ces informations servent uniquement à personnaliser les menus et les estimations. Elles sont synchronisées dans votre compte Mise.</p>
             <div class="premium-lock" id="premiumHealthLock">
@@ -535,5 +588,6 @@
   <script src="app-v12.js"></script>
   <script src="app-v13.js"></script>
   <script src="app-v14.js"></script>
+  <script src="app-v15.js"></script>
 </body>
 </html>
