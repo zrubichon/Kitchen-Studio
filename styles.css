@@ -208,3 +208,9 @@
 .recipe-tile.pack-locked{position:relative;overflow:hidden}.recipe-tile.pack-locked:after{content:'Student Pack · 4,99 €';position:absolute;inset:auto 10px 10px 10px;background:rgba(44,39,34,.94);color:#fff;border-radius:9px;padding:9px;text-align:center;font-size:9px;font-weight:900}.recipe-tile.pack-locked .recipe-tile-photo,.recipe-tile.pack-locked .recipe-tile-body{filter:blur(1.5px);opacity:.62}.recipe-tile.pack-locked .mini-add,.recipe-tile.pack-locked .recipe-fav{pointer-events:none}
 .premium-locked-control{position:relative}.premium-locked-control:after{content:'Premium';position:absolute;top:-7px;right:-7px;background:#e8d8ab;color:#614a16;padding:3px 5px;border-radius:999px;font-size:6px;font-weight:900;text-transform:uppercase}
 @media(max-width:900px){.premium-page-hero,.premium-comparison{grid-template-columns:1fr}.premium-page-copy h2{font-size:40px}.student-pack-preview,.premium-cost-control{align-items:flex-start;flex-direction:column}}
+
+/* V16 — persistent account recovery */
+.auth-help-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}.auth-help-row .text-btn{font-size:9px}
+.auth-persistence-note{display:block;margin-top:9px;color:var(--muted);font-size:8px;line-height:1.5}
+.password-recovery-modal{width:min(520px,94vw);padding:30px}.password-recovery-modal h2{font:36px/1.05 var(--serif);margin:7px 0 10px}
+.first-run-auth-help{margin-top:10px}
