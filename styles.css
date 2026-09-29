@@ -221,3 +221,6 @@
 .auth-field-hint.auth-warning{color:#8b5a4e}
 .auth-field-hint.auth-success{color:#58704f}
 .auth-reset-inline{font-weight:800;text-decoration:underline;cursor:pointer}
+
+/* V18 — reliable password reset flow */
+.forgot-password-modal{width:min(520px,94vw);padding:30px}.forgot-password-modal h2{font:36px/1.05 var(--serif);margin:7px 0 10px}.forgot-password-modal .muted{line-height:1.55}.forgot-password-modal .cloud-auth-status{margin-top:12px}
