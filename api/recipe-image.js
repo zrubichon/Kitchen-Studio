@@ -46,6 +46,22 @@ async function verifyWithAI(candidate,ctx){
     const raw=d?.choices?.[0]?.message?.content;return typeof raw==='string'?JSON.parse(raw):raw;
   }catch{return {match:false,confidence:0,reason:'vision check failed'}}
 }
+async function verifyMetadataWithAI(candidate,ctx){
+  const apiKey=process.env.AI_GATEWAY_API_KEY,model=process.env.AI_MODEL;
+  if(!apiKey||!model)return {match:false,confidence:0,reason:'AI verification unavailable'};
+  const prompt=`Recipe: ${ctx.name}
+Dish type: ${ctx.dish}
+Ingredients: ${ctx.ingredients.join(', ')}
+Candidate image title: ${candidate.title}
+Candidate source/page: ${candidate.page}
+Search relevance score: ${candidate.score}
+Judge whether this candidate metadata strongly indicates a food photo of the SAME recipe/dish, not just a generic meal. Main protein and defining ingredients must agree. Return strict JSON only: {"match":boolean,"confidence":number,"reason":string}.`;
+  try{
+    const r=await fetch('https://ai-gateway.vercel.sh/v1/chat/completions',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,temperature:0,response_format:{type:'json_object'},messages:[{role:'system',content:'You are a strict recipe-image metadata verifier. Approve only when title/source clearly correspond to the requested dish and ingredients.'},{role:'user',content:prompt}]})});
+    const d=await r.json();if(!r.ok)return {match:false,confidence:0,reason:'metadata check failed'};
+    const raw=d?.choices?.[0]?.message?.content;return typeof raw==='string'?JSON.parse(raw):raw;
+  }catch{return {match:false,confidence:0,reason:'metadata check failed'}}
+}
 function placeholder(res,name){
   res.setHeader('Content-Type','image/svg+xml; charset=utf-8');res.setHeader('Cache-Control','no-store');
   const safeName=String(name).replace(/[<>&"]/g,'').slice(0,54);
@@ -64,16 +80,24 @@ export default async function handler(req,res){
   const proteinGroups=[['chicken','poulet'],['salmon','saumon'],['tuna','thon'],['beef','boeuf'],['pork','porc'],['tofu'],['eggs','oeuf']];
   const present=proteinGroups.find(g=>g.some(x=>all.includes(norm(x))));
   proteinGroups.forEach(g=>{if(present!==g)bad.push(...g)});
-  const query=[...translate(name).slice(0,8),...ingredientTokens.slice(0,6),dish,'recipe food photography'].join(' ');
+  const exact=translate(name).slice(0,8).join(' ');const query=['"'+exact+'"',...ingredientTokens.slice(0,6),dish,'recipe food photography'].join(' ');
   try{
     const sr=await fetch('https://www.bing.com/images/search?q='+encodeURIComponent(query)+'&form=HDRSC2&first=1',{headers:{'user-agent':'Mozilla/5.0 (compatible; MiseKitchen/2.0)','accept':'text/html'}});
     if(sr.ok){
       const ranked=extractCandidates(await sr.text()).map(c=>({...c,url:safe(c.url)})).filter(c=>c.url).map(c=>({...c,score:textScore(c,required,optional,bad)})).filter(c=>c.score>=4).sort((a,b)=>b.score-a.score).slice(0,6);
-      for(const c of ranked.slice(0,4)){
-        const check=await verifyWithAI(c,{name,dish,ingredients,required});
-        if(check?.match===true&&Number(check.confidence)>=0.78){
+      for(const c of ranked.slice(0,5)){
+        const ctx={name,dish,ingredients,required};
+        const vision=await verifyWithAI(c,ctx);
+        if(vision?.match===true&&Number(vision.confidence)>=0.72){
           res.setHeader('Cache-Control','public, s-maxage=604800, stale-while-revalidate=2592000');
           return res.redirect(302,c.url);
+        }
+        if(c.score>=10){
+          const meta=await verifyMetadataWithAI(c,ctx);
+          if(meta?.match===true&&Number(meta.confidence)>=0.76){
+            res.setHeader('Cache-Control','public, s-maxage=604800, stale-while-revalidate=2592000');
+            return res.redirect(302,c.url);
+          }
         }
       }
     }
