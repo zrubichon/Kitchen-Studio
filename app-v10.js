@@ -21,17 +21,28 @@
     {fr:'Yoga dynamique',en:'Dynamic yoga',met:3.3,icon:'🧘'}
   ];
 
+  const FAST_ID='fasting-slot';
+  if(!RECIPES.some(r=>r.id===FAST_ID))RECIPES.push({id:FAST_ID,name:'Jeûne',slot:'fasting',time:0,kcal:0,protein:0,carbs:0,fat:0,tags:['fasting'],image:'',ingredients:[],steps:[],tip:'Fenêtre de jeûne intermittent.',methods:{default:['Jeûne','']}});
   state.profile.bodyGoal=state.profile.bodyGoal||'maintain';
+  state.profile.goalPace=state.profile.goalPace||'moderate';
   state.profile.activityLevel=state.profile.activityLevel||'moderate';
   state.profile.proteinPriority=state.profile.proteinPriority||'normal';
   state.profile.sugar=state.profile.sugar||'normal';
+  state.profile.fastingMode=state.profile.fastingMode||'none';
+  state.profile.fastingStart=state.profile.fastingStart||'12:00';
+  state.profile.fastingEnd=state.profile.fastingEnd||'20:00';
+  state.profile.breakfastTime=state.profile.breakfastTime||'08:00';
+  state.profile.lunchTime=state.profile.lunchTime||'13:00';
+  state.profile.dinnerTime=state.profile.dinnerTime||'19:00';
+  state.profile.adaptiveRequest=state.profile.adaptiveRequest||'';
 
   function hydrate(){
     const f=q('#profileForm');if(!f)return;
     const p=state.profile;
-    const values=['firstName','lastName','age','weightKg','heightCm','targetWeightKg','bodyGoal','activityLevel','goal','diet','proteinPriority','sugar','servings','maxTime','allergies','dislikes','productPriority'];
+    const values=['firstName','lastName','age','weightKg','heightCm','targetWeightKg','bodyGoal','goalPace','activityLevel','fastingMode','fastingStart','fastingEnd','breakfastTime','lunchTime','dinnerTime','adaptiveRequest','goal','diet','proteinPriority','sugar','servings','maxTime','allergies','dislikes','productPriority'];
     values.forEach(k=>{if(f.elements[k]&&p[k]!=null&&p[k]!=='')f.elements[k].value=p[k]});
     qa('[data-wellness-fr]').forEach(el=>{el.textContent=en()?(el.dataset.wellnessEn||el.textContent):(el.dataset.wellnessFr||el.textContent)});
+    syncFastingPreset(false);
   }
 
   function collect(){
@@ -48,10 +59,18 @@
       p.heightCm=num(fd.get('heightCm'));
       p.targetWeightKg=num(fd.get('targetWeightKg'));
       p.bodyGoal=String(fd.get('bodyGoal')||'maintain');
+      p.goalPace=String(fd.get('goalPace')||'moderate');
       p.activityLevel=String(fd.get('activityLevel')||'moderate');
+      p.fastingMode=String(fd.get('fastingMode')||'none');
+      p.fastingStart=String(fd.get('fastingStart')||'12:00');
+      p.fastingEnd=String(fd.get('fastingEnd')||'20:00');
+      p.breakfastTime=String(fd.get('breakfastTime')||'08:00');
+      p.lunchTime=String(fd.get('lunchTime')||'13:00');
+      p.dinnerTime=String(fd.get('dinnerTime')||'19:00');
+      p.adaptiveRequest=String(fd.get('adaptiveRequest')||'').trim();
     }
     const w=computeWellness(p);
-    p.calorieTarget=w.valid?{low:w.low,high:w.high,maintenance:w.maintenance,movementTarget:w.movementTarget,durationMinWeeks:w.durationMinWeeks,durationMaxWeeks:w.durationMaxWeeks,updatedAt:new Date().toISOString()}:null;
+    p.calorieTarget=w.valid?{low:w.low,high:w.high,maintenance:w.maintenance,movementTarget:w.movementTarget,durationMinWeeks:w.durationMinWeeks,durationMaxWeeks:w.durationMaxWeeks,pace:p.goalPace,updatedAt:new Date().toISOString()}:null;
     localStorage.setItem('miseProfile',JSON.stringify(p));
     try{saveProfileV3()}catch{}
     window.KitchenCloud?.saveSoon?.();
@@ -66,23 +85,32 @@
     const factor=activityFactors[p.activityLevel]||34;
     const maintenance=round50(weight*factor);
     const floor=Math.max(1400,round50(weight*22));
+    const pace=p.goalPace||'moderate';
+    const lossPct={gentle:.08,moderate:.12,faster:.18}[pace]||.12;
+    const gainPct={gentle:.03,moderate:.05,faster:.08}[pace]||.05;
     let low=maintenance,high=maintenance;
-    if(p.bodyGoal==='loss'){low=Math.max(floor,round50(maintenance*.85));high=Math.max(low,round50(maintenance*.90))}
-    else if(p.bodyGoal==='muscle'){low=round50(maintenance*1.05);high=round50(maintenance*1.10)}
-    else {low=round50(maintenance*.95);high=round50(maintenance*1.05)}
+    if(p.bodyGoal==='loss'){
+      low=Math.max(floor,round50(maintenance*(1-lossPct-.015)));
+      high=Math.max(low,round50(maintenance*(1-lossPct+.015)));
+    }else if(p.bodyGoal==='muscle'){
+      low=round50(maintenance*(1+gainPct-.01));
+      high=round50(maintenance*(1+gainPct+.01));
+    }else {low=round50(maintenance*.96);high=round50(maintenance*1.04)}
     let durationMinWeeks=null,durationMaxWeeks=null;
     if(p.bodyGoal==='loss'&&target&&target<weight){
-      const d=weight-target;durationMinWeeks=Math.max(1,Math.ceil(d/.5));durationMaxWeeks=Math.max(durationMinWeeks,Math.ceil(d/.25));
+      const d=weight-target,rate={gentle:.25,moderate:.4,faster:.6}[pace]||.4;
+      durationMinWeeks=Math.max(1,Math.ceil(d/rate));durationMaxWeeks=Math.max(durationMinWeeks,Math.ceil(d/(rate*.7)));
     }else if(p.bodyGoal==='muscle'&&target&&target>weight){
-      const d=target-weight;durationMinWeeks=Math.max(1,Math.ceil(d/.25));durationMaxWeeks=Math.max(durationMinWeeks,Math.ceil(d/.10));
+      const d=target-weight,rate={gentle:.1,moderate:.18,faster:.28}[pace]||.18;
+      durationMinWeeks=Math.max(1,Math.ceil(d/rate));durationMaxWeeks=Math.max(durationMinWeeks,Math.ceil(d/(rate*.65)));
     }
-    const movementTarget=p.bodyGoal==='loss'?clamp(Math.round((maintenance*.08)/25)*25,150,250):150;
+    const movementTarget=p.bodyGoal==='loss'?clamp(Math.round((maintenance*.07)/25)*25,125,225):150;
     const activities=activityCatalog.map(a=>{
       const perMin=a.met*3.5*weight/200;
       const minutes=clamp(Math.round((movementTarget/perMin)/5)*5,10,120);
       return {...a,minutes};
     });
-    return {valid:true,age,weight,height,target,bmi,targetBmi,maintenance,low,high,movementTarget,durationMinWeeks,durationMaxWeeks,activities};
+    return {valid:true,age,weight,height,target,bmi,targetBmi,maintenance,low,high,movementTarget,durationMinWeeks,durationMaxWeeks,activities,pace};
   }
 
   function goalLabel(goal){
@@ -97,7 +125,8 @@
       return tr((name?'Bienvenue '+name+' — ':'')+'complétez votre âge, poids, taille, activité et objectif pour activer le suivi Premium.',(name?'Welcome '+name+' — ':'')+'complete your age, weight, height, activity and goal to activate Premium tracking.');
     }
     const duration=w.durationMinWeeks?tr(' sur environ '+w.durationMinWeeks+'–'+w.durationMaxWeeks+' semaines',' over roughly '+w.durationMinWeeks+'–'+w.durationMaxWeeks+' weeks'):'';
-    return tr((name?'Bienvenue '+name+' — ':'')+'Mise vise '+w.low+'–'+w.high+' kcal/jour pour une '+goalLabel(state.profile.bodyGoal)+duration+', avec un rythme volontairement progressif.',(name?'Welcome '+name+' — ':'')+'Mise targets '+w.low+'–'+w.high+' kcal/day for '+goalLabel(state.profile.bodyGoal)+duration+', using a deliberately gradual approach.');
+    const fasting=state.profile.fastingMode&&state.profile.fastingMode!=='none'?tr(', avec une fenêtre repas '+state.profile.fastingStart+'–'+state.profile.fastingEnd,', with an eating window '+state.profile.fastingStart+'–'+state.profile.fastingEnd):'';
+    return tr((name?'Bienvenue '+name+' — ':'')+'Mise vise '+w.low+'–'+w.high+' kcal/jour pour une '+goalLabel(state.profile.bodyGoal)+duration+fasting+'.',(name?'Welcome '+name+' — ':'')+'Mise targets '+w.low+'–'+w.high+' kcal/day for '+goalLabel(state.profile.bodyGoal)+duration+fasting+'.');
   }
 
   async function aiSentence(w){
@@ -109,6 +138,8 @@
         calorieLow:w.low,calorieHigh:w.high,
         durationMinWeeks:w.durationMinWeeks,durationMaxWeeks:w.durationMaxWeeks,
         diet:state.profile.diet,proteinPriority:state.profile.proteinPriority,
+        pace:state.profile.goalPace,fastingMode:state.profile.fastingMode,fastingStart:state.profile.fastingStart,fastingEnd:state.profile.fastingEnd,
+        adaptiveRequest:state.profile.adaptiveRequest||'',
         language:state.profile.language||'fr'
       })});
       if(r.ok){const d=await r.json();if(d?.text)return d.text}
@@ -179,32 +210,118 @@
     renderMini();
   }
 
+  function syncFastingPreset(write=true){
+    const f=q('#profileForm');if(!f)return;
+    const mode=f.elements.fastingMode?.value||state.profile.fastingMode||'none';
+    const presets={'12-12':['08:00','20:00'],'14-10':['10:00','20:00'],'16-8':['12:00','20:00'],'18-6':['13:00','19:00']};
+    if(write&&presets[mode]){f.elements.fastingStart.value=presets[mode][0];f.elements.fastingEnd.value=presets[mode][1]}
+    const custom=mode==='custom',off=mode==='none';
+    if(f.elements.fastingStart)f.elements.fastingStart.disabled=off||(!custom&&!!presets[mode]);
+    if(f.elements.fastingEnd)f.elements.fastingEnd.disabled=off||(!custom&&!!presets[mode]);
+  }
+  q('#fastingMode')?.addEventListener('change',()=>syncFastingPreset(true));
+
+  const toMinutes=t=>{const [h,m]=String(t||'00:00').split(':').map(Number);return h*60+(m||0)};
+  function inEatingWindow(time){
+    const mode=state.profile.fastingMode||'none';if(mode==='none')return true;
+    const t=toMinutes(time),a=toMinutes(state.profile.fastingStart),b=toMinutes(state.profile.fastingEnd);
+    return a<=b?(t>=a&&t<=b):(t>=a||t<=b);
+  }
+  function slotTime(si){return [state.profile.breakfastTime||'08:00',state.profile.lunchTime||'13:00',state.profile.dinnerTime||'19:00'][si]}
+  function shouldFast(si){return state.profile.fastingMode!=='none'&&!inEatingWindow(slotTime(si))}
+  function foodReplacement(si,day){
+    const slot=['breakfast','lunch','dinner'][si],prev=day>0?state.plan[day-1]?.[si]:null;
+    const pool=RECIPES.filter(r=>r.id!==FAST_ID&&r.slot===slot&&profileSafeEligible(r)&&r.id!==prev);
+    return (pool.sort((a,b)=>Number(b.protein||0)-Number(a.protein||0))[0]||RECIPES.find(r=>r.slot===slot&&r.id!==FAST_ID))?.id||state.plan[day]?.[si];
+  }
+  function applyFastingSchedule(){
+    for(let d=0;d<7;d++)for(let si=0;si<3;si++){
+      if(shouldFast(si))state.plan[d][si]=FAST_ID;
+      else if(state.plan[d][si]===FAST_ID)state.plan[d][si]=foodReplacement(si,d);
+    }
+    localStorage.setItem('misePlan',JSON.stringify(state.plan));
+  }
+
+  const renderWeekBeforeFasting=renderWeek;
+  renderWeek=function(){
+    const grid=q('#weekGrid');if(!grid)return;
+    grid.innerHTML='';const days=currentDays(),labels=currentMeals();
+    state.plan.forEach((meals,d)=>{
+      const col=document.createElement('div');col.className='day-col';const date=dateForDay(d);
+      col.innerHTML='<div class="day-head '+(date.getDate()===23&&state.weekOffset===0?'today':'')+'"><strong>'+days[d]+'</strong><small>'+fmtDate(date)+'</small></div>';
+      meals.forEach((id,si)=>{
+        const slot=['breakfast','lunch','dinner'][si],key=d+'-'+si,card=document.createElement('article');
+        if(id===FAST_ID){
+          card.className='meal-card fasting';card.innerHTML='<div class="meal-slot">'+labels[slot]+'</div><h4>'+tr('Jeûne','Fasting')+'</h4><span class="fasting-chip">'+(state.profile.fastingMode||'')+'</span><div class="fast-window">'+tr('Fenêtre repas ','Eating window ')+(state.profile.fastingStart||'')+'–'+(state.profile.fastingEnd||'')+'</div><div class="meal-foot"><span>'+tr('Hydratation selon vos habitudes','Hydration as usual')+'</span><span class="kcal">—</span></div>';
+          col.appendChild(card);return;
+        }
+        const r=recipeById(id);if(!r)return;
+        const rt=recipeText(r);card.className='meal-card '+(slot==='dinner'?'dinner ':'')+(state.selected.has(key)?'selected':'');card.dataset.key=key;card.dataset.id=id;
+        card.innerHTML='<span class="selected-dot"></span><div class="meal-slot">'+labels[slot]+'</div><h4>'+rt.name+'</h4><div class="meal-foot"><span>'+r.time+' min · '+r.protein+'g '+(isEN()?'protein':'prot.')+'</span><span class="kcal">'+r.kcal+' kcal</span></div>';
+        card.addEventListener('click',e=>{if(e.shiftKey){toggleSelect(key);return}openRecipe(r,days[d]+' '+date.getDate()+' · '+labels[slot])});
+        card.addEventListener('contextmenu',e=>{e.preventDefault();toggleSelect(key)});col.appendChild(card);
+      });grid.appendChild(col);
+    });
+    updateWeekHeader();renderShopping();renderRecipeIdeas();window.KitchenStudioV9?.renderFridgeCoverage?.();window.KitchenStudioV9?.renderPlannerDrawer?.();
+  };
+
+  function showFirstRun(){
+    if(localStorage.getItem('miseFirstRunComplete')==='1'||isConnected()||!window.KitchenCloud?.ready)return;
+    const dlg=q('#firstRunModal');if(!dlg||dlg.open)return;
+    try{openModal(dlg)}catch{dlg.showModal()}
+  }
+  let firstMode='signup';
+  qa('[data-first-auth-mode]').forEach(b=>b.addEventListener('click',()=>{
+    firstMode=b.dataset.firstAuthMode;qa('[data-first-auth-mode]').forEach(x=>x.classList.toggle('active',x===b));
+    q('#firstRunNameLabel').hidden=firstMode==='signin';q('#firstRunSubmit').textContent=firstMode==='signup'?tr('Créer mon compte','Create my account'):tr('Se connecter','Sign in');
+    q('#firstRunPassword').autocomplete=firstMode==='signup'?'new-password':'current-password';
+  }));
+  q('#firstRunAuthForm')?.addEventListener('submit',async e=>{
+    e.preventDefault();const c=window.KitchenCloud?.client,status=q('#firstRunStatus');if(!c){status.innerHTML='<span class="status-dot"></span><span>'+tr('Connexion en cours d’initialisation…','Cloud connection is initializing…')+'</span>';return}
+    const email=q('#firstRunEmail').value.trim(),password=q('#firstRunPassword').value,name=q('#firstRunName').value.trim();
+    status.innerHTML='<span class="status-dot"></span><span>'+(firstMode==='signup'?tr('Création du compte…','Creating account…'):tr('Connexion…','Signing in…'))+'</span>';
+    if(firstMode==='signup'){
+      const {data,error}=await c.auth.signUp({email,password,options:{data:{name},emailRedirectTo:location.origin+'/'}});
+      if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
+      if(data.session){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
+      else status.innerHTML='<span class="status-dot ok"></span><span>'+tr('Compte créé. Confirmez votre email puis revenez sur Mise.','Account created. Confirm your email, then return to Mise.')+'</span>';
+    }else{
+      const {data,error}=await c.auth.signInWithPassword({email,password});
+      if(error){status.innerHTML='<span class="status-dot"></span><span>'+error.message+'</span>';return}
+      if(data.user){localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};navigate('profile')}
+    }
+  });
+  q('#firstRunSkip')?.addEventListener('click',()=>{localStorage.setItem('miseFirstRunComplete','1');try{closeModal(q('#firstRunModal'))}catch{};});
+
   function profileSafeEligible(r){
     try{return typeof eligibleByProfile==='function'?eligibleByProfile(r):true}catch{return true}
   }
   function tunePlanToGoal(){
     if(!isConnected())return;
     const w=computeWellness(state.profile);if(!w.valid)return;
-    const target=(w.low+w.high)/2,ratios=[.25,.35,.40];
+    const target=(w.low+w.high)/2;
+    const foodSlots=[0,1,2].filter(si=>!shouldFast(si)),baseRatios=foodSlots.length===2?[.46,.54]:foodSlots.length===1?[1]:[.25,.35,.40];
+    const ratioBySlot={};foodSlots.forEach((si,i)=>ratioBySlot[si]=baseRatios[i]||1/foodSlots.length);
     const next=state.plan.map((day,di)=>day.map((id,si)=>{
-      const current=RECIPES.find(r=>r.id===id);if(!current)return id;
-      const slot=current.slot,targetKcal=target*ratios[si],currentGap=Math.abs(Number(current.kcal||0)-targetKcal);
-      if(currentGap<130)return id;
+      if(shouldFast(si))return FAST_ID;
+      const current=RECIPES.find(r=>r.id===id&&r.id!==FAST_ID);if(!current)return foodReplacement(si,di);
+      const slot=['breakfast','lunch','dinner'][si],targetKcal=target*(ratioBySlot[si]||1/foodSlots.length),currentGap=Math.abs(Number(current.kcal||0)-targetKcal);
+      if(currentGap<110)return id;
       const prev=di>0?state.plan[di-1][si]:null;
-      const pool=RECIPES.filter(r=>r.slot===slot&&profileSafeEligible(r)&&r.id!==prev);
+      const pool=RECIPES.filter(r=>r.id!==FAST_ID&&r.slot===slot&&profileSafeEligible(r)&&r.id!==prev);
       let best=current,bestScore=currentGap;
       pool.forEach(r=>{
         let score=Math.abs(Number(r.kcal||0)-targetKcal);
-        if((state.profile.proteinPriority==='high'||state.profile.proteinPriority==='very-high')&&(r.tags||[]).some(t=>t==='protein'||t==='high-protein'))score-=45;
-        if(state.profile.sugar==='low'&&(r.tags||[]).some(t=>t==='dessert'||t==='drink'))score+=120;
-        if(score<bestScore-45){best=r;bestScore=score}
+        if((state.profile.proteinPriority==='high'||state.profile.proteinPriority==='very-high')&&(r.tags||[]).some(t=>t==='protein'||t==='high-protein'))score-=55;
+        if(state.profile.sugar==='low'&&(r.tags||[]).some(t=>t==='dessert'||t==='drink'))score+=140;
+        if(score<bestScore-35){best=r;bestScore=score}
       });
       return best.id;
     }));
-    state.plan=next;localStorage.setItem('misePlan',JSON.stringify(state.plan));renderWeek();renderShopping();window.KitchenCloud?.saveSoon?.();
+    state.plan=next;applyFastingSchedule();localStorage.setItem('misePlan',JSON.stringify(state.plan));renderWeek();window.KitchenCloud?.saveSoon?.();
   }
 
-  q('#premiumCreateAccountBtn')?.addEventListener('click',()=>q('#profileAccountShell')?.scrollIntoView({behavior:'smooth',block:'start'}));
+  q('#premiumCreateAccountBtn')  q('#premiumCreateAccountBtn')?.addEventListener('click',()=>q('#profileAccountShell')?.scrollIntoView({behavior:'smooth',block:'start'}));
   q('#saveProfile')?.addEventListener('click',()=>setTimeout(()=>{
     collect();hydrate();const w=computeWellness(state.profile);renderPremiumPreview(w);renderGate();renderCoach();renderRecipes(window.__recipeFilter||'all');
     toast(tr('Profil enregistré. L’IA utilisera ces données pour les prochains menus.','Profile saved. The AI will use these details for future menus.'));
@@ -216,11 +333,27 @@
   const wizard=q('#wizardNext');
   if(wizard&&wizard.onclick){
     const prev=wizard.onclick;
-    wizard.onclick=async function(e){const final=typeof wizardStep!=='undefined'&&wizardStep===3;await prev.call(this,e);if(final)setTimeout(()=>{tunePlanToGoal();renderCoach()},160)};
+    wizard.onclick=async function(e){const final=typeof wizardStep!=='undefined'&&wizardStep===3;await prev.call(this,e);if(final)setTimeout(()=>{applyFastingSchedule();tunePlanToGoal();renderCoach()},180)};
   }
+  const regen=q('#regenerateSelected');regen?.addEventListener('click',()=>setTimeout(()=>{applyFastingSchedule();renderWeek()},80));
   const quick=q('#sendQuickPrompt');
-  if(quick&&quick.onclick){
-    const prev=quick.onclick;quick.onclick=function(e){const out=prev.call(this,e);setTimeout(()=>{tunePlanToGoal();renderCoach()},100);return out};
+  if(quick){
+    quick.onclick=async function(){
+      const prompt=q('#quickPrompt').value.trim();if(!prompt)return;
+      toast(tr('Mise adapte votre semaine à votre demande…','Mise is adapting your week…'));
+      const before=JSON.parse(JSON.stringify(state.plan));
+      let plan=null;
+      try{
+        const r=await fetch('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+          profile:state.profile,
+          brief:{prompt,adaptiveRequest:state.profile.adaptiveRequest||'',fasting:{mode:state.profile.fastingMode,start:state.profile.fastingStart,end:state.profile.fastingEnd},avoidPlan:before},
+          fridgeInventory:window.KitchenStudioV9?.fridgeItems?.()||[]
+        })});
+        if(r.ok){const d=await r.json();if(Array.isArray(d.plan)&&d.plan.length===7)plan=d.plan}
+      }catch{}
+      if(plan)state.plan=plan;applyFastingSchedule();tunePlanToGoal();localStorage.setItem('misePlan',JSON.stringify(state.plan));renderWeek();
+      try{closeModal(q('#aiModal'))}catch{}navigate('planner');toast(plan?tr('Votre demande a été intégrée au menu.','Your request has been integrated into the menu.'):tr('Mise a gardé votre semaine et appliqué vos réglages personnels.','Mise kept your week and applied your personal settings.'));
+    };
   }
 
   document.addEventListener('mise:auth',e=>{
@@ -229,10 +362,12 @@
       state.profile.firstName=u.user_metadata?.name||'';
       localStorage.setItem('miseProfile',JSON.stringify(state.profile));
     }
-    hydrate();renderGate();renderCoach();
+    if(u){localStorage.setItem('miseFirstRunComplete','1');const dlg=q('#firstRunModal');if(dlg?.open){try{closeModal(dlg)}catch{dlg.close()}}}
+    hydrate();renderGate();applyFastingSchedule();renderWeek();renderCoach();
+    if(!u)setTimeout(showFirstRun,50);
   });
   document.addEventListener('mise:cloudloaded',()=>setTimeout(()=>{hydrate();renderGate();renderCoach()},0));
 
-  hydrate();renderGate();renderCoach();
-  window.MiseWellness={compute:()=>computeWellness(state.profile),render:renderCoach,tune:tunePlanToGoal};
+  hydrate();renderGate();applyFastingSchedule();renderWeek();renderCoach();setTimeout(showFirstRun,350);
+  window.MiseWellness={compute:()=>computeWellness(state.profile),render:renderCoach,tune:tunePlanToGoal,applyFasting:applyFastingSchedule};
 })();
