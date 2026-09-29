@@ -381,8 +381,8 @@
             <div class="account-tabs"><button class="account-tab active" data-auth-mode="signup" type="button">Créer un compte</button><button class="account-tab" data-auth-mode="signin" type="button">Se connecter</button></div>
             <form id="cloudAuthForm" class="account-form">
               <label id="cloudNameLabel"><span data-wellness-fr="Prénom" data-wellness-en="First name">Prénom</span><input id="cloudAccountName" name="name" autocomplete="given-name" placeholder="Votre prénom" /></label>
-              <label><span>Email</span><input id="cloudAccountEmail" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required /></label>
-              <label><span data-wellness-fr="Mot de passe" data-wellness-en="Password">Mot de passe</span><input id="cloudAccountPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /></label>
+              <label><span>Email</span><input id="cloudAccountEmail" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required /><small class="auth-field-hint" id="cloudEmailHint">Si cette adresse possède déjà un compte, utilisez l’onglet « Se connecter ».</small></label>
+              <label><span data-wellness-fr="Mot de passe" data-wellness-en="Password">Mot de passe</span><input id="cloudAccountPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /><small class="auth-field-hint" id="cloudPasswordHint">8 caractères minimum.</small></label>
               <button class="btn btn-primary full" id="cloudAuthSubmit" type="submit">Créer mon compte</button>
             </form>
             <div class="cloud-auth-status" id="cloudAuthStatus"><span class="status-dot"></span><span>Connexion cloud à initialiser.</span></div>
@@ -507,8 +507,8 @@
         <div class="account-tabs"><button class="account-tab active" data-first-auth-mode="signup" type="button">Créer un compte</button><button class="account-tab" data-first-auth-mode="signin" type="button">J’ai déjà un compte</button></div>
         <form id="firstRunAuthForm" class="account-form">
           <label id="firstRunNameLabel">Prénom<input id="firstRunName" autocomplete="given-name" placeholder="Votre prénom" /></label>
-          <label>Email<input id="firstRunEmail" type="email" autocomplete="email" placeholder="vous@email.com" required /></label>
-          <label>Mot de passe<input id="firstRunPassword" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /></label>
+          <label>Email<input id="firstRunEmail" type="email" autocomplete="email" placeholder="vous@email.com" required /><small class="auth-field-hint" id="firstRunEmailHint">Déjà inscrit ? Choisissez « J’ai déjà un compte ».</small></label>
+          <label>Mot de passe<input id="firstRunPassword" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required /><small class="auth-field-hint" id="firstRunPasswordHint">8 caractères minimum.</small></label>
           <button class="btn btn-primary full" type="submit" id="firstRunSubmit">Créer mon compte</button>
         </form>
         <div class="cloud-auth-status" id="firstRunStatus"><span class="status-dot"></span><span>Votre compte synchronise l’expérience Mise.</span></div>
