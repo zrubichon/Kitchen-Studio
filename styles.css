@@ -214,3 +214,10 @@
 .auth-persistence-note{display:block;margin-top:9px;color:var(--muted);font-size:8px;line-height:1.5}
 .password-recovery-modal{width:min(520px,94vw);padding:30px}.password-recovery-modal h2{font:36px/1.05 var(--serif);margin:7px 0 10px}
 .first-run-auth-help{margin-top:10px}
+
+/* V17 — clearer auth feedback */
+.auth-field-hint{display:block;margin-top:5px;color:#8b8178;font-size:8px;line-height:1.45;font-weight:500}
+.auth-field-hint.known-account{color:#766c64}
+.auth-field-hint.auth-warning{color:#8b5a4e}
+.auth-field-hint.auth-success{color:#58704f}
+.auth-reset-inline{font-weight:800;text-decoration:underline;cursor:pointer}
