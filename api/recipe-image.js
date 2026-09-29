@@ -36,17 +36,20 @@ export default async function handler(req,res){
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
   const imageModel=process.env.AI_IMAGE_MODEL||'openai/gpt-image-2';
   const visionModel=process.env.AI_VISION_MODEL||process.env.AI_MODEL;
-  if(!apiKey)return placeholder(res,name);
+  if(!apiKey){console.error('[recipe-image] no AI Gateway credential available');return placeholder(res,name);}
+  console.log('[recipe-image] start',{name,imageModel,hasVisionModel:Boolean(visionModel)});
   for(let attempt=0;attempt<2;attempt++){
     try{
       const generated=await generateImage(apiKey,imageModel,imagePrompt(name,ingredients,tags,attempt===1));
+      console.log('[recipe-image] generated',{name,attempt,mime:generated.mime,bytes:generated.b64?.length||0});
       const check=await verifyImage(apiKey,visionModel,generated.b64,generated.mime,{name,ingredients,tags});
+      console.log('[recipe-image] verified',{name,attempt,match:check?.match,confidence:check?.confidence,reason:check?.reason||''});
       if(check?.match===true&&Number(check.confidence)>=0.72){
         const buf=Buffer.from(generated.b64,'base64');
         res.setHeader('Content-Type',generated.mime||'image/png');res.setHeader('Cache-Control','public, s-maxage=2592000, stale-while-revalidate=7776000');
         return res.status(200).end(buf);
       }
-    }catch{}
+    }catch(e){console.error('[recipe-image] attempt failed',{name,attempt,error:String(e?.message||e)})}
   }
-  return placeholder(res,name);
+  console.error('[recipe-image] all attempts rejected',{name});return placeholder(res,name);
 }
