@@ -227,6 +227,12 @@
               <button class="category-chip" data-recipe-category="bowl">Bowls</button>
             </div>
           </div>
+          <div class="category-group student-budget-group">
+            <div class="category-group-title">Étudiants · Petits prix</div>
+            <div class="recipe-category-scroll">
+              <button class="category-chip" data-recipe-category="student-budget">💸 Petits prix · 60 recettes</button>
+            </div>
+          </div>
           <div class="category-group equipment-minimal-group">
             <div class="category-group-title">Sans four / équipement minimal</div>
             <div class="recipe-category-scroll">
@@ -400,9 +406,10 @@
       <section class="cook-guide-panel" id="cookGuidePanel" hidden>
         <div class="cook-guide-head"><div><div class="eyebrow">Mode cuisine</div><h3 id="cookGuideTitle">Cuisson adaptée</h3></div><span class="compatibility-badge" id="cookCompatibility">Compatible</span></div>
         <div class="cook-method-switch">
-          <button class="cook-method active" type="button" data-cook-method="selected">Mon appareil</button>
-          <button class="cook-method" type="button" data-cook-method="oven">Four traditionnel</button>
-          <button class="cook-method" type="button" data-cook-method="airfryer">Air Fryer</button>
+          <button class="cook-method active" type="button" data-cook-method="selected">Méthode conseillée</button>
+          <button class="cook-method" type="button" data-cook-method="oven">Four</button>
+          <button class="cook-method" type="button" data-cook-method="stovetop">Plaques / poêle</button>
+          <button class="cook-method" type="button" data-cook-method="microwave">Micro-ondes</button>
         </div>
         <div class="cook-guide-grid">
           <div><small>Appareil</small><strong id="cookGuideDevice">—</strong></div>
@@ -411,12 +418,15 @@
           <div><small>Durée</small><strong id="cookGuideTime">—</strong></div>
           <div><small>Récipient / accessoire</small><strong id="cookGuideContainer">—</strong></div>
           <div><small>Préchauffage</small><strong id="cookGuidePreheat">—</strong></div>
+          <div><small>Placement</small><strong id="cookGuidePlacement">—</strong></div>
+          <div><small>Puissance / feu</small><strong id="cookGuidePower">—</strong></div>
+          <div><small>Cuisson à cœur</small><strong id="cookGuideDoneness">—</strong></div>
         </div>
         <div class="cook-guide-note" id="cookGuideNote"></div>
         <h4>Étapes adaptées</h4>
         <ol id="cookGuideSteps" class="steps-list"></ol>
       </section>
-      <div class="detail-columns"><div><h3>Ingrédients</h3><div id="detailIngredients" class="ingredients-list"></div></div><div><h3>Étapes</h3><ol id="detailSteps" class="steps-list"></ol></div></div>
+      <div class="detail-columns"><div><h3>Ingrédients</h3><small class="detail-servings-label" id="detailServingsLabel">Pour 1 portion</small><div id="detailIngredients" class="ingredients-list"></div></div><div><h3>Étapes</h3><ol id="detailSteps" class="steps-list"></ol></div></div>
       <div class="recipe-detail-actions"><button class="btn btn-outline" id="detailFavoriteBtn">♡ Ajouter aux favoris</button><button class="btn btn-primary" id="detailAddWeekBtn">+ Ajouter à la semaine</button></div>
       <div class="chef-tip"><span>✦</span><div><strong>Conseil Mise</strong><p id="detailTip">Préparez deux portions du poulet : la seconde est déjà prévue dans le déjeuner de demain.</p></div></div>
     </div>
@@ -524,5 +534,6 @@
   <script src="app-v11.js"></script>
   <script src="app-v12.js"></script>
   <script src="app-v13.js"></script>
+  <script src="app-v14.js"></script>
 </body>
 </html>
