@@ -1,6 +1,7 @@
 // Kitchen Studio cloud sync. Uses only the public Supabase URL + publishable key.
 (function(){
   const Cloud={ready:false,client:null,user:null,timer:null};
+  const AUTH_REDIRECT='https://mise-kitchen-studio.vercel.app/';
   const status=()=>document.querySelector('#cloudAuthStatus');
 
   function setStatus(message,ok=false){
@@ -99,6 +100,30 @@
     }
     return out;
   }
+
+  async function signUpAccount(email,password,name=''){
+    if(!Cloud.ready||!Cloud.client)throw new Error('Cloud indisponible');
+    return await Cloud.client.auth.signUp({
+      email,password,
+      options:{data:{name},emailRedirectTo:AUTH_REDIRECT}
+    });
+  }
+  async function signInAccount(email,password){
+    if(!Cloud.ready||!Cloud.client)throw new Error('Cloud indisponible');
+    return await Cloud.client.auth.signInWithPassword({email,password});
+  }
+  async function resendConfirmation(email){
+    if(!email)throw new Error('Entrez votre email.');
+    return await Cloud.client.auth.resend({type:'signup',email,options:{emailRedirectTo:AUTH_REDIRECT}});
+  }
+  async function sendPasswordReset(email){
+    if(!email)throw new Error('Entrez votre email.');
+    return await Cloud.client.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT});
+  }
+  function safeSignupMessage(){
+    return 'Si cette adresse est nouvelle, un email de confirmation vient d’être envoyé. Si vous aviez déjà un compte, il n’est pas recréé : choisissez “Se connecter” ou “Mot de passe oublié ?”.';
+  }
+
   function updateAccountUI(user){
     const signOut=document.querySelector('#cloudSignOut');
     if(user){
@@ -120,13 +145,21 @@
       const cfg=await fetch('/api/public-config').then(r=>r.json());
       if(!cfg.configured){setStatus('Compte cloud prêt dans le code, mais Supabase n’est pas encore configuré pour Kitchen Studio.');return}
       await loadSdk();
+      // Auth users live in the stable Supabase project, not in a Vercel deployment.
+      // Keeping the same project URL/publishable key means accounts survive every website update.
       Cloud.client=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
       Cloud.ready=true;
       const {data:{session}}=await Cloud.client.auth.getSession();
       Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
       if(Cloud.user)await loadCloud();
-      Cloud.client.auth.onAuthStateChange(async(_event,session)=>{
+      Cloud.client.auth.onAuthStateChange(async(event,session)=>{
         Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
+        if(event==='PASSWORD_RECOVERY'){
+          setTimeout(()=>{
+            const dlg=document.querySelector('#passwordRecoveryModal');
+            if(dlg&&!dlg.open){try{openModal(dlg)}catch{dlg.showModal()}}
+          },50);
+        }
         if(Cloud.user)await loadCloud();
       });
       setStatus(Cloud.user?'Compte connecté · synchronisation active':'Cloud prêt · créez un compte ou connectez-vous',Boolean(Cloud.user));
@@ -139,6 +172,9 @@
     document.querySelector('#cloudNameLabel').hidden=mode==='signin';
     document.querySelector('#cloudAuthSubmit').textContent=mode==='signup'?'Créer mon compte':'Se connecter';
     document.querySelector('#cloudAccountPassword').autocomplete=mode==='signup'?'new-password':'current-password';
+    const resend=document.querySelector('#resendConfirmation'),forgot=document.querySelector('#forgotPassword');
+    if(resend)resend.hidden=mode!=='signup';
+    if(forgot)forgot.hidden=mode!=='signin';
   });
   document.querySelector('#cloudAuthForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
@@ -146,20 +182,54 @@
     const email=document.querySelector('#cloudAccountEmail').value.trim(),password=document.querySelector('#cloudAccountPassword').value,name=document.querySelector('#cloudAccountName').value.trim();
     setStatus(mode==='signup'?'Création du compte…':'Connexion…');
     if(mode==='signup'){
-      const {data,error}=await Cloud.client.auth.signUp({email,password,options:{data:{name},emailRedirectTo:window.location.origin+'/'}});
+      const {data,error}=await signUpAccount(email,password,name);
       if(error){setStatus(error.message);return}
       Cloud.user=data.user||null;
       if(data.session){updateAccountUI(Cloud.user);await saveNow();setStatus('Compte créé et synchronisé',true)}
-      else setStatus('Compte créé. Vérifiez votre email pour confirmer puis reconnectez-vous.',true);
+      else setStatus(safeSignupMessage(),true);
     }else{
-      const {data,error}=await Cloud.client.auth.signInWithPassword({email,password});
+      const {data,error}=await signInAccount(email,password);
       if(error){setStatus(error.message);return}
       Cloud.user=data.user;updateAccountUI(Cloud.user);await loadCloud();
     }
   });
+
+  document.querySelector('#resendConfirmation')?.addEventListener('click',async()=>{
+    const email=document.querySelector('#cloudAccountEmail')?.value.trim();
+    if(!email){setStatus('Entrez votre email ci-dessus.');return}
+    setStatus('Envoi de la confirmation…');
+    const {error}=await resendConfirmation(email);
+    if(error){
+      setStatus('Impossible de renvoyer une confirmation. Si ce compte est déjà confirmé, utilisez “Se connecter” ou “Mot de passe oublié ?”.');
+      return;
+    }
+    setStatus('Si cette adresse attend encore une confirmation, un nouvel email vient d’être envoyé.',true);
+  });
+  document.querySelector('#forgotPassword')?.addEventListener('click',async()=>{
+    const email=document.querySelector('#cloudAccountEmail')?.value.trim();
+    if(!email){setStatus('Entrez votre email ci-dessus.');return}
+    setStatus('Envoi du lien de récupération…');
+    const {error}=await sendPasswordReset(email);
+    if(error){setStatus(error.message||'Impossible d’envoyer le lien de récupération.');return}
+    setStatus('Si un compte correspond à cet email, un lien pour choisir un nouveau mot de passe vient d’être envoyé.',true);
+  });
+  document.querySelector('#passwordRecoveryForm')?.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const p1=document.querySelector('#newRecoveryPassword')?.value||'',p2=document.querySelector('#confirmRecoveryPassword')?.value||'';
+    const status=document.querySelector('#passwordRecoveryStatus');
+    const say=(m,ok=false)=>{if(status)status.innerHTML='<span class="status-dot '+(ok?'ok':'')+'"></span><span>'+m+'</span>'};
+    if(p1.length<8){say('Utilisez au moins 8 caractères.');return}
+    if(p1!==p2){say('Les deux mots de passe ne correspondent pas.');return}
+    say('Mise à jour du mot de passe…');
+    const {error}=await Cloud.client.auth.updateUser({password:p1});
+    if(error){say(error.message||'Impossible de modifier le mot de passe.');return}
+    say('Mot de passe mis à jour. Votre compte et vos données sont conservés.',true);
+    setTimeout(()=>{const dlg=document.querySelector('#passwordRecoveryModal');if(dlg?.open)dlg.close()},900);
+  });
+
   document.querySelector('#cloudSignOut')?.addEventListener('click',async()=>{if(Cloud.client)await Cloud.client.auth.signOut();Cloud.user=null;updateAccountUI(null);setStatus('Déconnecté. Les données locales restent sur cet appareil.')});
 
-  Object.assign(Cloud,{saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply});
+  Object.assign(Cloud,{saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply,signUpAccount,signInAccount,resendConfirmation,sendPasswordReset});
   window.KitchenCloud=Cloud;
   init();
 })();
