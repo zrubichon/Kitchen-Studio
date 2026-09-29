@@ -120,8 +120,23 @@
     if(!email)throw new Error('Entrez votre email.');
     return await Cloud.client.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT});
   }
+  function isRepeatedSignup(data){
+    return Boolean(data?.user && Array.isArray(data.user.identities) && data.user.identities.length===0);
+  }
+  function rememberExistingEmail(email){
+    try{sessionStorage.setItem('miseKnownExistingEmail',String(email||'').trim().toLowerCase())}catch{}
+  }
+  function knownExistingEmail(email){
+    try{return sessionStorage.getItem('miseKnownExistingEmail')===String(email||'').trim().toLowerCase()}catch{return false}
+  }
+  function setHint(selector,message,kind=''){
+    const el=document.querySelector(selector);if(!el)return;
+    el.textContent=message;
+    el.classList.remove('known-account','auth-warning','auth-success');
+    if(kind)el.classList.add(kind);
+  }
   function safeSignupMessage(){
-    return 'Si cette adresse est nouvelle, un email de confirmation vient d’être envoyé. Si vous aviez déjà un compte, il n’est pas recréé : choisissez “Se connecter” ou “Mot de passe oublié ?”.';
+    return 'Si cette adresse est nouvelle, un email de confirmation vient d’être envoyé. Si vous aviez déjà un compte, utilisez “Se connecter” ou “Mot de passe oublié ?”.';
   }
 
   function updateAccountUI(user){
@@ -175,6 +190,12 @@
     const resend=document.querySelector('#resendConfirmation'),forgot=document.querySelector('#forgotPassword');
     if(resend)resend.hidden=mode!=='signup';
     if(forgot)forgot.hidden=mode!=='signin';
+    setHint('#cloudEmailHint',mode==='signup'
+      ?'Si cette adresse possède déjà un compte, Mise vous proposera de vous connecter.'
+      :'Entrez l’adresse utilisée lors de la création de votre compte.');
+    setHint('#cloudPasswordHint',mode==='signup'
+      ?'8 caractères minimum.'
+      :'Mot de passe oublié ? Utilisez le bouton juste sous le formulaire pour le réinitialiser.');
   });
   document.querySelector('#cloudAuthForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
@@ -185,12 +206,38 @@
       const {data,error}=await signUpAccount(email,password,name);
       if(error){setStatus(error.message);return}
       Cloud.user=data.user||null;
-      if(data.session){updateAccountUI(Cloud.user);await saveNow();setStatus('Compte créé et synchronisé',true)}
-      else setStatus(safeSignupMessage(),true);
+      if(data.session){
+        updateAccountUI(Cloud.user);await saveNow();setStatus('Compte créé et synchronisé',true);
+        setHint('#cloudEmailHint','Compte créé avec cette adresse.','auth-success');
+      }else if(isRepeatedSignup(data)){
+        rememberExistingEmail(email);
+        setStatus('Cette adresse est déjà associée à un compte Mise. Passez sur “Se connecter”.',true);
+        setHint('#cloudEmailHint','✓ Un compte Mise existe déjà avec cette adresse. Utilisez “Se connecter”.','known-account');
+        setHint('#cloudPasswordHint','Si vous ne connaissez plus le mot de passe, passez sur “Se connecter” puis cliquez sur “Mot de passe oublié ?”.','known-account');
+      }else{
+        setStatus(safeSignupMessage(),true);
+        setHint('#cloudEmailHint','Nouvelle inscription : vérifiez votre boîte mail et vos spams pour confirmer l’adresse.','auth-success');
+      }
     }else{
       const {data,error}=await signInAccount(email,password);
-      if(error){setStatus(error.message);return}
+      if(error){
+        const invalid=error.code==='invalid_credentials'||/invalid login credentials/i.test(error.message||'');
+        if(invalid){
+          if(knownExistingEmail(email)){
+            setStatus('Le mot de passe saisi est incorrect pour ce compte.');
+            setHint('#cloudEmailHint','✓ Un compte Mise existe avec cette adresse.','known-account');
+            setHint('#cloudPasswordHint','Mot de passe incorrect. Cliquez sur “Mot de passe oublié ?” ci-dessous pour en choisir un nouveau.','auth-warning');
+          }else{
+            setStatus('Email ou mot de passe incorrect.');
+            setHint('#cloudPasswordHint','Si vous avez déjà créé un compte avec cet email, cliquez sur “Mot de passe oublié ?” pour réinitialiser le mot de passe.','auth-warning');
+          }
+        }else setStatus(error.message);
+        return
+      }
+      try{sessionStorage.removeItem('miseKnownExistingEmail')}catch{}
       Cloud.user=data.user;updateAccountUI(Cloud.user);await loadCloud();
+      setHint('#cloudEmailHint','✓ Compte reconnu.','auth-success');
+      setHint('#cloudPasswordHint','Connexion réussie.','auth-success');
     }
   });
 
@@ -209,9 +256,11 @@
     const email=document.querySelector('#cloudAccountEmail')?.value.trim();
     if(!email){setStatus('Entrez votre email ci-dessus.');return}
     setStatus('Envoi du lien de récupération…');
+    setHint('#cloudPasswordHint','Nous allons envoyer un lien permettant de choisir un nouveau mot de passe. Votre compte et vos données ne seront pas supprimés.','known-account');
     const {error}=await sendPasswordReset(email);
     if(error){setStatus(error.message||'Impossible d’envoyer le lien de récupération.');return}
-    setStatus('Si un compte correspond à cet email, un lien pour choisir un nouveau mot de passe vient d’être envoyé.',true);
+    setStatus('Email de réinitialisation demandé. Vérifiez votre boîte mail et vos spams.',true);
+    setHint('#cloudPasswordHint','Ouvrez l’email de Mise, cliquez sur le lien, puis choisissez un nouveau mot de passe. Ensuite vous pourrez vous reconnecter normalement.','auth-success');
   });
   document.querySelector('#passwordRecoveryForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
@@ -229,7 +278,7 @@
 
   document.querySelector('#cloudSignOut')?.addEventListener('click',async()=>{if(Cloud.client)await Cloud.client.auth.signOut();Cloud.user=null;updateAccountUI(null);setStatus('Déconnecté. Les données locales restent sur cet appareil.')});
 
-  Object.assign(Cloud,{saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply,signUpAccount,signInAccount,resendConfirmation,sendPasswordReset});
+  Object.assign(Cloud,{saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply,signUpAccount,signInAccount,resendConfirmation,sendPasswordReset,isRepeatedSignup,rememberExistingEmail,knownExistingEmail});
   window.KitchenCloud=Cloud;
   init();
 })();
