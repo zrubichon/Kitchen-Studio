@@ -54,6 +54,7 @@
     if(state.profile.location)localStorage.setItem('miseLocation',state.profile.location);
     if(state.profile.budget)localStorage.setItem('miseBudget',String(state.profile.budget));
     const v9=window.KitchenStudioV9;
+    document.dispatchEvent(new CustomEvent('mise:cloudloaded',{detail:{payload}}));
     v9?.renderDevices?.();
     v9?.renderPlannerDrawer?.();
     v9?.renderFridge?.();
@@ -112,6 +113,7 @@
       document.querySelector('#accountDisplayEmail').textContent='Créez votre compte ou connectez-vous.';
       if(signOut)signOut.hidden=true;
     }
+    document.dispatchEvent(new CustomEvent('mise:auth',{detail:{user:user||null}}));
   }
   async function init(){
     try{
