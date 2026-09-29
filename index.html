@@ -99,14 +99,14 @@
           <button class="btn btn-dark" id="askWhy">Pourquoi ces choix ?</button>
         </div>
 
-        <details class="planner-menu-drawer" id="plannerMenuDrawer">
-          <summary><span><span class="eyebrow">Menu & inspirations</span><strong>Ma semaine + des idées à ajouter</strong></span><span class="drawer-chevron">⌄</span></summary>
+        <section class="planner-menu-drawer planner-menu-static" id="plannerMenuDrawer">
+          <div class="drawer-static-head"><span><span class="eyebrow">Menu & inspirations</span><strong>Ma semaine + des idées à ajouter</strong></span></div>
           <div class="drawer-body">
             <div class="drawer-week-menu" id="drawerWeekMenu"></div>
             <div class="drawer-ideas-head"><div><div class="eyebrow">Avec ❤️ et + partout</div><h3>Idées à faire glisser dans votre semaine.</h3></div><button class="text-btn" id="refreshDrawerIdeas">↻ Changer les idées</button></div>
             <div class="drawer-ideas-track" id="drawerIdeasTrack"></div>
           </div>
-        </details>
+        </section>
       </section>
 
       <section class="page" id="page-shopping">
@@ -490,6 +490,20 @@
     </form>
   </dialog>
 
+  <dialog class="modal shopping-buy-modal" id="shoppingBuyModal">
+    <button class="modal-close" data-close>×</button>
+    <div class="eyebrow">Liste achetable</div>
+    <h2>Votre panier, basé sur votre planning.</h2>
+    <p class="muted">Cette liste reprend uniquement les ingrédients nécessaires aux plats présents dans votre semaine, après retrait de ce qui est déjà dans votre frigo.</p>
+    <div class="buy-list-meta"><span id="buyListStore">Magasin : —</span><span id="buyListCount">0 produits</span></div>
+    <div id="buyListItems" class="buy-list-items"></div>
+    <div class="buy-list-actions">
+      <button class="btn btn-outline" id="copyBuyList" type="button">Copier la liste</button>
+      <a class="btn btn-primary" id="openInstacartList" target="_blank" rel="noopener" hidden>Ouvrir ma liste Instacart</a>
+    </div>
+    <div class="buy-list-status" id="buyListStatus"></div>
+  </dialog>
+
   <dialog class="modal ai-modal" id="aiModal">
     <button class="modal-close" data-close>×</button><div class="chef-seal dark">✦</div><div class="eyebrow">Chef IA</div><h2>Demandez sans remplir de formulaire.</h2><p>Le chef utilise votre profil permanent, votre semaine actuelle et vos appareils.</p><div class="chat-box"><div class="chat-message ai">Je connais déjà votre profil. Qu’est-ce qui change cette semaine ?</div><div class="prompt-input"><textarea id="quickPrompt" rows="4" placeholder="Ex. Je rentre tard mercredi, j’ai envie d’un saumon mardi et j’ai déjà 4 œufs…"></textarea><button class="btn btn-primary" id="sendQuickPrompt">Composer ✦</button></div></div>
   </dialog>
@@ -509,5 +523,6 @@
   <script src="app-v10.js"></script>
   <script src="app-v11.js"></script>
   <script src="app-v12.js"></script>
+  <script src="app-v13.js"></script>
 </body>
 </html>
