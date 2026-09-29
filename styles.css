@@ -141,3 +141,16 @@
 .wellness-disclaimer{font-size:8px!important;margin-top:10px!important}
 .profile-form-v10{align-items:start}
 @media(max-width:900px){.profile-account-shell{grid-template-columns:1fr}.premium-goal-preview,.wellness-metrics{grid-template-columns:1fr}.wellness-coach-card.locked,.wellness-coach-head{flex-direction:column;align-items:stretch}}
+
+/* V10.1 — first-run onboarding + adaptive fasting */
+.onboarding-modal{width:min(980px,96vw);padding:0;overflow:hidden;border-radius:22px}
+.onboarding-grid{display:grid;grid-template-columns:.9fr 1.1fr;min-height:560px}
+.onboarding-brand-panel{padding:42px;background:linear-gradient(145deg,#292620,#6f2b22);color:#fff;display:flex;flex-direction:column;justify-content:center}
+.onboarding-mark{margin-bottom:22px}.onboarding-brand-panel h1{font:48px/.98 var(--serif);margin:12px 0 16px}.onboarding-brand-panel p{color:#e4d8ce;line-height:1.65;max-width:420px}
+.onboarding-benefits{display:grid;gap:9px;margin-top:24px}.onboarding-benefits span{font-size:10px;font-weight:800;color:#f0dfd1}
+.onboarding-auth-panel{padding:42px;background:var(--paper);display:flex;flex-direction:column;justify-content:center}.onboarding-auth-panel h2{font:38px/1 var(--serif);margin:8px 0}.onboarding-auth-panel>p{color:var(--muted);line-height:1.55;margin:0 0 18px}
+.onboarding-skip{margin:12px auto 6px}.premium-wide{grid-column:1/-1}
+.meal-card.fasting{background:repeating-linear-gradient(135deg,#eee8df,#eee8df 8px,#e7dfd4 8px,#e7dfd4 16px);border-style:dashed;cursor:default}
+.meal-card.fasting:hover{transform:none;box-shadow:none}.meal-card.fasting h4{color:#6f6257}.meal-card.fasting .fast-window{font-size:8px;color:#8c7e72;margin-top:auto}.meal-card.fasting .kcal{color:#88786a}
+.fasting-chip{display:inline-flex;border-radius:999px;background:#312c27;color:#fff;padding:5px 8px;font-size:8px;font-weight:800;margin-top:8px}
+@media(max-width:760px){.onboarding-grid{grid-template-columns:1fr}.onboarding-brand-panel{padding:28px;min-height:250px}.onboarding-brand-panel h1{font-size:38px}.onboarding-auth-panel{padding:28px}}
