@@ -8,7 +8,7 @@ export default async function handler(req,res){
     const duration=p.durationMinWeeks?((fr?' sur environ ':' over roughly ')+p.durationMinWeeks+'–'+p.durationMaxWeeks+(fr?' semaines':' weeks')):'';
     return name+(fr?'Mise adapte les menus à votre objectif avec une cible progressive de ':'Mise adapts your menus to your goal with a gradual target of ')+range+duration+'.';
   };
-  const apiKey=process.env.AI_GATEWAY_API_KEY,model=process.env.AI_MODEL;
+  const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey||!model)return res.status(200).json({text:fallback(),fallback:true});
   const system='Write exactly one short, supportive sentence for a meal-planning app. Use only the supplied goal summary. Do not diagnose, shame, promise a result, prescribe extreme calorie deficits, or frame exercise as compensation for eating. Mention the calorie range and timeline only when provided. Return plain text only.';
   try{
