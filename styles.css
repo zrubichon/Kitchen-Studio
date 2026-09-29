@@ -170,3 +170,9 @@
 .slot-pick-banner{margin:-4px 0 18px;padding:14px 16px;border:1px solid #d7c3b1;border-radius:13px;background:linear-gradient(135deg,#fff9f2,#f2e8dc);display:flex;align-items:center;justify-content:space-between;gap:16px}
 .slot-pick-banner strong,.slot-pick-banner small{display:block}.slot-pick-banner strong{font:20px var(--serif);margin:3px 0}.slot-pick-banner small{color:var(--muted);font-size:9px}
 @media(max-width:800px){.calendar-card-actions{opacity:1}.slot-pick-banner{align-items:flex-start;flex-direction:column}.empty-slot{min-height:112px}}
+
+/* V12 — minimal equipment recipe discovery */
+.equipment-minimal-group{border:1px solid #dccbbb;border-radius:14px;padding:12px 12px 10px;background:linear-gradient(135deg,#fffaf5,#f4ece3)}
+.equipment-minimal-group .category-group-title{color:#7a2f24}
+.equipment-minimal-group .category-chip{background:#fff;border-color:#d7c4b3}
+.equipment-minimal-group .category-chip.active{background:#312c27;color:#fff;border-color:#312c27}
