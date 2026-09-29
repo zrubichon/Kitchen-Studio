@@ -62,8 +62,8 @@
       p.goalPace=String(fd.get('goalPace')||'moderate');
       p.activityLevel=String(fd.get('activityLevel')||'moderate');
       p.fastingMode=String(fd.get('fastingMode')||'none');
-      p.fastingStart=String(fd.get('fastingStart')||'12:00');
-      p.fastingEnd=String(fd.get('fastingEnd')||'20:00');
+      p.fastingStart=String(f.elements.fastingStart?.value||'12:00');
+      p.fastingEnd=String(f.elements.fastingEnd?.value||'20:00');
       p.breakfastTime=String(fd.get('breakfastTime')||'08:00');
       p.lunchTime=String(fd.get('lunchTime')||'13:00');
       p.dinnerTime=String(fd.get('dinnerTime')||'19:00');
@@ -216,8 +216,8 @@
     const presets={'12-12':['08:00','20:00'],'14-10':['10:00','20:00'],'16-8':['12:00','20:00'],'18-6':['13:00','19:00']};
     if(write&&presets[mode]){f.elements.fastingStart.value=presets[mode][0];f.elements.fastingEnd.value=presets[mode][1]}
     const custom=mode==='custom',off=mode==='none';
-    if(f.elements.fastingStart)f.elements.fastingStart.disabled=off||(!custom&&!!presets[mode]);
-    if(f.elements.fastingEnd)f.elements.fastingEnd.disabled=off||(!custom&&!!presets[mode]);
+    if(f.elements.fastingStart){f.elements.fastingStart.readOnly=off||(!custom&&!!presets[mode]);f.elements.fastingStart.classList.toggle('readonly-field',f.elements.fastingStart.readOnly)}
+    if(f.elements.fastingEnd){f.elements.fastingEnd.readOnly=off||(!custom&&!!presets[mode]);f.elements.fastingEnd.classList.toggle('readonly-field',f.elements.fastingEnd.readOnly)}
   }
   q('#fastingMode')?.addEventListener('change',()=>syncFastingPreset(true));
 
@@ -228,7 +228,12 @@
     return a<=b?(t>=a&&t<=b):(t>=a||t<=b);
   }
   function slotTime(si){return [state.profile.breakfastTime||'08:00',state.profile.lunchTime||'13:00',state.profile.dinnerTime||'19:00'][si]}
-  function shouldFast(si){return state.profile.fastingMode!=='none'&&!inEatingWindow(slotTime(si))}
+  function eatingSlots(){
+    if(state.profile.fastingMode==='none')return [0,1,2];
+    const slots=[0,1,2].filter(si=>inEatingWindow(slotTime(si)));
+    return slots.length?slots:[1];
+  }
+  function shouldFast(si){return state.profile.fastingMode!=='none'&&!eatingSlots().includes(si)}
   function foodReplacement(si,day){
     const slot=['breakfast','lunch','dinner'][si],prev=day>0?state.plan[day-1]?.[si]:null;
     const pool=RECIPES.filter(r=>r.id!==FAST_ID&&r.slot===slot&&profileSafeEligible(r)&&r.id!==prev);
@@ -264,6 +269,14 @@
     });
     updateWeekHeader();renderShopping();renderRecipeIdeas();window.KitchenStudioV9?.renderFridgeCoverage?.();window.KitchenStudioV9?.renderPlannerDrawer?.();
   };
+  if(window.KitchenStudioV9){
+    window.KitchenStudioV9.renderFridgeCoverage=function(){
+      const box=q('#fridgeCoverage');if(!box)return;
+      const meals=state.plan.flat().filter(id=>id!==FAST_ID);
+      const covered=meals.filter(id=>window.KitchenStudioV9.recipeCovered?.(recipeById(id))).length,total=meals.length;
+      box.innerHTML='<div><strong>'+covered+'/'+total+'</strong><span>'+tr('repas prévus entièrement couverts par le frigo','planned meals fully covered by your fridge')+'</span></div><div class="fridge-coverage-bar"><span style="width:'+(total?covered/total*100:0)+'%"></span></div>';
+    };
+  }
 
   function showFirstRun(){
     if(localStorage.getItem('miseFirstRunComplete')==='1'||isConnected()||!window.KitchenCloud?.ready)return;
@@ -321,7 +334,7 @@
     state.plan=next;applyFastingSchedule();localStorage.setItem('misePlan',JSON.stringify(state.plan));renderWeek();window.KitchenCloud?.saveSoon?.();
   }
 
-  q('#premiumCreateAccountBtn')  q('#premiumCreateAccountBtn')?.addEventListener('click',()=>q('#profileAccountShell')?.scrollIntoView({behavior:'smooth',block:'start'}));
+  q('#premiumCreateAccountBtn')?.addEventListener('click',()=>q('#profileAccountShell')?.scrollIntoView({behavior:'smooth',block:'start'}));
   q('#saveProfile')?.addEventListener('click',()=>setTimeout(()=>{
     collect();hydrate();const w=computeWellness(state.profile);renderPremiumPreview(w);renderGate();renderCoach();renderRecipes(window.__recipeFilter||'all');
     toast(tr('Profil enregistré. L’IA utilisera ces données pour les prochains menus.','Profile saved. The AI will use these details for future menus.'));
