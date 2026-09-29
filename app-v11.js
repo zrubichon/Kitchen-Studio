@@ -7,7 +7,7 @@
   let moveSource=null;
   let pendingSlot=null;
 
-  function norm(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,' ')}
+  function norm(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,'').replace(/\b(cuit|cuite|cuits|cuites|frais|fraiche|fraîche|fraiches|fraîches|complet|complete|complète|cerises?|sec|seche|sèche)\b/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim().replace(/s$/,'')}
   function fridgeItems(){return window.KitchenStudioV9?.fridgeItems?.()||[]}
   function hasFridge(){return fridgeItems().length>0}
   function fridgeSet(){return new Set(fridgeItems().map(x=>norm(x.name)))}
@@ -16,6 +16,24 @@
     const set=fridgeSet();
     return (r.ingredients||[]).every(([name])=>set.has(norm(name)) || /^(salt|pepper|oil|olive oil|water|sel|poivre|huile|eau)$/i.test(String(name)));
   }
+
+  function removeShoppingItemByKey(key){
+    if(!key)return;
+    if(!(state.removedShopping instanceof Set))state.removedShopping=new Set(state.removedShopping||[]);
+    state.removedShopping.add(key);
+    localStorage.setItem('miseRemovedShopping',JSON.stringify([...state.removedShopping]));
+    try{renderShopping()}catch{}
+    window.KitchenCloud?.saveSoon?.();
+    toast(tr('Produit retiré de la liste de courses.','Item removed from grocery list.'));
+  }
+
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest?.('[data-remove-shop]');
+    if(!btn)return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    removeShoppingItemByKey(btn.dataset.removeShop);
+  },true);
 
   // Null/empty slots must never break the grocery list.
   aggregateShopping=function(){
