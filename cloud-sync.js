@@ -1,12 +1,47 @@
 // Kitchen Studio cloud sync. Uses only the public Supabase URL + publishable key.
 (function(){
-  const Cloud={ready:false,client:null,user:null,timer:null,loading:false};
+  // Capture recovery intent before the SDK consumes/clears the URL fragment.
+  const recoveryHash=new URLSearchParams(window.location.hash.slice(1));
+  const recoveryLink=recoveryHash.get('type')==='recovery';
+  const recoveryToken=recoveryHash.get('access_token');
+  let recoveryStored=null;try{recoveryStored=sessionStorage.getItem('misePasswordRecoveryUser')}catch{}
+  const Cloud={ready:false,client:null,user:null,timer:null,loading:false,recovering:recoveryLink||Boolean(recoveryStored),recoveryUserId:null,recoverySubmitting:false};
+  let recoveryError=recoveryHash.get('error_description')||recoveryHash.get('error')||'';
   const AUTH_REDIRECT='https://mise-kitchen-studio.vercel.app/';
   const status=()=>document.querySelector('#cloudAuthStatus');
 
   function setStatus(message,ok=false){
     const el=status();if(!el)return;
     el.innerHTML='<span class="status-dot '+(ok?'ok':'')+'"></span><span>'+message+'</span>';
+  }
+  function recoveryStatus(message,ok=false){
+    const el=document.querySelector('#passwordRecoveryStatus');
+    if(el){el.textContent=message;el.classList.toggle('auth-success',ok)}
+  }
+  function openRecovery(valid=false,message='Validation du lien de récupération…'){
+    const dlg=document.querySelector('#passwordRecoveryModal');if(!dlg)return;
+    document.querySelectorAll('dialog[open]').forEach(other=>{if(other!==dlg)closeModal(other)});
+    const button=document.querySelector('#passwordRecoverySubmit');if(button)button.disabled=!valid||Cloud.recoverySubmitting;
+    recoveryStatus(message,valid);
+    if(!dlg.open){try{openModal(dlg)}catch{dlg.showModal()}}
+    if(valid)document.querySelector('#newRecoveryPassword')?.focus();
+  }
+  function recoverySession(session){
+    if(!Cloud.recovering)return false;
+    if(!recoveryLink&&recoveryStored&&session?.user&&session.user.id!==recoveryStored){
+      Cloud.recovering=false;recoveryStored=null;try{sessionStorage.removeItem('misePasswordRecoveryUser')}catch{};
+      const dlg=document.querySelector('#passwordRecoveryModal');if(dlg?.open)closeModal(dlg);
+      return false;
+    }
+    Cloud.user=session?.user||null;
+    const valid=Boolean(Cloud.user&&!recoveryError&&(!recoveryToken||session.access_token===recoveryToken));
+    Cloud.recoveryUserId=valid?Cloud.user.id:null;
+    if(valid){
+      recoveryStored=Cloud.user.id;try{sessionStorage.setItem('misePasswordRecoveryUser',recoveryStored)}catch{}
+      openRecovery(true,'Lien validé. Saisissez et confirmez votre nouveau mot de passe.');
+      setStatus('Réinitialisation en cours · choisissez votre nouveau mot de passe.');
+    }else openRecovery(false,'Ce lien est expiré, déjà utilisé ou invalide. Demandez un nouveau lien avec « Mot de passe oublié ? ».');
+    return true;
   }
   function loadSdk(){
     return new Promise((resolve,reject)=>{
@@ -66,7 +101,7 @@
     if(typeof renderRecipeIdeas==='function')renderRecipeIdeas();
   }
   async function saveNow(){
-    if(!Cloud.ready||!Cloud.user||Cloud.loading)return;
+    if(!Cloud.ready||!Cloud.user||Cloud.loading||Cloud.recovering)return;
     const payload=capture();
     const {error}=await Cloud.client.from('kitchen_user_state').upsert({user_id:Cloud.user.id,payload,updated_at:new Date().toISOString()},{onConflict:'user_id'});
     if(error)console.warn('Kitchen cloud save failed',error.message);
@@ -95,7 +130,7 @@
     return response;
   }
   async function loadCloud(){
-    if(!Cloud.ready||!Cloud.user)return;
+    if(!Cloud.ready||!Cloud.user||Cloud.recovering)return;
     const userId=Cloud.user.id;Cloud.loading=true;clearTimeout(Cloud.timer);
     try{
       const {data,error}=await Cloud.client.from('kitchen_user_state').select('payload,updated_at').eq('user_id',userId).maybeSingle();
@@ -181,6 +216,7 @@
     document.dispatchEvent(new CustomEvent('mise:auth',{detail:{user:user||null}}));
   }
   async function init(){
+    if(Cloud.recovering||recoveryError){Cloud.recovering=true;openRecovery(false,recoveryError?'Ce lien est expiré, déjà utilisé ou invalide. Demandez un nouveau lien.':'Validation du lien de récupération…')}
     try{
       const cfg=await fetch('/api/public-config').then(r=>r.json());
       if(!cfg.configured){setStatus('Compte cloud prêt dans le code, mais Supabase n’est pas encore configuré pour Kitchen Studio.');return}
@@ -189,23 +225,22 @@
       // Keeping the same project URL/publishable key means accounts survive every website update.
       Cloud.client=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
       Cloud.ready=true;
-      const {data:{session}}=await Cloud.client.auth.getSession();
-      Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
-      if(Cloud.user)await loadCloud();
+      // Subscribe before getSession(): PASSWORD_RECOVERY can fire during initialization.
       Cloud.client.auth.onAuthStateChange((event,session)=>{
         clearTimeout(Cloud.timer);
+        if(event==='PASSWORD_RECOVERY')Cloud.recovering=true;
+        if(recoverySession(session))return;
         Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
-        if(event==='PASSWORD_RECOVERY'){
-          setTimeout(()=>{
-            const dlg=document.querySelector('#passwordRecoveryModal');
-            if(dlg&&!dlg.open){try{openModal(dlg)}catch{dlg.showModal()}}
-          },50);
-        }
         // Supabase calls must run outside the synchronous auth callback.
         if(Cloud.user&&['SIGNED_IN','INITIAL_SESSION'].includes(event))setTimeout(()=>loadCloud(),0);
       });
+      const {data:{session},error}=await Cloud.client.auth.getSession();
+      if(error&&Cloud.recovering)recoveryError=error.message||'Lien invalide';
+      if(recoverySession(session))return;
+      Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
+      if(Cloud.user)await loadCloud();
       setStatus(Cloud.user?'Compte connecté · synchronisation active':'Cloud prêt · créez un compte ou connectez-vous',Boolean(Cloud.user));
-    }catch(e){setStatus('Connexion cloud indisponible pour le moment.')}
+    }catch(e){setStatus('Connexion cloud indisponible pour le moment.');if(Cloud.recovering)openRecovery(false,'Impossible de valider le lien pour le moment. Réessayez ou demandez un nouveau lien.')}
   }
 
   let mode='signup';
@@ -292,15 +327,38 @@
   document.querySelector('#passwordRecoveryForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
     const p1=document.querySelector('#newRecoveryPassword')?.value||'',p2=document.querySelector('#confirmRecoveryPassword')?.value||'';
-    const status=document.querySelector('#passwordRecoveryStatus');
-    const say=(m,ok=false)=>{if(status)status.innerHTML='<span class="status-dot '+(ok?'ok':'')+'"></span><span>'+m+'</span>'};
+    const say=recoveryStatus,button=document.querySelector('#passwordRecoverySubmit');
+    if(Cloud.recoverySubmitting)return;
+    if(!Cloud.ready||!Cloud.recovering||!Cloud.recoveryUserId||Cloud.recoveryUserId!==Cloud.user?.id){say('Lien invalide ou expiré. Demandez un nouveau lien de récupération.');return}
     if(p1.length<8){say('Utilisez au moins 8 caractères.');return}
     if(p1!==p2){say('Les deux mots de passe ne correspondent pas.');return}
     say('Mise à jour du mot de passe…');
-    const {error}=await Cloud.client.auth.updateUser({password:p1});
-    if(error){say(error.message||'Impossible de modifier le mot de passe.');return}
-    say('Mot de passe mis à jour. Votre compte et vos données sont conservés.',true);
-    setTimeout(()=>{const dlg=document.querySelector('#passwordRecoveryModal');if(dlg?.open)dlg.close()},900);
+    Cloud.recoverySubmitting=true;if(button)button.disabled=true;
+    try{
+      const {data,error}=await Cloud.client.auth.updateUser({password:p1});
+      if(error){say(error.message||'Impossible de modifier le mot de passe.');return}
+      Cloud.user=data?.user||Cloud.user;Cloud.recovering=false;Cloud.recoveryUserId=null;
+      try{sessionStorage.removeItem('misePasswordRecoveryUser')}catch{}
+      document.querySelector('#passwordRecoveryForm').reset();
+      closeModal(document.querySelector('#passwordRecoveryModal'));
+      updateAccountUI(Cloud.user);try{await loadCloud()}catch{console.warn('Cloud reload failed after password update')}
+      setStatus('Nouveau mot de passe enregistré · compte connecté.',true);
+      toast('Votre nouveau mot de passe a été enregistré.');
+    }catch{say('Impossible de modifier le mot de passe pour le moment. Réessayez.');}
+    finally{Cloud.recoverySubmitting=false;if(button)button.disabled=false;}
+  });
+  document.querySelector('#passwordRecoveryModal')?.addEventListener('cancel',e=>{if(Cloud.recovering)e.preventDefault()});
+  document.querySelector('#passwordRecoveryModal')?.addEventListener('close',()=>{
+    if(Cloud.recovering)setTimeout(()=>{if(Cloud.recovering)openRecovery(Boolean(Cloud.recoveryUserId),document.querySelector('#passwordRecoveryStatus')?.textContent||'Choisissez votre nouveau mot de passe.')},0);
+  });
+  document.querySelector('#passwordRecoveryCancel')?.addEventListener('click',async()=>{
+    if(Cloud.recoverySubmitting)return;
+    if(Cloud.client)await Cloud.client.auth.signOut({scope:'local'});
+    Cloud.recovering=false;Cloud.recoveryUserId=null;Cloud.user=null;
+    try{sessionStorage.removeItem('misePasswordRecoveryUser')}catch{}
+    history.replaceState(null,'',window.location.pathname+window.location.search);
+    closeModal(document.querySelector('#passwordRecoveryModal'));updateAccountUI(null);navigate('profile');
+    setStatus('Réinitialisation annulée. Vous pouvez demander un nouveau lien.');
   });
 
   document.querySelector('#cloudSignOut')?.addEventListener('click',async()=>{if(Cloud.client)await Cloud.client.auth.signOut();Cloud.user=null;updateAccountUI(null);setStatus('Déconnecté. Les données locales restent sur cet appareil.')});

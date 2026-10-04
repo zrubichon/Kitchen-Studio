@@ -287,6 +287,7 @@
   }
 
   function showFirstRun(){
+    if(window.KitchenCloud?.recovering)return;
     if(localStorage.getItem('miseFirstRunComplete')==='1'||sessionStorage.getItem('miseFirstRunDismissed')==='1'||isConnected()||!window.KitchenCloud?.ready)return;
     const dlg=q('#firstRunModal');if(!dlg||dlg.open)return;
     try{openModal(dlg)}catch{dlg.showModal()}
