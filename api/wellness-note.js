@@ -1,5 +1,8 @@
+import { aiFailure } from '../lib/ai-status.js';
+import { requirePremium } from '../lib/access.js';
 export default async function handler(req,res){
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
+  if(!await requirePremium(req,res))return;
   const p=req.body||{};
   const fallback=()=>{
     const fr=(p.language||'fr')!=='en';
@@ -15,7 +18,7 @@ export default async function handler(req,res){
     const upstream=await fetch('https://ai-gateway.vercel.sh/v1/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'system',content:system},{role:'user',content:JSON.stringify(p)}],temperature:.35,max_tokens:90})});
     const data=await upstream.json();
     const text=data?.choices?.[0]?.message?.content?.trim();
-    if(!upstream.ok||!text)return res.status(200).json({text:fallback(),fallback:true});
+    if(!upstream.ok||!text)return res.status(200).json({text:fallback(),fallback:true,...aiFailure(data,upstream.status)});
     return res.status(200).json({text});
   }catch{return res.status(200).json({text:fallback(),fallback:true})}
 }

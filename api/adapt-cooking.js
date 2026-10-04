@@ -1,5 +1,8 @@
+import { aiFailure } from '../lib/ai-status.js';
+import { requirePremium } from '../lib/access.js';
 export default async function handler(req,res){
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
+  if(!await requirePremium(req,res))return;
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey||!model)return res.status(503).json({error:'AI cooking adaptation is not configured'});
   const recipe=req.body?.recipe,device=req.body?.device,servings=Math.max(1,Number(req.body?.servings||1));
@@ -41,7 +44,7 @@ Non-negotiable rules:
   const payload={servings,recipe:{name:recipe.name,time:recipe.time,ingredients:recipe.ingredients,steps:recipe.steps,tags:recipe.tags,methods:recipe.methods},device};
   try{
     const upstream=await fetch('https://ai-gateway.vercel.sh/v1/chat/completions',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,temperature:0.1,response_format:{type:'json_object'},messages:[{role:'system',content:system},{role:'user',content:JSON.stringify(payload)}]})});
-    const data=await upstream.json();if(!upstream.ok)return res.status(upstream.status).json({error:'AI cooking adaptation failed',details:data});
+    const data=await upstream.json();if(!upstream.ok)return res.status(upstream.status).json({error:'AI cooking adaptation failed',...aiFailure(data,upstream.status)});
     const raw=data?.choices?.[0]?.message?.content,guide=typeof raw==='string'?JSON.parse(raw):raw;
     return res.status(200).json(guide);
   }catch{return res.status(500).json({error:'Cooking adaptation failed'})}

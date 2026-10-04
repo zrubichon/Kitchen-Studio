@@ -1,5 +1,8 @@
+import { aiFailure } from '../lib/ai-status.js';
+import { requirePremium } from '../lib/access.js';
 export default async function handler(req,res){
   if(req.method!=='POST') return res.status(405).json({error:'Method not allowed'});
+  if(!await requirePremium(req,res))return;
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN, model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey||!model) return res.status(503).json({error:'AI Gateway not configured'});
   const {imageDataUrl,catalog=[]}=req.body||{};
@@ -17,7 +20,7 @@ export default async function handler(req,res){
       ],temperature:0,response_format:{type:'json_object'}})
     });
     const data=await upstream.json();
-    if(!upstream.ok) return res.status(upstream.status).json({error:'Vision model request failed',details:data});
+    if(!upstream.ok) return res.status(upstream.status).json({error:'Vision model request failed',...aiFailure(data,upstream.status)});
     const content=data?.choices?.[0]?.message?.content;
     const parsed=typeof content==='string'?JSON.parse(content):content;
     return res.status(200).json(parsed);

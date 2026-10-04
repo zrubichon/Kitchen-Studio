@@ -1,3 +1,5 @@
+import { aiFailure } from '../lib/ai-status.js';
+import { requirePremium } from '../lib/access.js';
 function decodeHtml(s=''){return s.replace(/&amp;/g,'&').replace(/&#x2F;/gi,'/').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/<[^>]+>/g,' ')}
 function clean(s=''){return decodeHtml(s).replace(/\s+/g,' ').trim()}
 function extractResults(html){
@@ -23,6 +25,7 @@ function likelyOfficial(url,brand=''){
 }
 export default async function handler(req,res){
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
+  if(!await requirePremium(req,res))return;
   const query=String(req.body?.query||'').trim().slice(0,220);
   if(!query)return res.status(400).json({error:'Device query required'});
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
@@ -87,7 +90,7 @@ Rules:
       ]})
     });
     const data=await upstream.json();
-    if(!upstream.ok)return res.status(upstream.status).json({error:'AI appliance research failed',details:data});
+    if(!upstream.ok)return res.status(upstream.status).json({error:'AI appliance research failed',...aiFailure(data,upstream.status)});
     const raw=data?.choices?.[0]?.message?.content;
     const device=typeof raw==='string'?JSON.parse(raw):raw;
     if(!device||!device.model)return res.status(422).json({error:'No exact appliance could be identified',evidence:results.slice(0,5)});

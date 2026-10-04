@@ -91,3 +91,14 @@ Appliquer le schéma:
 - Les politiques RLS du fichier SQL limitent l'état et les fichiers à leur propriétaire authentifié.
 
 Le projet Supabase doit être dédié à Kitchen Studio. Ne pas réutiliser un backend d'une autre application uniquement pour éviter de créer le projet.
+
+
+## Accès propriétaire et aperçu des offres
+
+L’accès gratuit à Premium et au Student Budget Pack est réservé au compte Supabase confirmé de Zoé. `lib/access.js` vérifie côté serveur l’identifiant permanent et l’adresse email, via `/auth/v1/user`. Aucune préférence locale ou donnée `user_metadata` ne donne de droits. Les autres comptes restent Free tant que les paiements et leur validation ne sont pas connectés.
+
+Dans Mon profil, le compte propriétaire peut choisir : Tout débloqué, Free, Premium ou Student Budget Pack. L’aperçu réduit uniquement les fonctions visibles et ne modifie pas les comptes ou leurs données. Les API IA vérifient également les droits. Le bouton Tester l’IA effectue une véritable requête et signale notamment le blocage de facturation Vercel. Les suggestions locales restent utilisables lorsqu’AI Gateway est indisponible.
+
+Vérification du 4 octobre 2026 : compte propriétaire confirmé, dernière connexion réussie le 30 septembre ; création de compte email autorisée avec confirmation obligatoire. AI Gateway refuse les requêtes avec `customer_verification_required` (carte bancaire requise). Les liens Stripe ne sont pas configurés. La délivrance des emails publics n’est pas validée : ne pas présenter le service email comme prêt pour le lancement sans vérifier le SMTP et la réception.
+
+Tests : `node --test tests/access.test.js`.

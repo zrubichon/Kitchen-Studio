@@ -252,7 +252,7 @@
       if(!best||score>best.score)best={a,score};
     }
     if(best?.score>=10)return {...best.a,confidence:.95,verified:true,sourceUrls:best.a.source?[best.a.source]:[]};
-    const r=await fetch('/api/research-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query})}),data=await r.json();
+    const r=await window.KitchenCloud.request('/api/research-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query})}),data=await r.json();
     if(!r.ok)throw new Error(data.error||'research failed');return data.device;
   }
   const researchForm=$('#deviceResearchForm');
@@ -280,7 +280,7 @@
   async function analyzeManual(device,images){
     let knowledge=device.manualKnowledge||null;
     for(let i=0;i<images.length;i+=3){
-      const r=await fetch('/api/analyze-manual',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({device,images:images.slice(i,i+3),existingKnowledge:knowledge})}),data=await r.json();
+      const r=await window.KitchenCloud.request('/api/analyze-manual',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({device,images:images.slice(i,i+3),existingKnowledge:knowledge})}),data=await r.json();
       if(!r.ok)throw new Error(data.error||'manual analysis failed');knowledge=data.knowledge;
     }return knowledge;
   }

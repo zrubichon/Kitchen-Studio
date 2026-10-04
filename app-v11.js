@@ -194,7 +194,7 @@
   async function generalRecompose(targetKeys){
     const before=JSON.parse(JSON.stringify(state.plan));let generated=null;
     try{
-      const r=await fetch('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+      const r=await window.KitchenCloud.request('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
         profile:state.profile,
         brief:{prompt:state.profile.adaptiveRequest||'',avoidPlan:before},
         fridgeInventory:[]
@@ -237,7 +237,7 @@
     regen.disabled=true;const old=regen.textContent;regen.textContent=tr('✦ Recomposition…','✦ Regenerating…');
     try{
       if(hasFridge())fridgeRecompose(targets);
-      else{await generalRecompose(targets);toast(tr('Semaine recomposée. La liste de courses contient tout ce qu’il faut acheter.','Week regenerated. Your grocery list now contains what you need to buy.'))}
+      else{await generalRecompose(targets);toast(window.MiseAccess?.aiStatus?.state==='blocked'?tr('Semaine recomposée en mode local · IA indisponible.','Week regenerated locally · AI unavailable.'):tr('Semaine recomposée. La liste de courses contient tout ce qu’il faut acheter.','Week regenerated. Your grocery list now contains what you need to buy.'))}
       state.selected?.clear?.();
     }finally{regen.disabled=false;regen.textContent=old}
   };

@@ -1,6 +1,6 @@
 // Kitchen Studio cloud sync. Uses only the public Supabase URL + publishable key.
 (function(){
-  const Cloud={ready:false,client:null,user:null,timer:null};
+  const Cloud={ready:false,client:null,user:null,timer:null,loading:false};
   const AUTH_REDIRECT='https://mise-kitchen-studio.vercel.app/';
   const status=()=>document.querySelector('#cloudAuthStatus');
 
@@ -66,7 +66,7 @@
     if(typeof renderRecipeIdeas==='function')renderRecipeIdeas();
   }
   async function saveNow(){
-    if(!Cloud.ready||!Cloud.user)return;
+    if(!Cloud.ready||!Cloud.user||Cloud.loading)return;
     const payload=capture();
     const {error}=await Cloud.client.from('kitchen_user_state').upsert({user_id:Cloud.user.id,payload,updated_at:new Date().toISOString()},{onConflict:'user_id'});
     if(error)console.warn('Kitchen cloud save failed',error.message);
@@ -74,11 +74,36 @@
   function saveSoon(){
     clearTimeout(Cloud.timer);Cloud.timer=setTimeout(()=>saveNow(),700);
   }
+  // Attach the verified Supabase session to premium requests.
+  async function request(url,options={}){
+    const headers=new Headers(options.headers||{});
+    const {data:{session}={}}=await (Cloud.client?.auth.getSession()||Promise.resolve({data:{}}));
+    if(session?.access_token)headers.set('Authorization','Bearer '+session.access_token);
+    if(window.MiseAccess?.owner)headers.set('X-Mise-Preview',window.MiseAccess.preview||'all');
+    if(String(url).includes('/api/generate-plan')&&options.body){
+      const payload=JSON.parse(options.body);
+      payload.recipeCatalog=RECIPES.filter(r=>r.id!=='fasting-slot'&&(!window.eligibleByProfile||eligibleByProfile(r))).map(r=>({id:r.id,slot:r.slot,name:r.name,tags:r.tags,ingredients:r.ingredients,kcal:r.kcal,protein:r.protein,estimatedCost:r.estimatedCost}));
+      options={...options,body:JSON.stringify(payload)};
+    }
+    const response=await fetch(url,{...options,headers});
+    if(/\/api\/(generate-plan|adapt-cooking|wellness-note|recognize-appliance|research-appliance|analyze-manual)/.test(String(url))){
+      const data=await response.clone().json().catch(()=>({}));
+      if(['auth_required','premium_required','preview_locked'].includes(data.code))return response;
+      if(!response.ok||data.fallback)document.dispatchEvent(new CustomEvent('mise:ai-status',{detail:{state:'blocked',code:data.code||data.details?.error?.type,message:data.message||data.error?.message||data.error||'IA indisponible · mode local',ownerMessage:data.ownerMessage}}));
+      else document.dispatchEvent(new CustomEvent('mise:ai-status',{detail:{state:'available',message:'L’IA a répondu à votre demande.'}}));
+    }
+    return response;
+  }
   async function loadCloud(){
     if(!Cloud.ready||!Cloud.user)return;
-    const {data,error}=await Cloud.client.from('kitchen_user_state').select('payload,updated_at').eq('user_id',Cloud.user.id).maybeSingle();
-    if(error){console.warn(error.message);return}
-    if(data?.payload)apply(data.payload);else await saveNow();
+    const userId=Cloud.user.id;Cloud.loading=true;clearTimeout(Cloud.timer);
+    try{
+      const {data,error}=await Cloud.client.from('kitchen_user_state').select('payload,updated_at').eq('user_id',userId).maybeSingle();
+      if(Cloud.user?.id!==userId)return;
+      if(error){console.warn(error.message);return}
+      if(data?.payload)apply(data.payload);
+      else{Cloud.loading=false;await saveNow();}
+    }finally{Cloud.loading=false;}
   }
   async function uploadManualPage(deviceId,file){
     if(!Cloud.ready||!Cloud.user)return null;
@@ -167,7 +192,8 @@
       const {data:{session}}=await Cloud.client.auth.getSession();
       Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
       if(Cloud.user)await loadCloud();
-      Cloud.client.auth.onAuthStateChange(async(event,session)=>{
+      Cloud.client.auth.onAuthStateChange((event,session)=>{
+        clearTimeout(Cloud.timer);
         Cloud.user=session?.user||null;updateAccountUI(Cloud.user);
         if(event==='PASSWORD_RECOVERY'){
           setTimeout(()=>{
@@ -175,7 +201,8 @@
             if(dlg&&!dlg.open){try{openModal(dlg)}catch{dlg.showModal()}}
           },50);
         }
-        if(Cloud.user)await loadCloud();
+        // Supabase calls must run outside the synchronous auth callback.
+        if(Cloud.user&&['SIGNED_IN','INITIAL_SESSION'].includes(event))setTimeout(()=>loadCloud(),0);
       });
       setStatus(Cloud.user?'Compte connecté · synchronisation active':'Cloud prêt · créez un compte ou connectez-vous',Boolean(Cloud.user));
     }catch(e){setStatus('Connexion cloud indisponible pour le moment.')}
@@ -205,8 +232,8 @@
     if(mode==='signup'){
       const {data,error}=await signUpAccount(email,password,name);
       if(error){setStatus(error.message);return}
-      Cloud.user=data.user||null;
       if(data.session){
+        Cloud.user=data.user||null;
         updateAccountUI(Cloud.user);await saveNow();setStatus('Compte créé et synchronisé',true);
         setHint('#cloudEmailHint','Compte créé avec cette adresse.','auth-success');
       }else if(isRepeatedSignup(data)){
@@ -278,7 +305,7 @@
 
   document.querySelector('#cloudSignOut')?.addEventListener('click',async()=>{if(Cloud.client)await Cloud.client.auth.signOut();Cloud.user=null;updateAccountUI(null);setStatus('Déconnecté. Les données locales restent sur cet appareil.')});
 
-  Object.assign(Cloud,{saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply,signUpAccount,signInAccount,resendConfirmation,sendPasswordReset,isRepeatedSignup,rememberExistingEmail,knownExistingEmail});
+  Object.assign(Cloud,{request,saveSoon,saveNow,loadCloud,uploadManualPage,listManualPages,capture,apply,signUpAccount,signInAccount,resendConfirmation,sendPasswordReset,isRepeatedSignup,rememberExistingEmail,knownExistingEmail});
   window.KitchenCloud=Cloud;
   init();
 })();

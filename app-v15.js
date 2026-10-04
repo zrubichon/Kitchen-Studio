@@ -6,15 +6,76 @@
   const ACCESS={
     premium:false,
     studentPack:false,
+    owner:false,
     source:'free'
   };
   let commerce={ready:false,links:{}};
+  let preview='all', accessRequest=0;
+  let aiStatus={state:'untested'};
 
-  async function loadCommerce(){
+  function applyAccess(){
+    const before=ACCESS.premium+':'+ACCESS.studentPack;
+    const granted=commerce.access||{};
+    ACCESS.owner=granted.owner===true;
+    ACCESS.source=granted.source||'free';
+    ACCESS.premium=granted.premium===true&&(!ACCESS.owner||['all','premium'].includes(preview));
+    ACCESS.studentPack=granted.studentPack===true&&(!ACCESS.owner||['all','student-pack'].includes(preview));
+    refreshAccessUI();
+    if(before!==ACCESS.premium+':'+ACCESS.studentPack)document.dispatchEvent(new CustomEvent('mise:access'));
+  }
+
+  async function loadCommerce(checkAi=false){
+    const seq=++accessRequest;
     try{
-      const r=await fetch('/api/commerce-config',{cache:'no-store'});
-      if(r.ok)commerce=await r.json();
-    }catch{}
+      const r=await window.KitchenCloud.request('/api/commerce-config'+(checkAi?'?checkAi=1':''),{cache:'no-store'});
+      const data=await r.json();
+      if(seq!==accessRequest)return;
+      if(r.ok){
+        commerce=data;
+        if(data.ai?.state&&data.ai.state!=='untested')aiStatus=data.ai;
+        if(commerce.access?.owner){
+          const saved=sessionStorage.getItem('miseOwnerPreview');
+          preview=['all','free','premium','student-pack'].includes(saved)?saved:'all';
+        }else preview='all';
+      }else commerce={ready:false,links:{},access:{}};
+    }catch{if(seq!==accessRequest)return;commerce={ready:false,links:{},access:{}}}
+    applyAccess();
+  }
+
+  function setPreview(value){
+    if(!ACCESS.owner||!['all','free','premium','student-pack'].includes(value))return;
+    preview=value;sessionStorage.setItem('miseOwnerPreview',value);
+    applyAccess();
+  }
+
+  function renderOwnerTools(){
+    let panel=$('#ownerAccessPanel');
+    if(!ACCESS.owner){panel?.remove();return}
+    if(!panel){
+      panel=document.createElement('section');panel.id='ownerAccessPanel';panel.className='owner-access-panel';
+      panel.innerHTML='<div><span class="premium-badge">'+tr('Compte propriétaire · gratuit','Owner account · free')+'</span><h3>'+tr('Toutes les fonctions sont incluses pour votre compte.','All features are included for your account.')+'</h3><p>'+tr('Prévisualisez chaque offre. Ce choix ne modifie ni votre compte ni vos données.','Preview each plan. This does not change your account or data.')+'</p></div><label>'+tr('Offre à tester','Plan to preview')+'<select id="ownerPreviewSelect"><option value="all">'+tr('Tout débloqué · propriétaire','Everything unlocked · owner')+'</option><option value="free">Mise Free</option><option value="premium">Mise Premium</option><option value="student-pack">Student Budget Pack</option></select></label><div><p id="ownerAiStatus" role="status"></p><button class="btn btn-outline btn-small" id="ownerTestAi" type="button">'+tr('Tester l’IA','Test AI')+'</button><a href="https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card" target="_blank" rel="noopener" id="ownerActivateAi" hidden>'+tr('Activer AI Gateway dans Vercel ↗','Activate AI Gateway in Vercel ↗')+'</a></div>';
+      $('#page-profile .page-head')?.insertAdjacentElement('afterend',panel);
+      $('#ownerPreviewSelect')?.addEventListener('change',e=>setPreview(e.target.value));
+      $('#ownerTestAi')?.addEventListener('click',async e=>{
+        e.target.disabled=true;aiStatus={state:'testing'};renderOwnerTools();
+        try{await loadCommerce(true)}finally{e.target.disabled=false;renderOwnerTools()}
+      });
+    }
+    $('#ownerPreviewSelect').value=preview;
+    $('#ownerAiStatus').textContent=aiStatus.state==='available'?tr('IA : réponse reçue.','AI: response received.')
+      :aiStatus.state==='testing'?tr('IA : test en cours…','AI: testing…')
+      :aiStatus.state==='blocked'?(aiStatus.ownerMessage||aiStatus.message||tr('IA indisponible · mode local disponible.','AI unavailable · local planning available.'))
+      :tr('IA : disponibilité à tester.','AI: availability not tested yet.');
+    $('#ownerActivateAi').hidden=aiStatus.code!=='ai_billing_required'&&aiStatus.code!=='customer_verification_required';
+  }
+
+  function renderAiStatus(){
+    let note=$('#aiAvailabilityNote');
+    if(!note){note=document.createElement('p');note.id='aiAvailabilityNote';note.className='muted ai-availability-note';note.setAttribute('role','status');$('#page-planner .hero-row')?.insertAdjacentElement('afterend',note)}
+    if(note){
+      note.hidden=aiStatus.state!=='blocked';
+      note.textContent=tr('IA indisponible. Les menus proposés actuellement sont calculés en mode local.','AI unavailable. Current meal suggestions use local planning.');
+    }
   }
 
   function gotoPremium(){
@@ -39,6 +100,7 @@
   }
 
   async function startOffer(type){
+    if(ACCESS.owner){setPreview(type==='student-pack'?'student-pack':'premium');toast(tr('Aperçu activé gratuitement pour votre compte propriétaire.','Preview enabled free for your owner account.'));return}
     if(!window.KitchenCloud?.user){
       toast(tr('Créez ou connectez votre compte avant un achat afin que votre accès puisse être associé à votre profil.','Create or sign in to your account before purchasing so access can be linked to your profile.'));
       navigate('profile');
@@ -179,7 +241,7 @@
       badge.className='membership-badge';
       box.querySelector('.eyebrow')?.insertAdjacentElement('beforebegin',badge);
     }
-    badge.textContent=ACCESS.premium?'✦ Mise Premium':ACCESS.studentPack?'Student Pack':'Mise Free';
+    badge.textContent=ACCESS.owner?tr('✦ Propriétaire · gratuit','✦ Owner · free')+(preview==='all'?'':' · '+preview):ACCESS.premium?'✦ Mise Premium':ACCESS.studentPack?'Student Pack':'Mise Free';
     badge.classList.toggle('paid',ACCESS.premium||ACCESS.studentPack);
   }
 
@@ -188,9 +250,16 @@
     markPremiumControls();
     renderMembership();
     applyStudentPackLock();
+    renderOwnerTools();renderAiStatus();
   }
 
-  document.addEventListener('mise:auth',()=>setTimeout(refreshAccessUI,0));
+  document.addEventListener('mise:auth',()=>{
+    ++accessRequest;
+    commerce={ready:false,links:{},access:{}};ACCESS.owner=false;ACCESS.premium=false;ACCESS.studentPack=false;preview='all';
+    refreshAccessUI();setTimeout(()=>loadCommerce(),0);
+  });
+  document.addEventListener('mise:cloudloaded',()=>setTimeout(refreshAccessUI,0));
+  document.addEventListener('mise:ai-status',e=>{aiStatus=e.detail;renderOwnerTools();renderAiStatus()});
   $('#languageSelect')?.addEventListener('change',()=>setTimeout(refreshAccessUI,0));
 
   loadCommerce();
@@ -199,6 +268,9 @@
   window.MiseAccess={
     get premium(){return ACCESS.premium},
     get studentPack(){return ACCESS.studentPack},
+    get owner(){return ACCESS.owner},
+    get preview(){return preview},
+    get aiStatus(){return aiStatus},
     refresh:refreshAccessUI
   };
 })();

@@ -201,7 +201,7 @@ $('#accountForm').onsubmit=e=>{e.preventDefault();const fd=new FormData(e.target
 
 let applianceImageData=null;
 $('#appliancePhotoInput').onchange=()=>{const file=$('#appliancePhotoInput').files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{applianceImageData=reader.result;$('#appliancePhotoPreview').innerHTML=`<img src="${applianceImageData}" alt="Photo appareil"><small>${file.name}</small>`;$('#recognizeApplianceBtn').disabled=false};reader.readAsDataURL(file)};
-$('#recognizeApplianceBtn').onclick=async()=>{if(!applianceImageData)return;const result=$('#applianceRecognitionResult');result.hidden=false;result.innerHTML='<strong>✦ Analyse en cours…</strong>';try{const catalog=appliances.filter(a=>a.type==='Air Fryer').map(a=>({id:a.id,brand:a.brand,model:a.model}));const r=await fetch('/api/recognize-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({imageDataUrl:applianceImageData,catalog})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Recognition unavailable');const match=appliances.find(a=>a.id===d.matchId);if(match){appliances.forEach(a=>a.favorite=false);match.favorite=true;state.profile.applianceId=match.id;saveProfileV3();result.innerHTML=`<div class="recognition-match"><span>✓</span><div><small>${Math.round((d.confidence||0)*100)}% confiance</small><strong>${match.brand} ${match.model}</strong><p>${d.visibleEvidence||''}</p></div></div>`;renderAppliances();populateApplianceSelect();renderAccount()}else{result.innerHTML=`<div class="recognition-match tentative"><span>?</span><div><small>${Math.round((d.confidence||0)*100)}% confiance · à confirmer</small><strong>${d.brand||'Appareil'} ${d.model||''}</strong><p>${d.visibleEvidence||txt('Modèle non présent dans la bibliothèque vérifiée.','Model is not yet in the verified library.')}</p></div></div>`}}catch(err){result.innerHTML=`<strong>${txt('Reconnaissance IA non disponible. Vérifiez la configuration AI Gateway.','AI recognition unavailable. Check AI Gateway configuration.')}</strong>`}};
+$('#recognizeApplianceBtn').onclick=async()=>{if(!applianceImageData)return;const result=$('#applianceRecognitionResult');result.hidden=false;result.innerHTML='<strong>✦ Analyse en cours…</strong>';try{const catalog=appliances.filter(a=>a.type==='Air Fryer').map(a=>({id:a.id,brand:a.brand,model:a.model}));const r=await window.KitchenCloud.request('/api/recognize-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({imageDataUrl:applianceImageData,catalog})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Recognition unavailable');const match=appliances.find(a=>a.id===d.matchId);if(match){appliances.forEach(a=>a.favorite=false);match.favorite=true;state.profile.applianceId=match.id;saveProfileV3();result.innerHTML=`<div class="recognition-match"><span>✓</span><div><small>${Math.round((d.confidence||0)*100)}% confiance</small><strong>${match.brand} ${match.model}</strong><p>${d.visibleEvidence||''}</p></div></div>`;renderAppliances();populateApplianceSelect();renderAccount()}else{result.innerHTML=`<div class="recognition-match tentative"><span>?</span><div><small>${Math.round((d.confidence||0)*100)}% confiance · à confirmer</small><strong>${d.brand||'Appareil'} ${d.model||''}</strong><p>${d.visibleEvidence||txt('Modèle non présent dans la bibliothèque vérifiée.','Model is not yet in the verified library.')}</p></div></div>`}}catch(err){result.innerHTML=`<strong>${txt('Reconnaissance IA non disponible. Vérifiez la configuration AI Gateway.','AI recognition unavailable. Check AI Gateway configuration.')}</strong>`}};
 
 const previousWizardNextHandler=$('#wizardNext').onclick;
 $('#wizardNext').onclick=async function(e){const beforeStep=wizardStep;await previousWizardNextHandler?.call(this,e);if(beforeStep===3)setTimeout(()=>enforceCurrentBudget(true),50)};
@@ -642,13 +642,13 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
     const before=clonePlan(state.plan);
     let plan=null;
     try{
-      const r=await fetch('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({profile:state.profile,brief:{goal,prompt,budget:state.profile.budget,store:state.profile.store,location:state.profile.location,avoidPlan:before,noConsecutiveDuplicates:true}})});
+      const r=await window.KitchenCloud.request('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({profile:state.profile,brief:{goal,prompt,budget:state.profile.budget,store:state.profile.store,location:state.profile.location,avoidPlan:before,noConsecutiveDuplicates:true}})});
       if(r.ok){const d=await r.json();if(Array.isArray(d.plan)&&d.plan.length===7)plan=d.plan}
     }catch{}
     state.plan=finalizeGeneratedPlan(plan||buildDiverseBudgetPlan(state.profile.budget,before),before);
     savePlan();renderWeek();persistCanonicalStore();
     const changed=countChanged(before,state.plan);
-    toast(txt(`Semaine prête · ${changed} repas changés · budget ${money(state.profile.budget)}.`,`Week ready · ${changed} meals changed · ${money(state.profile.budget)} budget.`));
+    toast(txt(`${plan?"Semaine IA prête":"Semaine en mode local (IA indisponible)"} · ${changed} repas changés · budget ${money(state.profile.budget)}.`,`${plan?"AI week ready":"Local week ready (AI unavailable)"} · ${changed} meals changed · ${money(state.profile.budget)} budget.`));
   };
 
   // Initial normalization: saved plan and shopping location are repaired once on load.
@@ -831,7 +831,7 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
   async function researchDevice(query){
     const local=catalogMatch(query);
     if(local&&local.score!==0)return local;
-    const r=await fetch('/api/research-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query})});
+    const r=await window.KitchenCloud.request('/api/research-appliance',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query})});
     const data=await r.json();
     if(!r.ok)throw new Error(data.error||'Recherche impossible');
     return normalizeDevice(data.device);
@@ -900,7 +900,7 @@ renderRecipes();renderExtraExpenses();renderAccount();robustRenderWeek();enforce
     try{
       const rt=recipeText(currentRecipe);
       const recipePayload={...currentRecipe,name:rt.name,steps:rt.steps};
-      const r=await fetch('/api/adapt-cooking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipe:recipePayload,device:d})});
+      const r=await window.KitchenCloud.request('/api/adapt-cooking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipe:recipePayload,device:d})});
       const g=await r.json();
       if(!r.ok)throw new Error(g.error||'Adaptation impossible');
       renderAIGuide(g);return true;

@@ -1,5 +1,8 @@
+import { aiFailure } from '../lib/ai-status.js';
+import { requirePremium } from '../lib/access.js';
 export default async function handler(req,res){
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
+  if(!await requirePremium(req,res))return;
   const apiKey=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,model=process.env.AI_MODEL||'openai/gpt-5.6-sol';
   if(!apiKey||!model)return res.status(503).json({error:'AI manual analysis is not configured'});
   const {device,images=[],existingKnowledge=null}=req.body||{};
@@ -46,7 +49,7 @@ Rules:
       ]})
     });
     const data=await upstream.json();
-    if(!upstream.ok)return res.status(upstream.status).json({error:'Manual analysis failed',details:data});
+    if(!upstream.ok)return res.status(upstream.status).json({error:'Manual analysis failed',...aiFailure(data,upstream.status)});
     const raw=data?.choices?.[0]?.message?.content;
     const knowledge=typeof raw==='string'?JSON.parse(raw):raw;
     return res.status(200).json({knowledge});

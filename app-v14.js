@@ -227,7 +227,7 @@
     const key=deviceKey(d,r);if(guideCache.has(key))return guideCache.get(key);
     const promise=(async()=>{
       try{
-        const resp=await fetch('/api/adapt-cooking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipe:r,device:d,servings:servings()})});
+        const resp=await window.KitchenCloud.request('/api/adapt-cooking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipe:r,device:d,servings:servings()})});
         const g=await resp.json();if(!resp.ok||!g?.compatible)throw new Error(g?.notes||g?.error||'not compatible');
         return {compatible:true,device:g.device||[d.brand,d.model].filter(Boolean).join(' '),mode:g.mode||'—',temp:g.temperatureF?g.temperatureF+'°F / '+(g.temperatureC??Math.round((g.temperatureF-32)*5/9))+'°C':g.temperatureC?g.temperatureC+'°C':'—',power:g.powerLevel||'—',time:g.timeMinutes?(g.timeMinutes.min+'–'+g.timeMinutes.max+' min'):'—',container:g.container||'—',placement:g.placement||'—',preheat:g.preheat||'—',doneness:g.doneness||g.safety||'—',manualBased:!!g.manualBased,note:[g.notes,g.safety].filter(Boolean).join(' '),steps:[...(g.preparation||[]),...(g.steps||[])]};
       }catch(e){

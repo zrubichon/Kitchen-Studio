@@ -132,7 +132,7 @@
   async function aiSentence(w){
     if(!w.valid)return localSentence(w);
     try{
-      const r=await fetch('/api/wellness-note',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+      const r=await window.KitchenCloud.request('/api/wellness-note',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
         firstName:state.profile.firstName||user()?.user_metadata?.name||'',
         bodyGoal:state.profile.bodyGoal,
         calorieLow:w.low,calorieHigh:w.high,
@@ -149,7 +149,7 @@
 
   function renderPremiumPreview(w){
     const el=q('#premiumGoalPreview');if(!el)return;
-    if(!isConnected()){el.innerHTML='';return}
+    if(!isConnected()||window.MiseAccess?.premium===false){el.innerHTML='';return}
     if(!w.valid){
       el.innerHTML='<strong>'+localSentence(w)+'</strong>';
       return;
@@ -160,6 +160,11 @@
 
   async function renderCoach(){
     const card=q('#wellnessCoachCard');if(!card)return;
+    if(isConnected()&&window.MiseAccess?.premium===false){
+      card.className='wellness-coach-card locked';
+      card.innerHTML='<div><span class="premium-badge">✦ Mise Premium</span><h3>'+tr('Le suivi personnalisé est disponible avec Premium.','Personalized tracking is available with Premium.')+'</h3></div><button class="btn btn-outline" data-go-premium>'+tr('Voir Premium','Explore Premium')+'</button>';
+      return;
+    }
     if(!isConnected()){
       card.className='wellness-coach-card locked';
       card.innerHTML='<div><span class="premium-badge">✦ '+tr('Premium personnalisé','Personalized Premium')+'</span><h3>'+tr('Votre suivi calories et objectif physique est prêt à être activé.','Your calorie and physical-goal tracking is ready to unlock.')+'</h3><p>'+tr('Créez un compte dans Mon profil : cela permet à Mise de conserver votre objectif, votre frigo, votre liste de courses et vos menus synchronisés.','Create an account in My profile so Mise can keep your goal, fridge, grocery list and menus synchronized.')+'</p></div><button class="btn btn-dark" id="coachGoProfile">'+tr('Créer / connecter mon compte','Create / sign in')+'</button>';
@@ -200,7 +205,7 @@
     const connected=isConnected(),card=q('#premiumGoalCard'),lock=q('#premiumHealthLock'),fields=q('#premiumFields'),status=q('#premiumStatus');
     if(card)card.classList.toggle('locked',!connected);
     if(lock)lock.hidden=connected;
-    if(fields)qa('#premiumFields input,#premiumFields select').forEach(x=>x.disabled=!connected);
+    if(fields)qa('#premiumFields input,#premiumFields select').forEach(x=>x.disabled=!connected||window.MiseAccess?.premium===false);
     if(status){status.textContent=connected?tr('Activé','Active'):tr('Compte requis','Account required');status.classList.toggle('active',connected)}
     const auth=q('.cloud-auth-card'),summary=q('.account-summary');
     if(auth)auth.hidden=connected;
@@ -395,7 +400,7 @@
       const before=JSON.parse(JSON.stringify(state.plan));
       let plan=null;
       try{
-        const r=await fetch('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+        const r=await window.KitchenCloud.request('/api/generate-plan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
           profile:state.profile,
           brief:{prompt,adaptiveRequest:state.profile.adaptiveRequest||'',fasting:{mode:state.profile.fastingMode,start:state.profile.fastingStart,end:state.profile.fastingEnd},avoidPlan:before},
           fridgeInventory:window.KitchenStudioV9?.fridgeItems?.()||[]
@@ -418,6 +423,7 @@
     if(!u)setTimeout(showFirstRun,50);
   });
   document.addEventListener('mise:cloudloaded',()=>setTimeout(()=>{hydrate();renderGate();renderCoach()},0));
+  document.addEventListener('mise:access',()=>{renderGate();renderCoach()});
 
   hydrate();renderGate();applyFastingSchedule();renderWeek();renderCoach();setTimeout(showFirstRun,350);
   window.MiseWellness={compute:()=>computeWellness(state.profile),render:renderCoach,tune:tunePlanToGoal,applyFasting:applyFastingSchedule};
